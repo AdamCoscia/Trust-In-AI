@@ -6,7 +6,7 @@ This repository establishes a bi-directional communication channel with the web 
 
 In the root of this directory `/server`
 
-1. Activate virtual environment (see root README for instructions)
+1. Activate virtual environment (depending on your OS -- see root README for instructions)
 2. Execute `python server.py`
 3. For local testing, set **SERVER_URL** (in `/app/src/app/models/config.ts`) to `http://localhost:3000`
 
