@@ -8,11 +8,11 @@ TODO
 
 ## Setup
 
-This is an Angular application with Python backend.
+This is an Angular application (`/app`) with Python backend (`/server`).
 
 These are the versions the system has been tested on as of **03/18/2021**
 
-### App
+### /App
 
 - Node.js (v14.16.0) [Link](https://nodejs.org/en/) - Environment
 - npm (v6.14.11) [Link](https://www.npmjs.com/get-npm) - Package installer for Node.js
@@ -23,7 +23,7 @@ These are the versions the system has been tested on as of **03/18/2021**
 3. Navigate to `/app` and run `npm install` to install packages
 4. finally run `ng serve` and open a browser page at <localhost:4200>
 
-### Server
+### /Server
 
 - Python (v.3.9.x) [Link](https://www.python.org/) - Environment
 - pip [Link](https://pypi.org/project/pip/) - Package installer for Python

@@ -8,7 +8,7 @@ In the root of this directory `/server`
 
 1. Activate virtual environment (see root README for instructions)
 2. Execute `python server.py`
-3. Set app endpoint (in `/app` directory) to `http://localhost:3000`
+3. For local testing, set **SERVER_URL** (in `/app/src/app/models/config.ts`) to `http://localhost:3000`
 
    ...
 
