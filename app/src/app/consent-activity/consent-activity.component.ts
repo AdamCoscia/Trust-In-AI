@@ -46,16 +46,16 @@ export class ConsentActivityComponent implements OnInit {
       if (this.route.snapshot.queryParams.hasOwnProperty("p2")) {
         switch (this.route.snapshot.queryParams["p2"]) {
           case "t24":
-            this.global.appType = "c1";
+            this.global.appType = "CONTROL";
             break;
           case "ozz":
-            this.global.appType = "c2";
+            this.global.appType = "HUMAN";
             break;
           case "8gv":
-            this.global.appType = "c3";
+            this.global.appType = "TECH";
             break;
           case "n5a":
-            this.global.appType = "c4";
+            this.global.appType = "HUMANTECH";
             break;
         }
       }
@@ -74,6 +74,9 @@ export class ConsentActivityComponent implements OnInit {
   }
 
   next(path: any) {
+    console.log(this.global.appOrder);
+    console.log(this.global.appType);
+    console.log(this.global.appMode);
     this.global.consent.complete(new Date().toLocaleString());
     this.router.navigateByUrl(path);
   }

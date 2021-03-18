@@ -1,7 +1,7 @@
 // libraries
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 // local
-import { UtilsService } from '../services/utils.service';
+import { UtilsService } from "../services/utils.service";
 
 var UtilsServiceObj = new UtilsService();
 var participantId = UtilsServiceObj.generateRandomUniqueString(12);
@@ -29,32 +29,32 @@ class PageRecord {
 export class SessionPage {
   constructor(private utils: UtilsService) {}
   // ids
-  'participantId': string = participantId; // 12 character long unique identifier
+  "participantId": string = participantId; // 12 character long unique identifier
   // conditions
-  'appOrder': string[] = []; // Order of Tasks
-  'appType': string = ''; // Condition {c1, c2, c3, c4}
+  "appOrder": string[] = []; // Order of Tasks {service, cooking}
+  "appType": string = ""; // Condition {CONTROL, HUMAN, TECH, HUMANTECH}
   // states
-  'appMode': string = 'service'; // Task {service, cooking}
+  "appMode": string = ""; // Current Task
   // pages
-  'consent' = new PageRecord();
-  'overview' = new PageRecord();
-  'pre-survey' = new PageRecord();
-  'task-service' = new PageRecord();
-  'live-service' = new PageRecord();
-  'task-cooking' = new PageRecord();
-  'live-cooking' = new PageRecord();
-  'post-survey' = new PageRecord();
-  'thanks' = new PageRecord();
+  "consent" = new PageRecord();
+  "overview" = new PageRecord();
+  "pre-survey" = new PageRecord();
+  "task-service" = new PageRecord();
+  "live-service" = new PageRecord();
+  "task-cooking" = new PageRecord();
+  "live-cooking" = new PageRecord();
+  "post-survey" = new PageRecord();
+  "thanks" = new PageRecord();
 }
 
 export const DeploymentConfig = Object.freeze({
-  SERVER_URL: 'http://localhost:3000',
-  PRE_SURVEY_FORM_URL: '', // TODO
+  SERVER_URL: "http://localhost:3000",
+  PRE_SURVEY_FORM_URL: "", // TODO
   POST_SURVEY_FORM_URL: {
-    c1: '', // TODO
-    c2: '', // TODO
-    c3: '', // TODO
-    c4: '', // TODO
+    c1: "", // TODO
+    c2: "", // TODO
+    c3: "", // TODO
+    c4: "", // TODO
   },
 });
 
