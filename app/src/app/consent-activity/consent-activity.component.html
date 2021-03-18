@@ -1,1 +1,176 @@
-<p>consent-activity works!</p>
+<div class="page-header text-center">
+  <h2 *ngIf="badURL" style="min-width: 526px">Something went wrong.</h2>
+  <h2 *ngIf="!badURL" style="min-width: 526px">
+    Consent Document For Enrolling Adult Participants In a Research Study
+  </h2>
+</div>
+
+<div *ngIf="badURL" class="container h-full min-width">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-warning text-center">
+        The URL used to reach this page is not correctly written and the study is unable to load as requested.
+        <br />
+        <br />
+        Please ensure you have the correct URL provided on the Mechanical Turk HIT Assignment page and try
+        again.
+        <br />
+        <br />
+        If you reach this page multiple times, please contact Dr. Alex Endert at
+        <a href="mailto: endert@gatech.edu">endert@gatech.edu</a>
+        to let us know what happened, close this page and <strong>reject the HIT.</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!badURL" class="container h-full min-width">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="text-center text-secondary">
+        Project Title:
+        <strong>Studying Interactive Decision Making in Visualization Systems with Crowdsourcing</strong>
+      </h3>
+
+      <h5 class="text-center text-secondary">Principle Investigator: <strong>Alex Endert</strong></h5>
+
+      <h5 class="text-center text-secondary">
+        Co-Investigators: <strong>Arpit Narechania, Jamal Paden, Adam Coscia</strong>
+      </h5>
+
+      <p class="text-center text-secondary">Protocol and Consent Title: <strong>H21032</strong></p>
+
+      <hr />
+
+      <p>You are being asked to be a volunteer in a research study.</p>
+      <p>
+        <b><u>Purpose:</u></b>
+        The purpose of this study is to evaluate alternative interactive visualization interfaces for their
+        efficacy in
+        aiding analysis and decision making processes.
+      </p>
+      <p>
+        <b><u>Exclusion/Inclusion Criteria:</u></b>
+        Participants in this study must be at least 18 years of age and have general familiarity with using
+        web-based
+        systems. Only participants in the United States can participate in this study.
+      </p>
+      <p>
+        <b><u>Procedures:</u></b>
+        If you decide to be in this study, your part will involve approximately forty-five to sixty minutes,
+        during
+        which you will complete a simple knowledge background questionnaire, watch a demonstration of the
+        evaluation
+        interface, and perform a set of tasks with an interactive visualization. With your permission we will
+        record
+        your interactions using logging software that will capture things like clicks and hovers.
+      </p>
+      <p>
+        <b><u>Risks or Discomforts:</u></b>
+        The risks involved are no greater than those involved in daily activities such as using a laptop for
+        web-browsing.
+      </p>
+      <p>
+        <b><u>Benefits:</u></b>
+        You are not likely to benefit in any way from joining this study. We hope that what we learn will help
+        to
+        enhance our understanding of user interaction patterns related to decision making.
+      </p>
+      <p>
+        <b><u>Compensation to You:</u></b>
+        You will receive $10/hr compensation for your time. U.S. Tax Law requires that a 1099-misc be issued if
+        U.S. tax
+        residents receive $600 or more per calendar year. If non-U.S. tax residents receive more than $75,
+        mandatory 30%
+        withholding is required. Your address and Tax I.D. may be collected for compensation purposes only. This
+        information will be shared only with the Georgia Tech department that issues compensation, if any, for
+        your
+        participation.
+      </p>
+      <p>
+        <b><u>Confidentiality:</u></b>
+        We will comply with any applicable laws and regulations regarding confidentiality. To protect your
+        privacy, your
+        records will be kept under a code number rather than by name. Interaction logs will be stored on an
+        external
+        storage device. Your records, including interaction logs, questionnaire responses, and consent form will
+        be kept
+        in locked files and only study staff will be allowed to look at them. Your name and any other fact that
+        might
+        point to you will not appear when results of this study are presented or published. Federal regulations
+        require
+        that all study data be stored for a minimum of 3 years. After analysis and publication, all records of
+        your
+        participation in the study will be destroyed. To make sure that this research is being carried out
+        properly, the
+        Georgia Institute of Technology IRB may review study records. The Office of Human Research Protections
+        may also
+        look over study records during required reviews.
+      </p>
+      <p>
+        <b><u>Costs to You:</u></b>
+        If you participate in this study, you will be responsible for any data costs incurred while
+        participating in the
+        online study.
+      </p>
+      <p>
+        <b><u>Participant Rights:</u></b>
+        Your participation in this study is voluntary. You do not have to be in this study if you don't want to
+        be. You
+        have the right to change your mind and leave the study at any time without giving any reason and without
+        penalty. If you decide not to finish the study, you have the right to withdraw any data collected about
+        you.
+        Should you decide to withdraw from the study, your questionnaires will be shredded. Any new information
+        that may
+        make you change your mind about being in this study will be given to you. You will be given a copy of
+        this
+        consent form to keep. You do not waive any of your legal rights by signing this consent form.
+      </p>
+      <p>
+        <b><u>Questions about the Study:</u></b>
+        If you have any questions about the study, you may contact Dr. Alex Endert at (404) 385-4477 or
+        endert@gatech.edu.
+      </p>
+      <p>
+        <b><u>Questions about Your Rights as a Research Participant:</u></b>
+        If you have any questions about your rights as a research participant, you may contact Ms. Melanie
+        Clark, Office
+        of Research Integrity and Assurance, at (404) 894-6942.
+      </p>
+
+      <hr />
+
+      <!-- User is using a Desktop Device -->
+      <form class="m-b text-center" *ngIf="!usingMobileDevice()">
+        <p>
+          By selecting <strong>Accept</strong>, you indicate that you have read the information in this
+          consent form and
+          consent to be in the study.
+        </p>
+
+        <div class="form-check">
+          <input type="checkbox" name="acceptCheckCB" class="form-check-input" id="acceptCheck"
+            [(ngModel)]="acceptedConsent" />
+          <label class="form-check-label" for="acceptCheck">I accept</label>
+        </div>
+
+        <br />
+
+        <button [disabled]="!acceptedConsent" (click)="next('/overview')" type="submit" class="btn btn-outline-dark">
+          Submit
+        </button>
+      </form>
+
+      <!-- User is NOT using a Desktop Device -->
+      <div *ngIf="usingMobileDevice()">
+        <h5 class="text-center text-secondary">STOP!</h5>
+
+        <p>
+          You are using a mobile device! We require a desktop device to complete this study. Please switch to
+          a desktop
+          device before continuing.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

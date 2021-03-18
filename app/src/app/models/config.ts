@@ -6,6 +6,25 @@ import { UtilsService } from '../services/utils.service';
 var UtilsServiceObj = new UtilsService();
 var participantId = UtilsServiceObj.generateRandomUniqueString(12);
 
+class PageRecord {
+  completed: any;
+  timestamp: any;
+
+  constructor() {
+    this.completed = false;
+    this.timestamp = null;
+  }
+
+  complete(timestamp: any) {
+    this.completed = true;
+    this.timestamp = timestamp;
+  }
+
+  save() {
+    return { completed: this.completed, timestamp: this.timestamp };
+  }
+}
+
 @Injectable()
 export class SessionPage {
   constructor(private utils: UtilsService) {}
@@ -17,15 +36,15 @@ export class SessionPage {
   // states
   'appMode': string = 'service'; // Task {service, cooking}
   // pages
-  'consent': object = { completed: false, timestamp: 0 };
-  'overview': object = { completed: false, timestamp: 0 };
-  'pre-survey': object = { completed: false, timestamp: 0 };
-  'task-service': object = { completed: false, timestamp: 0 };
-  'live-service': object = { completed: false, timestamp: 0 };
-  'task-cooking': object = { completed: false, timestamp: 0 };
-  'live-cooking': object = { completed: false, timestamp: 0 };
-  'post-survey': object = { completed: false, timestamp: 0 };
-  'thanks': object = { completed: false, timestamp: 0 };
+  'consent' = new PageRecord();
+  'overview' = new PageRecord();
+  'pre-survey' = new PageRecord();
+  'task-service' = new PageRecord();
+  'live-service' = new PageRecord();
+  'task-cooking' = new PageRecord();
+  'live-cooking' = new PageRecord();
+  'post-survey' = new PageRecord();
+  'thanks' = new PageRecord();
 }
 
 export const DeploymentConfig = Object.freeze({
