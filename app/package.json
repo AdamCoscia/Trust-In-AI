@@ -52,5 +52,8 @@
   },
   "prettier": {
     "printWidth": 120
+  },
+  "engines": {
+    "node": "14.x"
   }
 }
