@@ -2,13 +2,7 @@
   "name": "cs6795-group-project-study-interface",
   "version": "0.1.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "heroku-postbuild": "cd app && ng build --prod",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "heroku-postbuild": "cd app && ng build --prod"
   },
   "private": true,
   "dependencies": {
