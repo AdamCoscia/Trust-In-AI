@@ -22,11 +22,11 @@ app.use(forceSSL());
 
 // For all GET requests, send back index.html
 // so that PathLocationStrategy can be used
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "dist", "app")));
 
 // Send the index.html whatever the request is.
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+  res.sendFile(path.resolve(__dirname, "dist", "app", "index.html"));
 });
 
 app.listen(process.env.PORT || 8080);
