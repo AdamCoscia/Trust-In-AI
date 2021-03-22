@@ -5,7 +5,6 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "heroku-postbuild": "cd app && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -54,7 +53,4 @@
   "prettier": {
     "printWidth": 120
   },
-  "engines": {
-    "node": "14.x"
-  }
 }
