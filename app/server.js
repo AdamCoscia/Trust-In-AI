@@ -26,7 +26,7 @@ app.use(express.static(path.join("dist")));
 
 // Send the index.html whatever the request is.
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve("dist", "app", "index.html"));
+  res.sendFile(path.resolve(__dirname, "dist", "app", "index.html"));
 });
 
 app.listen(process.env.PORT || 8080);
