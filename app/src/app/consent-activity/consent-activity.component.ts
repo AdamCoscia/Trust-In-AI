@@ -36,34 +36,33 @@ export class ConsentActivityComponent implements OnInit {
     if (this.route.snapshot.queryParams.hasOwnProperty("p1")) {
       switch (this.route.snapshot.queryParams["p1"]) {
         case "95u":
-          this.global.appOrder = ["service", "cooking"];
+          this.global.appOrder = ["practice", "service", "cooking"];
           break;
         case "iq0":
-          this.global.appOrder = ["cooking", "service"];
+          this.global.appOrder = ["practice", "cooking", "service"];
           break;
       }
       // Check for and set appType
       if (this.route.snapshot.queryParams.hasOwnProperty("p2")) {
         switch (this.route.snapshot.queryParams["p2"]) {
           case "t24":
-            this.global.appType = "CONTROL";
+            this.global.appType = "CTRL";
             break;
           case "ozz":
-            this.global.appType = "HUMAN";
+            this.global.appType = "WTHN";
             break;
           case "8gv":
-            this.global.appType = "TECH";
+            this.global.appType = "BTWN";
             break;
           case "n5a":
-            this.global.appType = "HUMANTECH";
+            this.global.appType = "BOTH";
             break;
         }
       }
     }
     if (this.global.appOrder && this.global.appType) {
-      // appOrder and appType were set above => show consent doc!
-      this.titleService.setTitle("Consent");
       this.badURL = false;
+      this.titleService.setTitle("Consent");
     } else {
       this.titleService.setTitle("Error");
     }
@@ -73,11 +72,8 @@ export class ConsentActivityComponent implements OnInit {
     return /Mobi|Android/i.test(navigator.userAgent);
   }
 
-  next(path: any) {
-    console.log(this.global.appOrder);
-    console.log(this.global.appType);
-    console.log(this.global.appMode);
-    this.global.consent.complete(new Date().toLocaleString());
-    this.router.navigateByUrl(path);
+  next() {
+    this.global.consent.complete(new Date().getTime());
+    this.router.navigateByUrl("/overview");
   }
 }

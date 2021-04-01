@@ -1,1 +1,86 @@
-<p>overview-activity works!</p>
+<div class="page-header text-center min-width">
+  <h2 *ngIf="badURL">Something went wrong.</h2>
+  <h2 *ngIf="!badURL">Overview</h2>
+</div>
+
+<div *ngIf="badURL" class="container h-full min-width" style="padding-bottom: 15px">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-warning text-center">
+        We apologize for the inconvenience. The application may have been refreshed, reset, or navigated in an
+        unauthorized way. The application cannot continue.
+        <br />
+        <br />
+        Please close this page and click on the link provided for this study and start the assignment over from the
+        beginning.
+        <br />
+        <br />
+        If you reach this page multiple times, please contact Adam Coscia at
+        <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+        to let us know what happened and close this page.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!badURL" class="container h-full min-width" style="padding-bottom: 15px">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-info text-center">
+        For the best experience, please make your browser screen <strong>as large as possible</strong>, preferably
+        fullscreen!
+      </div>
+
+      <p>
+        The user study will consist of the following steps. The times below are
+        <strong>estimates</strong>; however, you may take as much time as you like.
+      </p>
+
+      <ol class="list-group list-group-flush" style="list-style-position: inside">
+        <li class="list-group-item">
+          <span>&nbsp;<strong>[1 min]</strong>&nbsp;Background questionnaire</span>
+        </li>
+        <li class="list-group-item">
+          <span>&nbsp;<strong>[3 min]</strong>&nbsp;Practice using the interface</span>
+        </li>
+        <li class="list-group-item">
+          <span>&nbsp;<strong>[2 min]</strong>&nbsp;Pre-study questionnaire</span>
+        </li>
+        <li class="list-group-item">
+          <span>
+            &nbsp;<strong>[6 min]</strong>
+            {{ global.appOrder[0].charAt(0).toUpperCase() + global.appOrder[0].slice(1) }} task
+          </span>
+        </li>
+        <li class="list-group-item">
+          <span>
+            &nbsp;<strong>[6 min]</strong>
+            {{ global.appOrder[1].charAt(0).toUpperCase() + global.appOrder[1].slice(1) }} task
+          </span>
+        </li>
+        <li class="list-group-item">
+          <span>&nbsp;<strong>[2 min]</strong>&nbsp;Post-study questionnaire</span>
+        </li>
+        <li class="list-group-item"><span>&nbsp;Completion Code and Wrap-up</span></li>
+      </ol>
+
+      <br />
+
+      <div class="alert alert-warning">
+        <div class="row flex-nowrap">
+          <div class="col-md-11 text-center center-all">
+            <span>
+              Please complete the entire study in one session. Do not press the <strong>back</strong> or
+              <strong>forward</strong> buttons, or <strong>refresh</strong> any pages in the application, until you have
+              reached the 'Thank You' page at the end of the study. Click the <strong>Next</strong> button at right to
+              continue!
+            </span>
+          </div>
+          <div class="col-md-1 center-all">
+            <button (click)="next()" class="btn btn-sm btn-outline-dark">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
