@@ -49,6 +49,7 @@ export class SessionPage {
 
 export const DeploymentConfig = Object.freeze({
   SERVER_URL: "http://localhost:3000",
+  BACKGROUND_SURVEY_FORM_URL: "", // TODO
   PRE_SURVEY_FORM_URL: "", // TODO
   POST_SURVEY_FORM_URL: {
     c1: "", // TODO

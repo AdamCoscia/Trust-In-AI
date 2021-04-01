@@ -1,7 +1,7 @@
 // libraries
-import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { Socket } from "ngx-socket-io";
+import { map } from "rxjs/operators";
 
 @Injectable()
 export class ChatService {
@@ -11,48 +11,36 @@ export class ChatService {
     this.vizSocket.connect();
   }
 
-  removeAllListenersAndDisconnectFromSocket() {
-    this.vizSocket.removeAllListeners();
-    this.vizSocket.disconnect();
-  }
-
   sendMessageToSaveSessionLogs(data: any, participantId: any) {
     let payload = {
-      data: data,
+      logs: data,
       participantId: participantId,
     };
-    this.vizSocket.emit('on_session_end_page_level_logs', payload);
+    this.vizSocket.emit("save_session_logs", payload);
   }
 
   sendMessageToSaveLogs() {
-    this.vizSocket.emit('on_save_logs', null);
-  }
-
-  sendMessageToRestartBiasComputation() {
-    this.vizSocket.emit('on_reset_bias_computation', null);
+    this.vizSocket.emit("save_interaction_logs");
   }
 
   sendInteractionResponse(payload: any) {
-    this.vizSocket.emit('on_interaction', payload);
-  }
-
-  getDisconnectEventResponse() {
-    return this.vizSocket.fromEvent('disconnect').pipe(map((obj) => obj));
+    this.vizSocket.emit("on_interaction", payload);
   }
 
   getConnectEventResponse() {
-    return this.vizSocket.fromEvent('connect').pipe(map((obj) => obj));
+    return this.vizSocket.fromEvent("connect").pipe(map((obj) => obj));
+  }
+
+  getDisconnectEventResponse() {
+    return this.vizSocket.fromEvent("disconnect").pipe(map((obj) => obj));
   }
 
   getInteractionResponse() {
-    return this.vizSocket
-      .fromEvent('interaction_response')
-      .pipe(map((obj) => obj));
+    return this.vizSocket.fromEvent("interaction_response").pipe(map((obj) => obj));
   }
 
-  getAttributeDistribution() {
-    return this.vizSocket
-      .fromEvent('attribute_distribution')
-      .pipe(map((obj) => obj));
+  removeAllListenersAndDisconnectFromSocket() {
+    this.vizSocket.removeAllListeners();
+    this.vizSocket.disconnect();
   }
 }
