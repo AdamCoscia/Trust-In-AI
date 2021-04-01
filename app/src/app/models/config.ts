@@ -55,6 +55,7 @@ export class SessionPage {
     this.consent = new PageRecord();
     this.overview = new PageRecord();
     this.background = new PageRecord();
+    this.live_practice = new PageRecord();
     this.presurvey = new PageRecord();
     this.task_service = new PageRecord();
     this.live_service = new PageRecord();

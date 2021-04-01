@@ -63,8 +63,12 @@ export class LiveActivityComponent implements OnInit {
     }
     // get next App mode and move on
     let idx = this.global.appOrder.indexOf(this.global.appMode); // get current index of current appMode
-    if (idx < this.global.appOrder.length - 1) {
-      // still have tasks to do!
+    if (idx == -1 || idx >= this.global.appOrder.length) {
+      // something went wrong, appMode/appOrder not correct
+      this.badURL = true; // show error screen
+      this.titleService.setTitle("Error");
+    } else if (idx < this.global.appOrder.length - 1) {
+      // still have tasks to do => to the next task page
       this.global.appMode = this.global.appOrder[idx + 1]; // get next appMode in the list
       this.router.navigateByUrl(`/task-${this.global.appMode}`);
     } else {
