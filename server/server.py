@@ -11,7 +11,32 @@ import socketio
 from aiohttp import web
 from aiohttp_index import IndexMiddleware
 
-DEPLOY_MODE = "heroku"  # local / heroku
+DEPLOY_MODE = "local"  # local / heroku
+print(f'deploy mode => {DEPLOY_MODE}')
+
+if DEPLOY_MODE == "local":
+    # for when developing locally
+    keys = json.load(open("redis.json", "r"))  #  stored remotely for safety
+    if keys:
+        print("Connecting to redis server", end='\r')
+        r = redis.Redis(host=keys["hostname"], password=keys["password"], port=keys["port"])
+        while not r.ping():
+            time.sleep(1.0)
+    else:
+        raise FileNotFoundError('Count not load redis.json')
+
+elif DEPLOY_MODE == "heroku":
+    # for when pushing to heroku
+    if os.environ.get("REDISCLOUD_URL"):
+        print("Connecting to redis server ...", end='\r')
+        url = urlparse.urlparse(os.environ.get("REDISCLOUD_URL"))
+        r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
+        while not r.ping():
+            time.sleep(1.0)
+    else:
+        raise FileNotFoundError('REDISCLOUD_URL not found.')
+
+print("Connected ")
 
 CLIENTS = {}  # entire data map of all client data
 CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING = {}
@@ -20,13 +45,6 @@ CLIENT_SOCKET_ID_PARTICIPANT_MAPPING = {}
 SIO = socketio.AsyncServer()
 APP = web.Application(middlewares=[IndexMiddleware()])
 SIO.attach(APP)
-
-if DEPLOY_MODE == "local":
-    keys = json.load(open("redis.json"))  #  stored remotely for safety
-    r = redis.Redis(host=keys.hostname, port=keys.port, password=keys.password)
-elif DEPLOY_MODE == "heroku":
-    url = urlparse.urlparse(os.environ.get("REDISCLOUD_URL"))
-    r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 
 
 def get_current_time():

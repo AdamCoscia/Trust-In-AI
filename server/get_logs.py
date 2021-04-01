@@ -1,12 +1,25 @@
 import json
 import os
-import urllib.parse as urlparse
+import time
+import sys
 
 import redis
 import pandas as pd
 
-keys = json.load(open("redis.json"))  #  stored remotely for safety
-r = redis.Redis(host=keys.hostname, port=keys.port, password=keys.password)
+keys = json.load(open("redis.json", "r"))  #  stored remotely for safety
+
+# === Establish Connection === #
+
+sys.stdout.write(f"\rConnecting to {keys['hostname']}")
+sys.stdout.flush()
+r = redis.Redis(host=keys["hostname"], password=keys["password"], port=keys["port"])
+while not r.ping():
+    for c in ['|', '/', '-', '\\']:
+        sys.stdout.write(f"\rConnecting to {keys['hostname']} ... {c}")
+        sys.stdout.flush()
+        time.sleep(0.33)
+sys.stdout.write(f"\rConnecting to {keys['hostname']} ... Connected!\n")
+sys.stdout.flush()
 
 #
 # GET Operations for different data types:
@@ -21,14 +34,16 @@ users = [u.decode("utf-8") for u in r.smembers("users")]
 interactions = {u: [json.loads(l) for l in r.lrange(f"user:{u}:interactions", 0, -1)] for u in users}
 session_end_pages = {u: [json.loads(l) for l in r.lrange(f"user:{u}:interactions", 0, -1)] for u in users}
 
-print("=== SUMMARY ===")
-print()
-for pid in users:
-    print(pid)
-    print("-" * len(pid))
-    df = pd.DataFrame.from_records(interactions[pid])
-    if not os.path.exists(os.path.join("output", pid)):
-        os.makedirs(os.path.join("output", pid))
-    df.to_csv(os.path.join("output", pid, "interactions.csv"))
-    print(df.head())
-    print()
+print("=== SUMMARY ===\n")
+
+if len(users) == 0:
+    print("No users.")
+else:
+    for pid in users:
+        print(pid)
+        print("-" * len(pid))
+        df = pd.DataFrame.from_records(interactions[pid])
+        if not os.path.exists(os.path.join("output", pid)):
+            os.makedirs(os.path.join("output", pid))
+        df.to_csv(os.path.join("output", pid, "interactions.csv"))
+        print(df.head(), end="\n")
