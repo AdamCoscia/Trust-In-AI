@@ -5,7 +5,7 @@ import urllib.parse as urlparse
 import redis
 import pandas as pd
 
-keys = json.load('redis.json')  #  stored remotely for safety
+keys = json.load(open("redis.json"))  #  stored remotely for safety
 r = redis.Redis(host=keys.hostname, port=keys.port, password=keys.password)
 
 #

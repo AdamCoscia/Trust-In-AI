@@ -3,6 +3,7 @@
 import json
 import os
 import time
+import urllib.parse as urlparse
 
 import pandas as pd
 import redis
@@ -10,8 +11,7 @@ import socketio
 from aiohttp import web
 from aiohttp_index import IndexMiddleware
 
-keys = json.load('redis.json')  #  stored remotely for safety
-r = redis.Redis(host=keys.hostname, port=keys.port, password=keys.password)
+DEPLOY_MODE = "heroku"  # local / heroku
 
 CLIENTS = {}  # entire data map of all client data
 CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING = {}
@@ -21,7 +21,12 @@ SIO = socketio.AsyncServer()
 APP = web.Application(middlewares=[IndexMiddleware()])
 SIO.attach(APP)
 
-DEPLOY_MODE = "local"  # local / heroku
+if DEPLOY_MODE == "local":
+    keys = json.load(open("redis.json"))  #  stored remotely for safety
+    r = redis.Redis(host=keys.hostname, port=keys.port, password=keys.password)
+elif DEPLOY_MODE == "heroku":
+    url = urlparse.urlparse(os.environ.get("REDISCLOUD_URL"))
+    r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 
 
 def get_current_time():
