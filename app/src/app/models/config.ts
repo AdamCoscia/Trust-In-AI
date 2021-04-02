@@ -67,8 +67,8 @@ export class SessionPage {
 }
 
 export const DeploymentConfig = Object.freeze({
-  // SERVER_URL: "cs6795-group-project-server.herokuapp.com/",
-  SERVER_URL: "localhost:3000",
+  SERVER_URL: "https://cs6795-group-project-server.herokuapp.com/",
+  // SERVER_URL: "https://localhost:3000",
 });
 
 /**
