@@ -10,7 +10,7 @@ import { PostSurveyActivityComponent } from "./post-survey-activity/post-survey-
 import { ThanksActivityComponent } from "./thanks-activity/thanks-activity.component";
 
 const routes: Routes = [
-  // set appType and appOrder; appMode == ""
+  // appMode == ""
   { path: "", component: ConsentActivityComponent },
   { path: "consent", component: ConsentActivityComponent },
   { path: "overview", component: OverviewActivityComponent },

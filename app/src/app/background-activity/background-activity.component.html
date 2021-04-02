@@ -1,9 +1,9 @@
 <div class="page-header text-center min-width">
-  <h2 *ngIf="badURL">Something went wrong.</h2>
-  <h2 *ngIf="!badURL">Background Questionnaire</h2>
+  <h2 *ngIf="unableToLoad">Something went wrong.</h2>
+  <h2 *ngIf="!unableToLoad">Background Questionnaire</h2>
 </div>
 
-<div *ngIf="badURL" class="container h-full min-width" style="padding-bottom: 15px">
+<div *ngIf="unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning text-center">
@@ -23,7 +23,7 @@
   </div>
 </div>
 
-<div *ngIf="!badURL" class="container h-full min-width">
+<div *ngIf="!unableToLoad" class="container h-full min-width">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning">

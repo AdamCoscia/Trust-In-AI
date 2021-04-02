@@ -1,1 +1,72 @@
-<p>task-activity works!</p>
+<div class="page-header text-center min-width">
+  <h2 *ngIf="unableToLoad">Something went wrong.</h2>
+  <h2 *ngIf="!unableToLoad">{{ capitalize(session.appMode) }} - Instructions</h2>
+</div>
+
+<!-- Unable to load the correct appMode -->
+<div *ngIf="unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-warning text-center">
+        <div>
+          <p>
+            We apologize for the inconvenience. The application has been reset in the middle of the study and cannot
+            continue.
+          </p>
+          <span>
+            Please <strong>contact</strong> Adam Coscia at
+            <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+            to let us know what happened. Please include the approximate time this failure occured.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICE TASK -->
+<div *ngIf="!unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
+  <div *ngIf="session.appMode == 'service'" class="row">
+    <div class="col-md-12">
+      <p>Service Task Description</p>
+
+      <h5 class="text-center">Your Task</h5>
+
+      <div class="alert alert-info">Instructions</div>
+    </div>
+  </div>
+
+  <!-- COOKING TASK -->
+  <div *ngIf="session.appMode == 'cooking'" class="row">
+    <div class="col-md-12">
+      <p>Cooking Task Description</p>
+
+      <h5 class="text-center">Your Task</h5>
+
+      <div class="alert alert-info">Instructions</div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-md-12">
+      <h5 class="text-center">Ready?</h5>
+      <div class="alert alert-warning">
+        <div class="row flex-nowrap">
+          <div class="col-md-11 text-center center-all">
+            <span>
+              Please complete the entire study in one session. Do not press the <strong>back</strong> or
+              <strong>forward</strong> buttons, or <strong>refresh</strong> any pages in the application, until you have
+              reached the 'Thank You' page at the end of the study. Click the <strong>Begin Task</strong> button at
+              right to continue!
+            </span>
+          </div>
+          <div class="col-md-1 center-all">
+            <button (click)="next()" class="btn btn-sm btn-outline-dark">Begin Task</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

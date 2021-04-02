@@ -1,4 +1,4 @@
-// libraries
+// global
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Title } from "@angular/platform-browser";
@@ -18,50 +18,48 @@ window.addEventListener("beforeunload", function (e) {
   styleUrls: ["./consent-activity.component.scss"],
 })
 export class ConsentActivityComponent implements OnInit {
+  unableToLoad: any;
   acceptedConsent: any;
-  badURL: any;
 
   constructor(
-    public global: SessionPage,
+    public session: SessionPage,
     private route: ActivatedRoute,
     private router: Router,
     private titleService: Title
-  ) {
-    this.acceptedConsent = false; // until user clicks 'I Accept' Next button is disabled
-    this.badURL = true; // assume poorly formatted URL until all parameters can be verified
-  }
+  ) {}
 
   ngOnInit(): void {
-    // Check for and set appOrder
+    this.acceptedConsent = false; // until user clicks 'I Accept' Next button is disabled
+    this.unableToLoad = true; // assume poorly formatted URL until all parameters can be verified
     if (this.route.snapshot.queryParams.hasOwnProperty("p1")) {
       switch (this.route.snapshot.queryParams["p1"]) {
         case "95u":
-          this.global.appOrder = ["practice", "service", "cooking"];
+          this.session.appOrder = ["practice", "service", "cooking"];
           break;
         case "iq0":
-          this.global.appOrder = ["practice", "cooking", "service"];
+          this.session.appOrder = ["practice", "cooking", "service"];
           break;
       }
       // Check for and set appType
       if (this.route.snapshot.queryParams.hasOwnProperty("p2")) {
         switch (this.route.snapshot.queryParams["p2"]) {
           case "t24":
-            this.global.appType = "CTRL";
+            this.session.appType = "CTRL";
             break;
           case "ozz":
-            this.global.appType = "WTHN";
+            this.session.appType = "WTHN";
             break;
           case "8gv":
-            this.global.appType = "BTWN";
+            this.session.appType = "BTWN";
             break;
           case "n5a":
-            this.global.appType = "BOTH";
+            this.session.appType = "BOTH";
             break;
         }
       }
     }
-    if (this.global.appOrder && this.global.appType) {
-      this.badURL = false;
+    if (this.session.appOrder && this.session.appType) {
+      this.unableToLoad = false;
       this.titleService.setTitle("Consent");
     } else {
       this.titleService.setTitle("Error");
@@ -73,7 +71,7 @@ export class ConsentActivityComponent implements OnInit {
   }
 
   next() {
-    this.global.consent.complete(new Date().getTime());
+    this.session.consent.complete(new Date().getTime());
     this.router.navigateByUrl("/overview");
   }
 }

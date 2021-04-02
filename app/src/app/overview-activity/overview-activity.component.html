@@ -1,9 +1,9 @@
 <div class="page-header text-center min-width">
-  <h2 *ngIf="badURL">Something went wrong.</h2>
-  <h2 *ngIf="!badURL">Overview</h2>
+  <h2 *ngIf="unableToLoad">Something went wrong.</h2>
+  <h2 *ngIf="!unableToLoad">Overview</h2>
 </div>
 
-<div *ngIf="badURL" class="container h-full min-width" style="padding-bottom: 15px">
+<div *ngIf="unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning text-center">
@@ -23,7 +23,7 @@
   </div>
 </div>
 
-<div *ngIf="!badURL" class="container h-full min-width" style="padding-bottom: 15px">
+<div *ngIf="!unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-info text-center">
@@ -36,33 +36,33 @@
         <strong>estimates</strong>; however, you may take as much time as you like.
       </p>
 
-      <ol class="list-group list-group-flush" style="list-style-position: inside">
-        <li class="list-group-item">
-          <span>&nbsp;<strong>[1 min]</strong>&nbsp;Background questionnaire</span>
-        </li>
-        <li class="list-group-item">
-          <span>&nbsp;<strong>[3 min]</strong>&nbsp;Practice using the interface</span>
-        </li>
-        <li class="list-group-item">
-          <span>&nbsp;<strong>[2 min]</strong>&nbsp;Pre-study questionnaire</span>
-        </li>
-        <li class="list-group-item">
-          <span>
-            &nbsp;<strong>[6 min]</strong>
-            {{ global.appOrder[0].charAt(0).toUpperCase() + global.appOrder[0].slice(1) }} task
-          </span>
-        </li>
-        <li class="list-group-item">
-          <span>
-            &nbsp;<strong>[6 min]</strong>
-            {{ global.appOrder[1].charAt(0).toUpperCase() + global.appOrder[1].slice(1) }} task
-          </span>
-        </li>
-        <li class="list-group-item">
-          <span>&nbsp;<strong>[2 min]</strong>&nbsp;Post-study questionnaire</span>
-        </li>
-        <li class="list-group-item"><span>&nbsp;Completion Code and Wrap-up</span></li>
-      </ol>
+      <div style="margin-bottom: 1rem">
+        <ol class="list-group list-group-flush">
+          <li class="list-group-item">
+            <span>&nbsp;<strong>[1 min]</strong>&nbsp;Background questionnaire</span>
+          </li>
+          <li class="list-group-item">
+            <span>&nbsp;<strong>[3 min]</strong>&nbsp;Practice using the interface</span>
+          </li>
+          <li class="list-group-item">
+            <span>&nbsp;<strong>[2 min]</strong>&nbsp;Pre-study questionnaire</span>
+          </li>
+          <li class="list-group-item">
+            <span>&nbsp;<strong>[6 min]</strong>&nbsp;{{ capitalize(session.appOrder[1]) }} task</span>
+          </li>
+          <li class="list-group-item">
+            <span>&nbsp;<strong>[6 min]</strong>&nbsp;{{ capitalize(session.appOrder[2]) }} task </span>
+          </li>
+          <li class="list-group-item">
+            <span>&nbsp;<strong>[2 min]</strong>&nbsp;Post-study questionnaire</span>
+          </li>
+        </ol>
+      </div>
+
+      <p>
+        The study will conclude by presenting you with a <strong>completion code</strong> that you must email back to us
+        at <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+      </p>
 
       <br />
 

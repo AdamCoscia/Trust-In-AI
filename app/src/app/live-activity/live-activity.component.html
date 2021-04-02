@@ -1,4 +1,107 @@
-<p>live-activity works! mode={{global.appMode}} order={{global.appOrder}} type={{global.appType}}</p>
-<div class="col-md-1 center-all">
-  <button (click)="next()" class="btn btn-sm btn-outline-dark">Next</button>
-</div>
+<!-- UNABLE TO LOAD -->
+<ng-container *ngIf="unableToLoad">
+  <!-- HEADER -->
+  <div class="container page-header min-width">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h2>Something went wrong.</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="container h-full min-width">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-warning text-center">
+          <div>
+            <p>
+              We apologize for the inconvenience. The application has been reset in the middle of the study and cannot
+              continue.
+            </p>
+            <span>
+              Please <strong>contact</strong> Adam Coscia at
+              <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+              to let us know what happened. Please include the approximate time this failure occured.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- APPLICATION CAN LOAD -->
+<ng-container *ngIf="!unableToLoad">
+  <!-- WHILE APP IS NOT CONNECTED DISPLAY THIS -->
+  <ng-container *ngIf="!socketConnected">
+    <!-- HEADER -->
+    <div class="container page-header text-center min-width">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h2>Connecting...</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="container h-full min-width">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="alert alert-info text-center">
+            Please wait while the application establishes a connection to our server...
+          </div>
+          <br />
+          <div class="alert alert-warning text-center">
+            <p>Please <strong>DO NOT</strong> refresh the page during this process.</p>
+            <p><strong>Note: This may take 2-3 minutes, depending on your internet connection speed.</strong></p>
+            <span>
+              If the application does not load after 3 minutes, please <strong>contact</strong> Adam Coscia at
+              <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+              to let us know what happened. Please include the approximate time this failure occured.
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- ONCE APP IS CONNECTED DISPLAY THIS -->
+  <ng-container *ngIf="socketConnected">
+    <!-- HEADER -->
+    <div class="container page-header min-width">
+      <div class="row flex-nowrap" style="align-items: center">
+        <div class="col text-left text-nowrap">
+          <h2>{{ capitalize(session.appMode) }} Task</h2>
+        </div>
+        <div class="col text-right text-nowrap">
+          <button [disabled]="!taskComplete" (click)="next()" class="btn btn-sm btn-outline-dark">Finish</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BODY -->
+    <div class="container h-full min-width">
+      <!-- PRACTICE TASK -->
+      <div *ngIf="session.appMode == 'practice'" class="row">
+        <div class="col-md-12">
+          <p>Practice Task - Coming Soon</p>
+        </div>
+      </div>
+
+      <!-- SERVICE TASK -->
+      <div *ngIf="session.appMode == 'service'" class="row">
+        <div class="col-md-12">
+          <p>Service Task - Coming Soon</p>
+        </div>
+      </div>
+
+      <!-- COOKING TASK -->
+      <div *ngIf="session.appMode == 'cooking'" class="row">
+        <div class="col-md-12">
+          <p>Cooking Task - Coming Soon</p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

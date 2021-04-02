@@ -4,7 +4,25 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class UtilsService {
   /**
-   * Generates a random alphanumeric string of `length` characters.
+   * Get current ms since EPOCH.
+   */
+  getCurrentTime() {
+    return new Date().getTime();
+  }
+
+  /**
+   * Capitalize first letter of alphabetical string.
+   * @param word A string of alphabetical chars.
+   * @returns The string with the first character uppercase.
+   */
+  capitalize(word: string) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+  /**
+   * Generate random alphanumeric string.
+   * @param length Number of characters in the generated string.
+   * @returns The random string.
    */
   generateRandomUniqueString(length: number) {
     var result = "";

@@ -11,30 +11,30 @@ import socketio
 from aiohttp import web
 from aiohttp_index import IndexMiddleware
 
-DEPLOY_MODE = "heroku"  # local / heroku
-print(f'deploy mode => {DEPLOY_MODE}')
+DEPLOY_MODE = "local"  # local / heroku
+print(f"deploy mode => {DEPLOY_MODE}")
 
 if DEPLOY_MODE == "local":
     # for when developing locally
     keys = json.load(open("redis.json", "r"))  #  stored remotely for safety
     if keys:
-        print("Connecting to redis server", end='\r')
+        print("Connecting to redis server", end="\r")
         r = redis.Redis(host=keys["hostname"], password=keys["password"], port=keys["port"])
         while not r.ping():
             time.sleep(1.0)
     else:
-        raise FileNotFoundError('Count not load redis.json')
+        raise FileNotFoundError("Count not load redis.json")
 
 elif DEPLOY_MODE == "heroku":
     # for when pushing to heroku
     if os.environ.get("REDISCLOUD_URL"):
-        print("Connecting to redis server ...", end='\r')
+        print("Connecting to redis server ...", end="\r")
         url = urlparse.urlparse(os.environ.get("REDISCLOUD_URL"))
         r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
         while not r.ping():
             time.sleep(1.0)
     else:
-        raise FileNotFoundError('REDISCLOUD_URL not found.')
+        raise FileNotFoundError("REDISCLOUD_URL not found.")
 
 print("Connected ")
 
@@ -42,7 +42,7 @@ CLIENTS = {}  # entire data map of all client data
 CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING = {}
 CLIENT_SOCKET_ID_PARTICIPANT_MAPPING = {}
 
-SIO = socketio.AsyncServer()
+SIO = socketio.AsyncServer(cors_allowed_origins="*")
 APP = web.Application(middlewares=[IndexMiddleware()])
 SIO.attach(APP)
 
@@ -53,7 +53,7 @@ def get_current_time():
 
 
 @SIO.event
-async def connect(sid):
+async def connect(sid, environ):
     print(f"Connected: Socket ID: {sid}")
 
 
@@ -64,7 +64,7 @@ def disconnect(sid):
         CLIENTS[pid]["disconnected_at"] = get_current_time()
         print(f"Disconnected: Participant ID: {pid} | Socket ID: {sid}")
     except Exception as e:
-        print(e)
+        print(f"Disconnected: Participant ID: unknown | Socket ID: {sid}")
 
 
 @SIO.event
@@ -133,7 +133,6 @@ async def on_interaction(sid, data):
     r.rpush(f"user:{pid}:interactions", payload)
     r.sadd("users", pid)
 
-    await SIO.emit("log", response)  # send this to all
     await SIO.emit("interaction_response", response, room=sid)
 
 

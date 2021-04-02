@@ -40,6 +40,7 @@ export class ChatService {
   }
 
   removeAllListenersAndDisconnectFromSocket() {
+    console.log("removeAllListenersAndDisconnectFromSocket");
     this.vizSocket.removeAllListeners();
     this.vizSocket.disconnect();
   }

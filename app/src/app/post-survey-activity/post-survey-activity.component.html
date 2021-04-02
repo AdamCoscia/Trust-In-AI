@@ -1,1 +1,75 @@
-<p>post-survey-activity works!</p>
+<div class="page-header text-center min-width">
+  <h2 *ngIf="unableToLoad">Something went wrong.</h2>
+  <h2 *ngIf="!unableToLoad">Post-Study Questionnaire</h2>
+</div>
+
+<!-- Unable to load the correct appMode -->
+<div *ngIf="unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-warning text-center">
+        <div>
+          <p>
+            We apologize for the inconvenience. The application has been reset in the middle of the study and cannot
+            continue.
+          </p>
+          <span>
+            Please <strong>contact</strong> Adam Coscia at
+            <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+            to let us know what happened. Please include the approximate time this failure occured.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!unableToLoad" class="container h-full min-width">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-warning">
+        Please be sure to scroll through to complete the entire survey before continuing.
+      </div>
+
+      <div class="text-center" style="margin-bottom: 1rem">
+        <iframe id="survey" [src]="postSurveyURL" width="100%" [style.height.px]="surveyHeight" frameborder="0"
+          marginheight="0" marginwidth="0" (window:resize)="setSurveyHeight($event)"></iframe>
+
+        <div *ngIf="!iFrameLoaded" style="width: 90%; margin-left: auto; margin-right: auto; margin-bottom: 2rem">
+          <h3>Loading Survey...</h3>
+          <div class="alert">
+            <div class="row flex-nowrap">
+              <div class="col-md-12 text-center">
+                <p>
+                  If this message does not go away, please use this link to take the survey and receive your
+                  continuation code:
+                </p>
+                <a [attr.href]="postSurveyURL" target="_blank"
+                  [innerHTML]="appConfig['postSurveyURL'][session.appType]"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-info">
+        <div class="row flex-nowrap">
+          <div class="col-md-8 text-center">
+            <span>
+              Once you have <strong>submitted</strong> the survey, please type in the code displayed above to enable the
+              <strong>Next</strong> button.
+            </span>
+          </div>
+
+          <div class="col-md-3 center-all">
+            <input (keyup)="onKey($event)" />
+          </div>
+
+          <div class="col-md-1 center-all">
+            <button [disabled]="!inputValid" (click)="next()" class="btn btn-sm btn-outline-dark">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
