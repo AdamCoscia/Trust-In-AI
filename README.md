@@ -10,7 +10,7 @@ TODO
 
 This is an Angular application (`/app`) with Python backend (`/server`).
 
-These are the versions the system has been tested on as of **03/18/2021**
+These are the versions the system has been tested on as of **04/02/2021**
 
 ### /App
 
