@@ -4,7 +4,6 @@ import { Title } from "@angular/platform-browser";
 // local
 import { SessionPage } from "../models/config";
 import { ChatService } from "../services/socket.service";
-import { UtilsService } from "../services/utils.service";
 
 window.addEventListener("beforeunload", function (e) {
   // Cancel the event
@@ -22,45 +21,26 @@ export class ThanksActivityComponent implements OnInit {
   unableToLoad: any;
   socketConnected: any;
 
-  constructor(
-    private chatService: ChatService,
-    public session: SessionPage,
-    private titleService: Title,
-    private utilsService: UtilsService
-  ) {}
+  constructor(private chatService: ChatService, public session: SessionPage, private titleService: Title) {}
 
   ngOnInit(): void {
     this.unableToLoad = true; // assume unable to load until all parameters can be verified
     this.socketConnected = false; // hide app HTML until socket connnection is established
     if (this.session.appOrder && this.session.appType && this.session.appMode !== "practice") {
       this.unableToLoad = false; // page can load!
-      this.titleService.setTitle("Pre-Survey");
-      this.subscribeToReceiveMessages(); // Connect to Server to Send/Receive Messages over WebSocket
+      this.titleService.setTitle("Thanks");
+      this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
     } else {
       this.titleService.setTitle("Error");
     }
   }
 
-  init(): void {
-    this.session.thanks.complete(new Date().getTime());
-    this.chatService.sendMessageToSaveSessionLogs(this.session, this.session["participantId"]);
-    this.chatService.removeAllListenersAndDisconnectFromSocket();
-  }
-
   /**
-   * Subscribes to server for sending messages.
+   * Called by chatService when connection is established.
    */
-  subscribeToReceiveMessages() {
-    let app = this;
-    this.chatService.connectToSocket();
-    this.chatService.getConnectEventResponse().subscribe((obj) => {
-      console.log("connected to socket");
-      app.socketConnected = true; // enable the application
-      app.init(); // initialize the app
-    });
-    this.chatService.getDisconnectEventResponse().subscribe((obj) => {
-      console.log("disconnected from socket");
-      app.socketConnected = false; // disable the application
-    });
+  socketOnConnect(): void {
+    this.session.thanks.complete(new Date().getTime());
+    this.chatService.sendMessageToSaveSessionLog(this.session, this.session["participantId"]);
+    this.chatService.removeAllListenersAndDisconnectFromSocket();
   }
 }

@@ -74,7 +74,9 @@ export const DeploymentConfig = Object.freeze({
 /**
  * SUPPORTED INTERACTION TYPES
  */
-export const enum InteractionTypes {}
+export const enum InteractionTypes {
+  TEST_INTERACTION = "test_interaction",
+}
 
 /**
  * APPLICATION-SPECIFIC SETTINGS

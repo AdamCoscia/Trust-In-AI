@@ -20,6 +20,7 @@ window.addEventListener("beforeunload", function (e) {
   selector: "app-live-activity",
   templateUrl: "./live-activity.component.html",
   styleUrls: ["./live-activity.component.scss"],
+  providers: [ChatService],
 })
 export class LiveActivityComponent implements OnInit, AfterViewInit {
   capitalize: any;
@@ -50,19 +51,19 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     if (this.session.appOrder && this.session.appType) {
       switch (this.session.appMode) {
         case "practice":
-          this.unableToLoad = false;
-          this.titleService.setTitle("Practice");
-          this.subscribeToReceiveMessages(); // Connect to Server to Send/Receive Messages over WebSocket
+          this.unableToLoad = false; // load the page!
+          this.titleService.setTitle("Practice"); // set the page title
+          this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
         case "service":
-          this.unableToLoad = false;
-          this.titleService.setTitle("Service");
-          this.subscribeToReceiveMessages(); // Connect to Server to Send/Receive Messages over WebSocket
+          this.unableToLoad = false; // load the page!
+          this.titleService.setTitle("Service"); // set the page title
+          this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
         case "cooking":
-          this.unableToLoad = false;
-          this.titleService.setTitle("Cooking");
-          this.subscribeToReceiveMessages(); // Connect to Server to Send/Receive Messages over WebSocket
+          this.unableToLoad = false; // load the page!
+          this.titleService.setTitle("Cooking"); // set the page title
+          this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
         default:
           this.titleService.setTitle("Error");
@@ -75,32 +76,33 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {}
 
-  init(): void {
-    let app = this;
-    console.log("connected => init called");
-    app.taskComplete = true;
-    let message = initializeNewMessage(app);
-    console.log(message);
-  }
-
   /**
-   * Subscribes to server for sending messages.
+   * Called by chatService when connection is established.
    */
-  subscribeToReceiveMessages() {
+  socketOnConnect(): void {
     let app = this;
-    this.chatService.connectToSocket();
-    this.chatService.getConnectEventResponse().subscribe((obj) => {
-      console.log("connected to socket");
-      app.socketConnected = true; // enable the application
-      app.init(); // initialize the app
-    });
-    this.chatService.getDisconnectEventResponse().subscribe((obj) => {
-      console.log("disconnected from socket");
-      app.socketConnected = false; // disable the application
-    });
-    this.chatService.getInteractionResponse().subscribe((obj) => {
+    app.taskComplete = true;
+    console.log("socketOnConnect() => called");
+
+    // subscribe to interaction responses from the server
+    app.chatService.getInteractionResponse().subscribe((obj) => {
       console.log("recieved interaction from server");
+      console.log(obj);
     });
+
+    // send a test message
+    let message = initializeNewMessage(app);
+    message.interactionType = InteractionTypes.TEST_INTERACTION;
+    console.log(message);
+    console.log("sending interaction to server");
+    this.chatService.sendInteractionResponse(message);
+
+    // save a test selections log
+    let selections = {
+      appMode: this.session.appMode,
+      t1: ["p1", this.utilsService.getCurrentTime()],
+    };
+    this.chatService.sendMessageToSaveSelectionLog(selections, this.session.participantId);
   }
 
   /**

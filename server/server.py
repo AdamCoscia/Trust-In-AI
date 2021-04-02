@@ -11,7 +11,7 @@ import socketio
 from aiohttp import web
 from aiohttp_index import IndexMiddleware
 
-DEPLOY_MODE = "local"  # local / heroku
+DEPLOY_MODE = "heroku"  # local / heroku
 print(f"deploy mode => {DEPLOY_MODE}")
 
 if DEPLOY_MODE == "local":
@@ -38,7 +38,7 @@ elif DEPLOY_MODE == "heroku":
 
 print("Connected ")
 
-CLIENTS = {}  # entire data map of all client data
+
 CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING = {}
 CLIENT_SOCKET_ID_PARTICIPANT_MAPPING = {}
 
@@ -53,58 +53,46 @@ def get_current_time():
 
 
 @SIO.event
-async def connect(sid, environ):
+def connect(sid, environ, auth):
     print(f"Connected: Socket ID: {sid}")
 
 
 @SIO.event
 def disconnect(sid):
-    try:
+    if sid in CLIENT_SOCKET_ID_PARTICIPANT_MAPPING:
         pid = CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid]
-        CLIENTS[pid]["disconnected_at"] = get_current_time()
-        print(f"Disconnected: Participant ID: {pid} | Socket ID: {sid}")
-    except Exception as e:
-        print(f"Disconnected: Participant ID: unknown | Socket ID: {sid}")
+    else:
+        pid = "unknown"
+    print(f"Disconnected: Participant ID: {pid} | Socket ID: {sid}")
 
 
 @SIO.event
-async def save_session_logs(sid, data):
+async def save_session_log(sid, data):
     try:
-        pid = data["participantId"]  # get participant ID
-        logs = data["logs"]  # session page times
-        if DEPLOY_MODE == "heroku":
-            payload = json.dumps(logs)
-            r.rpush(f"user:{pid}:interactions", payload)
-            r.sadd("users", pid)
-        elif DEPLOY_MODE == "local":
-            dirpath = os.path.join("output", pid)
-            if not os.path.exists(dirpath):
-                os.makedirs(dirpath)
-            filepath = os.path.join(dirpath, f"session_timestamps.csv")
-            pd.DataFrame(logs).to_csv(filepath, index=False)
-            print(f"Saved session logs to file: {filepath}")
+        pid = data["pid"]  # get participant ID
+        log = data["log"]  # session page times
+        payload = json.dumps(log)  # object to JSON
+        r.set(f"user:{pid}:session", payload)
+        r.sadd("users", pid)
     except Exception as e:
         print(e)
 
 
 @SIO.event
-async def save_interaction_logs(sid):
-    if DEPLOY_MODE == "local":
-        try:
-            pid = CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid]
-            interactions = CLIENTS[pid]["response_list"]
-            dirpath = os.path.join("output", pid)
-            if not os.path.exists(dirpath):
-                os.makedirs(dirpath)
-            filepath = os.path.join(dirpath, f"interactions.csv")
-            pd.DataFrame(interactions).to_csv(filepath, index=False)
-            print(f"Saved interaction logs to file: {filepath}")
-        except Exception as e:
-            print(e)
+async def save_selection_log(sid, data):
+    try:
+        pid = data["pid"]  # get participant ID
+        log = data["log"]  # session page times
+        payload = json.dumps(log)  # object to JSON
+        r.rpush(f"user:{pid}:selections", payload)
+        r.sadd("users", pid)
+    except Exception as e:
+        print(e)
 
 
 @SIO.event
 async def on_interaction(sid, data):
+    # Get client PID
     pid = data["participantId"]
 
     # record response to interaction
@@ -117,16 +105,6 @@ async def on_interaction(sid, data):
     #   worst case scenario of random restart of the server.
     CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid] = pid
     CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid
-
-    if pid not in CLIENTS:
-        # new participant => establish data mapping for them!
-        CLIENTS[pid] = {}
-        CLIENTS[pid]["sid"] = sid
-        CLIENTS[pid]["connected_at"] = get_current_time()
-        CLIENTS[pid]["response_list"] = []
-
-    # save response
-    CLIENTS[pid]["response_list"].append(response)
 
     # persist each interaction to redis
     payload = json.dumps(response)

@@ -5,43 +5,47 @@ import { map } from "rxjs/operators";
 
 @Injectable()
 export class ChatService {
-  constructor(private vizSocket: Socket) {}
+  page: any;
 
-  connectToSocket() {
-    this.vizSocket.connect();
+  constructor(private socket: Socket) {
+    this.socket.on("connect", () => {
+      // once connection is established, load the page
+      this.page.socketConnected = true;
+      this.page.socketOnConnect();
+    });
   }
 
-  sendMessageToSaveSessionLogs(data: any, participantId: any) {
-    let payload = {
-      logs: data,
-      participantId: participantId,
-    };
-    this.vizSocket.emit("save_session_logs", payload);
-  }
-
-  sendMessageToSaveLogs() {
-    this.vizSocket.emit("save_interaction_logs");
-  }
-
-  sendInteractionResponse(payload: any) {
-    this.vizSocket.emit("on_interaction", payload);
-  }
-
-  getConnectEventResponse() {
-    return this.vizSocket.fromEvent("connect").pipe(map((obj) => obj));
-  }
-
-  getDisconnectEventResponse() {
-    return this.vizSocket.fromEvent("disconnect").pipe(map((obj) => obj));
-  }
-
-  getInteractionResponse() {
-    return this.vizSocket.fromEvent("interaction_response").pipe(map((obj) => obj));
+  connectToSocket(app: any) {
+    this.page = app; // save reference to page
+    this.socket.connect();
   }
 
   removeAllListenersAndDisconnectFromSocket() {
-    console.log("removeAllListenersAndDisconnectFromSocket");
-    this.vizSocket.removeAllListeners();
-    this.vizSocket.disconnect();
+    this.socket.removeAllListeners();
+    this.socket.disconnect();
+  }
+
+  sendInteractionResponse(payload: any) {
+    this.socket.emit("on_interaction", payload);
+  }
+
+  getInteractionResponse() {
+    return this.socket.fromEvent("interaction_response").pipe(map((data) => data));
+  }
+
+  sendMessageToSaveSessionLog(data: any, pid: any) {
+    let payload = {
+      log: data,
+      pid: pid,
+    };
+    this.socket.emit("save_session_log", payload);
+  }
+
+  sendMessageToSaveSelectionLog(data: any, pid: any) {
+    let payload = {
+      log: data,
+      pid: pid,
+    };
+    this.socket.emit("save_selection_log", payload);
   }
 }
