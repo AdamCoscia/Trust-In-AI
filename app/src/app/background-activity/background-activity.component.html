@@ -1,24 +1,23 @@
 <div class="page-header text-center min-width">
   <h2 *ngIf="unableToLoad">Something went wrong.</h2>
-  <h2 *ngIf="!unableToLoad">Post-Study Questionnaire</h2>
+  <h2 *ngIf="!unableToLoad">Background Questionnaire</h2>
 </div>
 
-<!-- Unable to load the correct appMode -->
 <div *ngIf="unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning text-center">
-        <div>
-          <p>
-            We apologize for the inconvenience. The application has been reset in the middle of the study and cannot
-            continue.
-          </p>
-          <span>
-            Please <strong>contact</strong> Adam Coscia at
-            <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-            to let us know what happened. Please include the approximate time this failure occured.
-          </span>
-        </div>
+        We apologize for the inconvenience. The application may have been refreshed, reset, or navigated in an
+        unauthorized way. The application cannot continue.
+        <br />
+        <br />
+        Please close this page and click on the link provided for this study and start the assignment over from the
+        beginning.
+        <br />
+        <br />
+        If you reach this page multiple times, please contact Adam Coscia at
+        <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+        to let us know what happened and close this page.
       </div>
     </div>
   </div>
@@ -32,7 +31,7 @@
       </div>
 
       <div class="text-center" style="margin-bottom: 1rem">
-        <iframe id="survey" [src]="postSurveyURL" width="100%" [style.height.px]="surveyHeight" frameborder="0"
+        <iframe id="survey" [src]="backgroundSurveyURL" width="100%" [style.height.px]="surveyHeight" frameborder="0"
           marginheight="0" marginwidth="0" (window:resize)="setSurveyHeight($event)"></iframe>
 
         <div *ngIf="!iFrameLoaded" style="width: 90%; margin-left: auto; margin-right: auto; margin-bottom: 2rem">
@@ -44,8 +43,7 @@
                   If this message does not go away, please use this link to take the survey and receive your
                   continuation code:
                 </p>
-                <a [attr.href]="postSurveyURL" target="_blank"
-                  [innerHTML]="appConfig['postSurveyURL'][session.appType]"></a>
+                <a [attr.href]="backgroundSurveyURL" target="_blank" [innerHTML]="appConfig['backgroundSurveyURL']"></a>
               </div>
             </div>
           </div>

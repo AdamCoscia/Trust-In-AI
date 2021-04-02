@@ -1,1 +1,47 @@
-<p>thanks-activity works!</p>
+<div class="page-header text-center min-width">
+  <h2 *ngIf="unableToLoad">Something went wrong.</h2>
+  <h2 *ngIf="!unableToLoad">Thank You!</h2>
+</div>
+
+<!-- Unable to load the correct appMode -->
+<div *ngIf="unableToLoad" class="container h-full min-width">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-warning text-center">
+        <div>
+          <p>
+            We apologize for the inconvenience. The application has been reset in the middle of the study and cannot
+            continue.
+          </p>
+          <span>
+            Please <strong>contact</strong> Adam Coscia at
+            <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+            to let us know what happened. Please include the approximate time this failure occured.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Load the page -->
+<div *ngIf="!unableToLoad" class="container h-full min-width">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-warning text-center">
+        <h2 style="color: red"><strong>BEFORE YOU GO</strong></h2>
+      </div>
+
+      <div class="text-center" style="width: 90%; margin-left: auto; margin-right: auto; margin-bottom: 1rem">
+        <span>
+          Please email the following <strong>unique</strong> completion code Adam Coscia at
+          <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>.
+        </span>
+      </div>
+
+      <div class="alert alert-info text-center">
+        <strong style="color: red">{{ session.participantId }}</strong>
+      </div>
+    </div>
+  </div>
+</div>

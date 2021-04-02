@@ -9,10 +9,11 @@ import { AppComponent } from "./app.component";
 
 import { ConsentActivityComponent } from "./consent-activity/consent-activity.component";
 import { OverviewActivityComponent } from "./overview-activity/overview-activity.component";
+import { BackgroundActivityComponent } from "./background-activity/background-activity.component";
 import { PreSurveyActivityComponent } from "./pre-survey-activity/pre-survey-activity.component";
-import { PostSurveyActivityComponent } from "./post-survey-activity/post-survey-activity.component";
-import { LiveActivityComponent } from "./live-activity/live-activity.component";
 import { TaskActivityComponent } from "./task-activity/task-activity.component";
+import { LiveActivityComponent } from "./live-activity/live-activity.component";
+import { PostSurveyActivityComponent } from "./post-survey-activity/post-survey-activity.component";
 import { ThanksActivityComponent } from "./thanks-activity/thanks-activity.component";
 
 import { HttpErrorHandler } from "./services/http-error-handler.service";
@@ -33,28 +34,31 @@ const config: SocketIoConfig = {
     AppComponent,
     ConsentActivityComponent,
     OverviewActivityComponent,
+    BackgroundActivityComponent,
     PreSurveyActivityComponent,
-    PostSurveyActivityComponent,
-    LiveActivityComponent,
     TaskActivityComponent,
+    LiveActivityComponent,
+    PostSurveyActivityComponent,
     ThanksActivityComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, SocketIoModule.forRoot(config), NgbModule],
   providers: [
-    SessionPage,
     Title,
+    SessionPage,
     Message,
-    LiveActivityComponent,
-    ConsentActivityComponent,
-    TaskActivityComponent,
-    PreSurveyActivityComponent,
-    PostSurveyActivityComponent,
-    OverviewActivityComponent,
-    ThanksActivityComponent,
     HttpErrorHandler,
     MessageService,
     ChatService,
     UtilsService,
+    AppComponent,
+    ConsentActivityComponent,
+    OverviewActivityComponent,
+    BackgroundActivityComponent,
+    PreSurveyActivityComponent,
+    TaskActivityComponent,
+    LiveActivityComponent,
+    PostSurveyActivityComponent,
+    ThanksActivityComponent,
   ],
   bootstrap: [AppComponent],
 })

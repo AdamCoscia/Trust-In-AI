@@ -1,58 +1,51 @@
 // libraries
-import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { Socket } from "ngx-socket-io";
+import { map } from "rxjs/operators";
 
 @Injectable()
 export class ChatService {
-  constructor(private vizSocket: Socket) {}
+  page: any;
 
-  connectToSocket() {
-    this.vizSocket.connect();
+  constructor(private socket: Socket) {
+    this.socket.on("connect", () => {
+      // once connection is established, load the page
+      this.page.socketConnected = true;
+      this.page.socketOnConnect();
+    });
+  }
+
+  connectToSocket(app: any) {
+    this.page = app; // save reference to page
+    this.socket.connect();
   }
 
   removeAllListenersAndDisconnectFromSocket() {
-    this.vizSocket.removeAllListeners();
-    this.vizSocket.disconnect();
-  }
-
-  sendMessageToSaveSessionLogs(data: any, participantId: any) {
-    let payload = {
-      data: data,
-      participantId: participantId,
-    };
-    this.vizSocket.emit('on_session_end_page_level_logs', payload);
-  }
-
-  sendMessageToSaveLogs() {
-    this.vizSocket.emit('on_save_logs', null);
-  }
-
-  sendMessageToRestartBiasComputation() {
-    this.vizSocket.emit('on_reset_bias_computation', null);
+    this.socket.removeAllListeners();
+    this.socket.disconnect();
   }
 
   sendInteractionResponse(payload: any) {
-    this.vizSocket.emit('on_interaction', payload);
-  }
-
-  getDisconnectEventResponse() {
-    return this.vizSocket.fromEvent('disconnect').pipe(map((obj) => obj));
-  }
-
-  getConnectEventResponse() {
-    return this.vizSocket.fromEvent('connect').pipe(map((obj) => obj));
+    this.socket.emit("on_interaction", payload);
   }
 
   getInteractionResponse() {
-    return this.vizSocket
-      .fromEvent('interaction_response')
-      .pipe(map((obj) => obj));
+    return this.socket.fromEvent("interaction_response").pipe(map((data) => data));
   }
 
-  getAttributeDistribution() {
-    return this.vizSocket
-      .fromEvent('attribute_distribution')
-      .pipe(map((obj) => obj));
+  sendMessageToSaveSessionLog(data: any, pid: any) {
+    let payload = {
+      log: data,
+      pid: pid,
+    };
+    this.socket.emit("save_session_log", payload);
+  }
+
+  sendMessageToSaveSelectionLog(data: any, pid: any) {
+    let payload = {
+      log: data,
+      pid: pid,
+    };
+    this.socket.emit("save_selection_log", payload);
   }
 }
