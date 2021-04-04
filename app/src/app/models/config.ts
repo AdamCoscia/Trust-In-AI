@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 // local
 import { UtilsService } from "../services/utils.service";
 import practiceScenarios from "../../assets/practice/scenarios.json";
-import practiceTask from "../../assets/practice/task.json";
 import serviceTask from "../../assets/service/task.json";
 import serviceScenarios from "../../assets/service/scenarios.json";
 import cookingTask from "../../assets/cooking/task.json";
@@ -113,7 +112,6 @@ export const AppConfig: any = {
   practice: {
     dir: "assets/practice",
     cards: [1, 2, 3, 4],
-    task: practiceTask,
     scenarios: practiceScenarios,
   },
   /**

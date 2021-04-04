@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 // local
-import { SessionPage } from "../models/config";
+import { SessionPage, AppConfig } from "../models/config";
 import { UtilsService } from "../services/utils.service";
 
 window.addEventListener("beforeunload", function (e) {
@@ -19,8 +19,10 @@ window.addEventListener("beforeunload", function (e) {
   styleUrls: ["./task-activity.component.scss"],
 })
 export class TaskActivityComponent implements OnInit {
+  appConfig: any;
   capitalize: any;
   unableToLoad: any;
+  assets: any;
 
   constructor(
     public session: SessionPage,
@@ -28,6 +30,7 @@ export class TaskActivityComponent implements OnInit {
     private titleService: Title,
     private utilsService: UtilsService
   ) {
+    this.appConfig = AppConfig; // for use in HTML
     this.capitalize = this.utilsService.capitalize; // for use in the HTML
   }
 
@@ -36,11 +39,13 @@ export class TaskActivityComponent implements OnInit {
     if (this.session.appOrder && this.session.appType) {
       switch (this.session.appMode) {
         case "service":
-          this.unableToLoad = false;
+          this.unableToLoad = false; // load the app!
+          this.assets = this.appConfig.service; // get service assets
           this.titleService.setTitle("Service");
           break;
         case "cooking":
-          this.unableToLoad = false;
+          this.unableToLoad = false; // load the app!
+          this.assets = this.appConfig.cooking; // get service assets
           this.titleService.setTitle("Cooking");
           break;
         case "practice":
