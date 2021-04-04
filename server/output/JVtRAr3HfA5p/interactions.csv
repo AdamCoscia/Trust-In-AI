@@ -1,0 +1,4 @@
+sid,processed_at,inputs
+jGTHk9r0C6OahIFGAAAB,1617558909,"{'appMode': 'practice', 'interactionType': 'test_interaction', 'interactionAt': 1617558909491, 'participantId': 'JVtRAr3HfA5p', 'data': {}}"
+pDNrmzhcOAyCV5IIAAAF,1617559114,"{'appMode': 'service', 'interactionType': 'test_interaction', 'interactionAt': 1617559114863, 'participantId': 'JVtRAr3HfA5p', 'data': {}}"
+aiz0m7a0-ARQ0W07AAAH,1617559117,"{'appMode': 'cooking', 'interactionType': 'test_interaction', 'interactionAt': 1617559117286, 'participantId': 'JVtRAr3HfA5p', 'data': {}}"
