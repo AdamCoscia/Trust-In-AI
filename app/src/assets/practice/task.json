@@ -1,8 +1,3 @@
 {
-  "description": "Hello! You are in charge of hiring for a company. For each task, please review the applicant's materials and decide who to hire to the best of your ability. There will be feedback on some of the choices depending on how well the hirees do.",
-  "control": "TODO",
-  "intervention": "You won't be alone- we have an AI that can look at the applicant's materials and use the company's prior hiring history to give you its recommendation. You're not required to use it though.",
-  "BTWN": "This AI was built using similar technologies behind Siri and Watson.",
-  "WTHN": "This AI is a new version of an existing tool on the market. The users for the original tool rated it highly (4.5/5) and thought it had valuable suggestions.",
-  "BOTH": "This AI was built using similar technologies behind Siri and Watson. This AI is a new version of an existing tool on the market. The users for the original tool rated it highly (4.5/5) and thought it had valuable suggestions."
+  "description": "This is an example of a decision-making task you will be performing during the study."
 }

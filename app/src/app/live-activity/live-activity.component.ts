@@ -27,6 +27,8 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   userConfig: any;
   unableToLoad: any;
   socketConnected: any;
+  assets: any;
+  currentScenario: any;
   taskComplete: any;
 
   constructor(
@@ -42,27 +44,33 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     this.capitalize = this.utilsService.capitalize; // for use in the HTML
   }
 
+  // ========================= INITIALIZATION METHODS ========================
+
   ngOnInit(): void {
     this.session.appMode = "practice"; // temp
     this.session.appType = "CTRL"; // temp
 
     this.unableToLoad = true; // assume unable to load until all parameters can be verified
-    this.taskComplete = false; // when finished, set this to true
     this.socketConnected = false; // hide app HTML until socket connnection is established
+    this.currentScenario = 0; // scenario number => increment by 1
+    this.taskComplete = false; // when finished, set this to true
     if (this.session.appOrder && this.session.appType) {
       switch (this.session.appMode) {
         case "practice":
           this.unableToLoad = false; // load the page!
+          this.assets = this.appConfig.practice; // get practice assets
           this.titleService.setTitle("Practice"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
         case "service":
           this.unableToLoad = false; // load the page!
+          this.assets = this.appConfig.service; // get service assets
           this.titleService.setTitle("Service"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
         case "cooking":
           this.unableToLoad = false; // load the page!
+          this.assets = this.appConfig.cooking; // get cooking assets
           this.titleService.setTitle("Cooking"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
@@ -83,11 +91,36 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   socketOnConnect(): void {
     let app = this;
     // subscribe to interaction responses from the server
-    app.chatService.getInteractionResponse().subscribe((obj) => {
-      console.log("recieved interaction from server");
-      console.log(obj);
-    });
+    app.chatService.getInteractionResponse().subscribe((obj) => {});
+    // send init message to initialize PID in server logs
+    let message = this.utilsService.initializeNewMessage(app);
+    message.interactionType = InteractionTypes.INITIALIZE_APP;
+    app.chatService.sendInteractionResponse(message);
+    // get cards
+    let cards = app.getCards();
+    console.log(cards);
   }
+
+  // =========================== INTERACTION METHODS =========================
+
+  getCards() {
+    return this.assets.scenarios[this.currentScenario].choices.map((cn: any) => ({
+      id: cn,
+      fp: `${this.assets.dir}/cards/${cn}.png`,
+    }));
+  }
+
+  getCardId(id: any) {
+    return `candidate${id}`;
+  }
+
+  onSelectCandidate(event: any, id: any): void {
+    this.taskComplete = true;
+    const currID = this.userConfig.selectedCandidateId;
+    if (currID !== id) this.userConfig.selectedCandidateId = id;
+  }
+
+  // ============================== PAGE METHODS =============================
 
   saveSelections(): void {
     // save a test selections log

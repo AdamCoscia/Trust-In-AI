@@ -22,7 +22,8 @@
             <span>
               Please <strong>contact</strong> Adam Coscia at
               <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-              to let us know what happened. Please include the approximate time this failure occured.
+              to let us know what happened and close this page. Please include the approximate time this failure occured
+              as well.
             </span>
           </div>
         </div>
@@ -91,13 +92,20 @@
               This is an example of a decision-making task you will be performing during the study.
             </div>
             <p>
-              Below are four fictitious profiles of people looking to be hired. Your task is to pick one of the profiles
-              by clicking on the card below.
+              Below are {{ assets.scenarios[currentScenario].choices.length }} fictitious profiles of people looking to
+              be hired. Your task is to pick one of the profiles by clicking on the card below.
             </p>
           </div>
 
           <!-- CARDS -->
-          <div></div>
+          <div class="card-grid text-center">
+            <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
+              [ngClass]="c.id == userConfig.selectedCandidateId ? 'card-selected' : 'card-unselected'"
+              (click)="onSelectCandidate($event, c.id)">
+              <h5 class="card-header">Candidate {{ c.id }}</h5>
+              <img class="img-thumbnail card-image" [src]="c.fp" />
+            </div>
+          </div>
         </div>
       </div>
 
