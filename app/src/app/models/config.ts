@@ -2,6 +2,9 @@
 import { Injectable } from "@angular/core";
 // local
 import { UtilsService } from "../services/utils.service";
+import practiceScenarios from "../../assets/practice/scenario.json";
+import serviceScenarios from "../../assets/service/scenario.json";
+// import cookingScenarios from "../../assets/cooking/scenario.json";
 
 var UtilsServiceObj = new UtilsService();
 var participantId = UtilsServiceObj.generateRandomUniqueString(12);
@@ -68,7 +71,7 @@ export class SessionPage {
 
 export const DeploymentConfig = Object.freeze({
   // SERVER_URL: "https://cs6795-group-project-server.herokuapp.com/",
-  SERVER_URL: "https://localhost:3000",
+  SERVER_URL: "http://localhost:3000",
 });
 
 /**

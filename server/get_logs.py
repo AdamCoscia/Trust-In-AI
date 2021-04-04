@@ -30,6 +30,9 @@ sys.stdout.flush()
 #   if value is of type sorted sets -> ZRANGEBYSCORE <key> <min> <max>
 #
 
+sys.stdout.write(f"\rFetching user data ...")
+sys.stdout.flush()
+
 users = []
 user_logs = {}
 if r.smembers("users"):
@@ -43,12 +46,15 @@ if r.smembers("users"):
         if r.get(f"user:{u}:session"):
             user_logs[u]["session_log"] = (json.loads(r.get(f"user:{u}:session")),)
 
+sys.stdout.write(f"\rFetching user data ... Complete!\n")
+sys.stdout.flush()
 
-print("=== SUMMARY ===\n")
+print("=== SUMMARY ===")
 
 if len(users) == 0:
     print("No users.")
 else:
+    print(f"{len(users)} users' data pulled:\n")
     for pid in users:
         print(pid)
         print("-" * len(pid))

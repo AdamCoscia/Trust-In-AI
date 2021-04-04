@@ -1,5 +1,4 @@
 // global
-import * as $ from "jquery";
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { DomSanitizer, Title } from "@angular/platform-browser";
@@ -36,8 +35,7 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     private chatService: ChatService,
     private message: Message,
     private utilsService: UtilsService,
-    private router: Router,
-    private sanitizer: DomSanitizer
+    private router: Router
   ) {
     this.appConfig = AppConfig; // for use in HTML
     this.userConfig = UserConfig; // for use in HTML
@@ -45,6 +43,9 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.session.appMode = "practice"; // temp
+    this.session.appType = "CTRL"; // temp
+
     this.unableToLoad = true; // assume unable to load until all parameters can be verified
     this.taskComplete = false; // when finished, set this to true
     this.socketConnected = false; // hide app HTML until socket connnection is established
@@ -81,22 +82,14 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
    */
   socketOnConnect(): void {
     let app = this;
-    app.taskComplete = true;
-    console.log("socketOnConnect() => called");
-
     // subscribe to interaction responses from the server
     app.chatService.getInteractionResponse().subscribe((obj) => {
       console.log("recieved interaction from server");
       console.log(obj);
     });
+  }
 
-    // send a test message
-    let message = initializeNewMessage(app);
-    message.interactionType = InteractionTypes.TEST_INTERACTION;
-    console.log(message);
-    console.log("sending interaction to server");
-    this.chatService.sendInteractionResponse(message);
-
+  saveSelections(): void {
     // save a test selections log
     let selections = {
       appMode: this.session.appMode,
@@ -138,19 +131,4 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
       app.router.navigateByUrl("/post-survey");
     }
   }
-}
-
-/**
- * Creates message object to send to server for logging.
- * @param app Application class instance.
- * @returns Message object to populate.
- */
-function initializeNewMessage(app: any) {
-  let message = new Message();
-  (message.appMode = app.session.appMode),
-    (message.interactionType = ""),
-    (message.interactionAt = app.utilsService.getCurrentTime()),
-    (message.participantId = app.session.participantId),
-    (message.data = {});
-  return message;
 }

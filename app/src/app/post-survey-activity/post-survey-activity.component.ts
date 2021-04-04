@@ -1,5 +1,4 @@
 // global
-import * as $ from "jquery";
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { DomSanitizer, Title } from "@angular/platform-browser";
