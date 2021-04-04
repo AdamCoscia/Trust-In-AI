@@ -1,0 +1,63 @@
+[
+  {
+    "answer": 3,
+    "choices": [8, 15, 16, 28],
+    "bot": "Based on her prior experience, I would go with candidate 28."
+  },
+  {
+    "answer": 2,
+    "choices": [1, 4, 5]
+  },
+  {
+    "answer": 1,
+    "choices": [7, 9, 12]
+  },
+  {
+    "answer": 0,
+    "choices": [13, 18, 25]
+  },
+  {
+    "answer": 3,
+    "choices": [32, 35, 36, 48]
+  },
+  {
+    "answer": 2,
+    "choices": [37, 42, 45, 49]
+  },
+  {
+    "answer": 1,
+    "choices": [3, 10, 11]
+  },
+  {
+    "answer": 0,
+    "choices": [20, 24, 26]
+  },
+  {
+    "answer": 0,
+    "choices": [27, 29, 30]
+  },
+  {
+    "answer": 2,
+    "choices": [33, 34, 38]
+  },
+  {
+    "answer": 1,
+    "choices": [39, 43, 44, 50]
+  },
+  {
+    "answer": 1,
+    "choices": [2, 6, 14]
+  },
+  {
+    "answer": 2,
+    "choices": [17, 22, 24]
+  },
+  {
+    "answer": 1,
+    "choices": [31, 46, 47]
+  },
+  {
+    "answer": 3,
+    "choices": [19, 21, 40, 41]
+  }
+]
