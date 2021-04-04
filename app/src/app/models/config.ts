@@ -88,18 +88,18 @@ export const AppConfig: any = {
   continueCode: {
     "background-activity": "qp5mz",
     "pre-survey-activity": "8sb34",
-    "post-survey-activity": "l3h0a",
+    "post-survey-activity": "e3h0a",
   },
   /**
    * URLs for embedded Qualtrics surveys.
    */
-  backgroundSurveyURL: "", // TODO
-  preSurveyURL: "", // TODO
+  backgroundSurveyURL: "https://gatech.co1.qualtrics.com/jfe/form/SV_7OIzFHat7ALsmZo",
+  preSurveyURL: "https://gatech.co1.qualtrics.com/jfe/form/SV_6zdbHRJf6D2NKDA",
   postSurveyURL: {
-    CTRL: "", // TODO
-    WTHN: "", // TODO
-    BTWN: "", // TODO
-    BOTH: "", // TODO
+    CTRL: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
+    WTHN: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
+    BTWN: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
+    BOTH: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
   },
 };
 
