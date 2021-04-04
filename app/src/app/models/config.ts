@@ -2,9 +2,12 @@
 import { Injectable } from "@angular/core";
 // local
 import { UtilsService } from "../services/utils.service";
-import practiceScenarios from "../../assets/practice/scenario.json";
-import serviceScenarios from "../../assets/service/scenario.json";
-// import cookingScenarios from "../../assets/cooking/scenario.json";
+import practiceScenarios from "../../assets/practice/scenarios.json";
+import practiceTask from "../../assets/practice/task.json";
+import serviceTask from "../../assets/service/task.json";
+import serviceScenarios from "../../assets/service/scenarios.json";
+import cookingTask from "../../assets/cooking/task.json";
+import cookingScenarios from "../../assets/cooking/scenarios.json";
 
 var UtilsServiceObj = new UtilsService();
 var participantId = UtilsServiceObj.generateRandomUniqueString(12);
@@ -103,6 +106,84 @@ export const AppConfig: any = {
     WTHN: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
     BTWN: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
     BOTH: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
+  },
+  /**
+   * PRACTICE MODE
+   */
+  practice: {
+    dir: "../../assets/practice/",
+    cards: [1, 2, 3, 4],
+    task: practiceTask,
+    scenarios: practiceScenarios,
+  },
+  /**
+   * SERVICE MODE
+   */
+  service: {
+    dir: "../../assets/service/",
+    cards: [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+    ],
+    task: serviceTask,
+    scenarios: serviceScenarios,
+  },
+  /**
+   * COOKING MODE
+   */
+  cooking: {
+    dir: "../../assets/cooking/",
+    cards: [1, 2, 3, 4],
+    task: cookingTask,
+    scenarios: cookingScenarios,
   },
 };
 
