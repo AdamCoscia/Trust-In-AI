@@ -95,7 +95,7 @@
       <hr />
 
       <!-- User is using a Desktop Device -->
-      <form class="m-b text-center" *ngIf="!usingMobileDevice()">
+      <form *ngIf="!usingMobileDevice()" class="text-center" style="margin-bottom: 15px">
         <p>
           By selecting <strong>Accept</strong>, you indicate that you have read the information in this consent form and
           consent to be in the study.

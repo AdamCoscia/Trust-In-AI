@@ -1,19 +1,8 @@
 input {
-    min-width: 100%;
-    max-width: 100%;
-  }
-  
-  .min-width {
-    min-width: 559px;
-  }
-  
-  .darken {
-    background: linear-gradient(rgba(0, 0, 0, 0.075), rgba(0, 0, 0, 0.075));
-  }
-  
-  .center-all {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
+  min-width: 100%;
+  max-width: 100%;
+}
+
+.min-width {
+  min-width: 559px;
+}

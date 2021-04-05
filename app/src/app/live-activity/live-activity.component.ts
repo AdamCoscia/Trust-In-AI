@@ -91,9 +91,6 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     let message = this.utilsService.initializeNewMessage(app);
     message.interactionType = InteractionTypes.INITIALIZE_APP;
     app.chatService.sendInteractionResponse(message);
-    // get cards
-    let cards = app.getCards();
-    console.log(cards);
   }
 
   // =========================== INTERACTION METHODS =========================
