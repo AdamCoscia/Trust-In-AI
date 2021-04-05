@@ -1,24 +1,45 @@
 {
-  "description": "Hello! You are in charge of hiring for a company.",
+  "description": "Hello! You are in charge of hiring for a fictious company. You will go through multiple rounds of hiring where you will be asked to select a single ficitious candidate that should continue on in the hiring process.",
   "instructions": {
-    "ALL": "For each task, please review the applicant's materials and decide who to hire to the best of your ability. There will be feedback on some of the choices depending on how well the hirees do.",
+    "overview": "For each round, please review each applicant's portfolio. The portfolios have been reduced to metrics that the company cares about. Using these metrics, please decide who to hire to the best of your ability. There will be feedback on some of the choices depending on how the company feels about your choice.",
     "CTRL": "",
-    "BTWN": "You won't be alone - we have an AI that can look at the applicant's materials and use the company's prior hiring history to give you its recommendation. You're not required to use it though.",
-    "WTHN": "You won't be alone - we have an AI that can look at the applicant's materials and use the company's prior hiring history to give you its recommendation. You're not required to use it though.",
-    "BOTH": "You won't be alone - we have an AI that can look at the applicant's materials and use the company's prior hiring history to give you its recommendation. You're not required to use it though."
+    "BTWN": "You won't be alone -- we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation. However, you are not required to use it.",
+    "WTHN": "You won't be alone -- we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation. However, you are not required to use it.",
+    "BOTH": "You won't be alone -- we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation. However, you are not required to use it."
   },
   "reviews": {
-    "ALL": [""],
-    "CTRL": [""],
-    "BTWN": ["This AI was built using similar technologies behind Siri and Watson."],
-    "WTHN": [
-      "This AI is a new version of an existing tool on the market.",
-      "The users for the original tool rated it highly (4.5/5) and thought it had valuable suggestions."
+    "overview": "These reviews were collected to provide more information about the AI we chose to include in this study. Potentially identifiable information has been anonymized to protect privacy. We hope these reviews help you in your decision-making process.",
+    "BTWN": [
+      {
+        "type": "company",
+        "author": "'AI Monthly' Magazine",
+        "date": "02/05/2021",
+        "location": "Sacramento, CA",
+        "body": "This AI was built using similar technologies behind Siri and Watson."
+      },
+      {
+        "type": "company",
+        "author": "ai.powered.io",
+        "date": "03/14/2021",
+        "location": "",
+        "body": "This AI is ... a complete upgrade to similar tools on the market."
+      }
     ],
-    "BOTH": [
-      "This AI was built using similar technologies behind Siri and Watson.",
-      "This AI is a new version of an existing tool on the market.",
-      "The users for the original tool rated it highly (4.5/5) and thought it had valuable suggestions."
+    "WTHN": [
+      {
+        "type": "user",
+        "author": "Mary M.",
+        "date": "10/15/2020",
+        "job": "Hiring Manager",
+        "body": "I couldn't imagine doing my job without it."
+      },
+      {
+        "type": "user",
+        "author": "Kaley R.",
+        "date": "09/23/2020",
+        "job": "Software Developer",
+        "body": "I'm impressed by how well it can predict great candidates. Very powerful!"
+      }
     ]
   }
 }

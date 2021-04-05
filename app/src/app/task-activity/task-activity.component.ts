@@ -36,16 +36,15 @@ export class TaskActivityComponent implements OnInit {
 
   ngOnInit(): void {
     this.unableToLoad = true; // assume unable to load until all parameters can be verified
+    this.assets = this.appConfig[this.session.appMode]; // get task assets
     if (this.session.appOrder && this.session.appType) {
       switch (this.session.appMode) {
         case "service":
           this.unableToLoad = false; // load the app!
-          this.assets = this.appConfig.service; // get service assets
           this.titleService.setTitle("Service");
           break;
         case "cooking":
           this.unableToLoad = false; // load the app!
-          this.assets = this.appConfig.cooking; // get service assets
           this.titleService.setTitle("Cooking");
           break;
         case "practice":
@@ -58,6 +57,23 @@ export class TaskActivityComponent implements OnInit {
     } else {
       this.titleService.setTitle("Error");
     }
+  }
+
+  getReviews() {
+    // collect reviews
+    let allReviews = this.assets.task.reviews;
+    let reviews = [];
+    if (this.session.appType == "BOTH") {
+      reviews = [...allReviews["BTWN"], ...allReviews["WTHN"]];
+    } else {
+      reviews = allReviews[this.session.appType];
+    }
+    // randomly sort them
+    for (let i = reviews.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [reviews[i], reviews[j]] = [reviews[j], reviews[i]];
+    }
+    return reviews;
   }
 
   next() {

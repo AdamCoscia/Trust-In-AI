@@ -4,7 +4,7 @@
 </div>
 
 <!-- Unable to load the correct appMode -->
-<div *ngIf="unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
+<div *ngIf="unableToLoad" class="container h-full min-width">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning text-center">
@@ -25,37 +25,73 @@
   </div>
 </div>
 
-<!-- SERVICE TASK -->
-<div *ngIf="!unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
+<!-- Load the task description, instructions and possible reviews -->
+<div *ngIf="!unableToLoad" class="container h-full min-width">
   <div *ngIf="session.appMode == 'service'" class="row">
     <div class="col-md-12">
-      <p>{{assets.task.description}}</p>
+      <!-- DESCRIPTION -->
+      <div>
+        <p>{{ assets.task.description }}</p>
+      </div>
 
-      <h5 class="text-center">Your Task</h5>
+      <!-- INSTRUCTIONS -->
+      <div>
+        <!-- HEADER -->
+        <h5 class="text-center">Your Task</h5>
+        <!-- BODY -->
+        <div class="alert alert-info">
+          <!-- OVERVIEW -->
+          <div>
+            {{ assets.task.instructions.overview }}
+          </div>
+          <!-- CONDITION-SPECIFIC -->
+          <div *ngIf="assets.task.instructions[session.appType]">
+            <br />
+            {{ assets.task.instructions[session.appType] }}
+          </div>
+        </div>
+      </div>
 
-      <div class="alert alert-info">Instructions</div>
-    </div>
-  </div>
-
-  <!-- COOKING TASK -->
-  <div *ngIf="session.appMode == 'cooking'" class="row">
-    <div class="col-md-12">
-      <p>Cooking Task Description</p>
-
-      <h5 class="text-center">Your Task</h5>
-
-      <div class="alert alert-info">Instructions</div>
+      <!-- REVIEWS (Intervention ONLY) -->
+      <div *ngIf="['BTWN', 'WTHN', 'BOTH'].indexOf(session.appType) !== -1">
+        <!-- HEADER -->
+        <h5 class="text-center">Reviews</h5>
+        <!-- BODY -->
+        <div>
+          <!-- OVERVIEW -->
+          <div class="alert">
+            {{ assets.task.reviews.overview }}
+          </div>
+          <!-- CARDS -->
+          <div class="card-grid text-center">
+            <div *ngFor="let r of getReviews()" class="card">
+              <h5 class="card-header">{{ r.author }}</h5>
+              <div class="card-body">
+                <p>
+                  <span>{{ r.date }}</span>
+                  <br />
+                  <span *ngIf="r.type == 'company'">{{ r.location }}</span>
+                  <span *ngIf="r.type == 'user'">{{ r.job }}</span>
+                </p>
+                <p>
+                  <i>"{{ r.body }}"</i>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <hr />
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col">
       <h5 class="text-center">Ready?</h5>
       <div class="alert alert-warning">
         <div class="row flex-nowrap">
-          <div class="col-md-11 text-center center-all">
+          <div class="col-10 text-center center-all">
             <span>
               Please complete the entire study in one session. Do not press the <strong>back</strong> or
               <strong>forward</strong> buttons, or <strong>refresh</strong> any pages in the application, until you have
@@ -63,7 +99,7 @@
               right to continue!
             </span>
           </div>
-          <div class="col-md-1 center-all">
+          <div class="col-2 center-all">
             <button (click)="next()" class="btn btn-sm btn-outline-dark">Begin Task</button>
           </div>
         </div>

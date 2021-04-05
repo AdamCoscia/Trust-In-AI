@@ -47,30 +47,25 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   // ========================= INITIALIZATION METHODS ========================
 
   ngOnInit(): void {
-    this.session.appMode = "practice"; // temp
-    this.session.appType = "CTRL"; // temp
-
     this.unableToLoad = true; // assume unable to load until all parameters can be verified
     this.socketConnected = false; // hide app HTML until socket connnection is established
     this.currentScenario = 0; // scenario number => increment by 1
     this.taskComplete = false; // when finished, set this to true
+    this.assets = this.appConfig[this.session.appMode]; // get task assets
     if (this.session.appOrder && this.session.appType) {
       switch (this.session.appMode) {
         case "practice":
           this.unableToLoad = false; // load the page!
-          this.assets = this.appConfig.practice; // get practice assets
           this.titleService.setTitle("Practice"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
         case "service":
           this.unableToLoad = false; // load the page!
-          this.assets = this.appConfig.service; // get service assets
           this.titleService.setTitle("Service"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
         case "cooking":
           this.unableToLoad = false; // load the page!
-          this.assets = this.appConfig.cooking; // get cooking assets
           this.titleService.setTitle("Cooking"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
