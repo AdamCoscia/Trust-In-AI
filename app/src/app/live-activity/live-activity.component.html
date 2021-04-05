@@ -19,12 +19,12 @@
               We apologize for the inconvenience. The application has been reset in the middle of the study and cannot
               continue.
             </p>
-            <span>
+            <p>
               Please <strong>contact</strong> Adam Coscia at
               <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-              to let us know what happened and close this page. Please include the approximate time this failure occured
-              as well.
-            </span>
+              to let us know what happened.
+            </p>
+            <span>Please include the approximate time this failure occured.</span>
           </div>
         </div>
       </div>
@@ -56,11 +56,12 @@
           <div class="alert alert-warning text-center">
             <p>Please <strong>DO NOT</strong> refresh the page during this process.</p>
             <p><strong>Note: This may take 2-3 minutes, depending on your internet connection speed.</strong></p>
-            <span>
+            <p>
               If the application does not load after 3 minutes, please <strong>contact</strong> Adam Coscia at
               <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-              to let us know what happened. Please include the approximate time this failure occured.
-            </span>
+              to let us know what happened.
+            </p>
+            <span>Please include the approximate time this failure occured.</span>
           </div>
         </div>
       </div>
@@ -114,8 +115,9 @@
 
           <!-- INSTRUCTIONS: LIVE -->
           <div *ngIf="session.appMode !== 'practice'">
-            <div class="alert alert-info">
-              Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} candidates below.
+            <div class="alert alert-info text-center">
+              <strong>Task {{ currentScenario + 1 }}&nbsp;/&nbsp;{{ assets.scenarios.length }}:&nbsp;</strong>
+              <i>Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} candidates below.</i>
             </div>
           </div>
 

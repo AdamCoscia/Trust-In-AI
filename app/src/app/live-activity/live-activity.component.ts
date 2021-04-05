@@ -1,9 +1,8 @@
 // global
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { DomSanitizer, Title } from "@angular/platform-browser";
+import { Title } from "@angular/platform-browser";
 // local
-import { Message } from "../models/message";
 import { ChatService } from "../services/socket.service";
 import { UtilsService } from "../services/utils.service";
 import { SessionPage, AppConfig, InteractionTypes, UserConfig } from "../models/config";
@@ -37,7 +36,6 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     public session: SessionPage,
     private titleService: Title,
     private chatService: ChatService,
-    private message: Message,
     private utilsService: UtilsService,
     private router: Router
   ) {
@@ -55,9 +53,8 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     this.loadingRecommendation = false; // shows loading symbol while fetching recommendation
     this.hideRecommendation = true; // keep recommendation hidden until user asks for it
     this.taskComplete = false; // when finished, set this to true
-    this.assets = this.appConfig[this.session.appMode]; // get task assets
-    this.userConfig[this.session.appMode].appType = this.session.appType; // set appType in user config
     if (this.session.appOrder && this.session.appType) {
+      this.userConfig[this.session.appMode].appType = this.session.appType; // set appType in user config
       switch (this.session.appMode) {
         case "practice":
           this.unableToLoad = false; // load the page!
@@ -90,10 +87,12 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
    */
   socketOnConnect(): void {
     let app = this;
+    // get assets from appConfig
+    app.assets = app.appConfig[app.session.appMode]; // get task assets
     // subscribe to interaction responses from the server
     app.chatService.getInteractionResponse().subscribe((obj) => {});
     // send init message to initialize PID in server logs
-    let message = this.utilsService.initializeNewMessage(app);
+    let message = app.utilsService.initializeNewMessage(app);
     message.interactionType = InteractionTypes.INITIALIZE_APP;
     app.chatService.sendInteractionResponse(message);
   }
@@ -126,8 +125,10 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
    * @param id Card id
    */
   onSelectCandidate(event: any, id: any): void {
-    const currID = this.userConfig.selectedCandidateId;
-    if (currID !== id) this.userConfig.selectedCandidateId = id;
+    if (!this.taskComplete) {
+      const currID = this.userConfig.selectedCandidateId;
+      if (currID !== id) this.userConfig.selectedCandidateId = id;
+    }
   }
 
   /**
@@ -140,7 +141,7 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     setTimeout(function () {
       app.loadingRecommendation = false; // hide loading icon
       app.hideRecommendation = false; // show recommendation
-    }, Math.floor(Math.random() * (5 - 2) + 2 * 1000));
+    }, Math.floor(Math.random() * (3.8 - 1.3) + 1.3 * 1000));
   }
 
   // ============================== PAGE METHODS =============================
@@ -173,7 +174,10 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
    */
   next() {
     let app = this;
-    // disconnect from socket
+    // send app closed message, save selection logs, and disconnect
+    let message = app.utilsService.initializeNewMessage(app);
+    message.interactionType = InteractionTypes.CLOSE_APP;
+    app.chatService.sendInteractionResponse(message);
     app.chatService.sendMessageToSaveSelectionLog(app.userConfig[app.session.appMode], app.session.participantId);
     app.chatService.removeAllListenersAndDisconnectFromSocket();
     // Record page complete timestamp
