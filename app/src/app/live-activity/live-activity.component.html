@@ -112,14 +112,44 @@
       <!-- SERVICE TASK -->
       <div *ngIf="session.appMode == 'service'" class="row">
         <div class="col-md-12">
-          <p>Service Task - Coming Soon</p>
+          <!-- INSTRUCTIONS -->
+          <div>
+            <div class="alert alert-info">
+              Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} candidates below.
+            </div>
+          </div>
+
+          <!-- CARDS -->
+          <div class="card-grid text-center">
+            <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
+              [ngClass]="c.id == userConfig.selectedCandidateId ? 'card-selected' : 'card-unselected'"
+              (click)="onSelectCandidate($event, c.id)">
+              <h5 class="card-header">Candidate {{ c.id }}</h5>
+              <img class="img-thumbnail card-image" [src]="c.fp" />
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- COOKING TASK -->
       <div *ngIf="session.appMode == 'cooking'" class="row">
         <div class="col-md-12">
-          <p>Cooking Task - Coming Soon</p>
+          <!-- INSTRUCTIONS -->
+          <div>
+            <div class="alert alert-info">
+              Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} candidates below.
+            </div>
+          </div>
+
+          <!-- CARDS -->
+          <div class="card-grid text-center">
+            <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
+              [ngClass]="c.id == userConfig.selectedCandidateId ? 'card-selected' : 'card-unselected'"
+              (click)="onSelectCandidate($event, c.id)">
+              <h5 class="card-header">Candidate {{ c.id }}</h5>
+              <img class="img-thumbnail card-image" [src]="c.fp" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
