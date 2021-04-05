@@ -3,16 +3,16 @@
   <!-- HEADER -->
   <div class="container page-header min-width">
     <div class="row">
-      <div class="col-md-12 text-center">
+      <div class="col text-center">
         <h2>Something went wrong.</h2>
       </div>
     </div>
   </div>
 
   <!-- BODY -->
-  <div class="container  min-width">
+  <div class="container min-width">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col">
         <div class="alert alert-warning text-center">
           <div>
             <p>
@@ -39,16 +39,16 @@
     <!-- HEADER -->
     <div class="container page-header text-center min-width">
       <div class="row">
-        <div class="col-md-12 text-center">
+        <div class="col text-center">
           <h2>Connecting...</h2>
         </div>
       </div>
     </div>
 
     <!-- BODY -->
-    <div class="container  min-width">
+    <div class="container min-width">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col">
           <div class="alert alert-info text-center">
             Please wait while the application establishes a connection to our server...
           </div>
@@ -82,66 +82,80 @@
     </div>
 
     <!-- BODY -->
-    <div class="container  min-width">
-      <!-- PRACTICE TASK -->
-      <div *ngIf="session.appMode == 'practice'" class="row">
-        <div class="col-md-12">
-          <!-- INSTRUCTIONS -->
-          <div>
+    <div class="container min-width">
+      <div class="row">
+        <div class="col">
+          <!-- INSTRUCTIONS: PRACTICE -->
+          <div *ngIf="session.appMode == 'practice'">
             <div class="alert alert-info">
               This is an example of a decision-making task you will be performing during the study.
             </div>
-            <p>
-              Below are {{ assets.scenarios[currentScenario].choices.length }} fictitious profiles of people looking to
-              be hired. Your task is to pick one of the profiles by clicking on the card below.
-            </p>
+
+            <ul>
+              <li>
+                Below are {{ assets.scenarios[currentScenario].choices.length }} portfolios of ficitious people. Your
+                task is to pick the <strong>best</strong> portfolio by clicking on the card below.
+              </li>
+              <li>
+                You can optionally choose to get a <strong>recommendation</strong> from our AI by clicking the
+                <i>"Recommend"</i> button.
+              </li>
+              <li>
+                When you are comfortable with your candidate selection, click the <i>"Save"</i> button. During the
+                actual tasks, clicking save will bring up another round of portfolios as the task requires. For now,
+                only one round will be presented.
+              </li>
+              <li>
+                Once your selection during the final round of portfolios has been saved, the <i>"Finish"</i> button in
+                the top-right corner will become active, allowing you to move on to the next task.
+              </li>
+            </ul>
           </div>
 
-          <!-- CARDS -->
-          <div class="card-grid text-center">
-            <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
-              [ngClass]="c.id == userConfig.selectedCandidateId ? 'card-selected' : 'card-unselected'"
-              (click)="onSelectCandidate($event, c.id)">
-              <h5 class="card-header">Candidate {{ c.id }}</h5>
-              <img class="img-thumbnail card-image" [src]="c.fp" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SERVICE TASK -->
-      <div *ngIf="session.appMode == 'service'" class="row">
-        <div class="col-md-12">
-          <!-- INSTRUCTIONS -->
-          <div>
+          <!-- INSTRUCTIONS: LIVE -->
+          <div *ngIf="session.appMode !== 'practice'">
             <div class="alert alert-info">
               Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} candidates below.
             </div>
           </div>
 
-          <!-- CARDS -->
-          <div class="card-grid text-center">
-            <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
-              [ngClass]="c.id == userConfig.selectedCandidateId ? 'card-selected' : 'card-unselected'"
-              (click)="onSelectCandidate($event, c.id)">
-              <h5 class="card-header">Candidate {{ c.id }}</h5>
-              <img class="img-thumbnail card-image" [src]="c.fp" />
+          <!-- OPTIONS -->
+          <div class="alert alert-warning">
+            <div class="row">
+              <!-- LEFT COL: RECOMMENDATION -->
+              <div class="col-6 center-all text-center" style="border-right: 1px solid lightgrey">
+                <div class="col-8 center-all text-center"><strong>Recommend a candidate:</strong></div>
+                <div class="col-4 center-all">
+                  <button [disabled]="!hideRecommendation || taskComplete" (click)="getRecommendation()"
+                    class="btn btn-sm btn-outline-dark">
+                    Recommend
+                  </button>
+                </div>
+              </div>
+              <!-- RIGHT COL: SAVE SELECTION -->
+              <div class="col-6 center-all text-center" style="border-left: 1px solid lightgrey">
+                <div class="col-8 center-all text-center"><strong>Save selected candidate:</strong></div>
+                <div class="col-4 center-all">
+                  <button [disabled]="!userConfig.selectedCandidateId || taskComplete" (click)="saveSelection()"
+                    class="btn btn-sm btn-outline-dark">
+                    {{ taskComplete ? "Saved" : "Save" }}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- COOKING TASK -->
-      <div *ngIf="session.appMode == 'cooking'" class="row">
-        <div class="col-md-12">
-          <!-- INSTRUCTIONS -->
-          <div>
-            <div class="alert alert-info">
-              Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} candidates below.
+          <!-- RECOMMENDATION -->
+          <div *ngIf="loadingRecommendation" class="alert alert-info text-center" style="margin-bottom: 0">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
             </div>
           </div>
+          <div *ngIf="!hideRecommendation" class="alert alert-info text-center" style="margin-bottom: 0">
+            <strong>AI recommendation:&nbsp;</strong><i>"{{ assets.scenarios[currentScenario].bot }}"</i>
+          </div>
 
-          <!-- CARDS -->
+          <!-- SELECTIONS -->
           <div class="card-grid text-center">
             <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
               [ngClass]="c.id == userConfig.selectedCandidateId ? 'card-selected' : 'card-unselected'"

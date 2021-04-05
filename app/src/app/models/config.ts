@@ -141,4 +141,31 @@ export const AppConfig: any = {
  */
 export var UserConfig: any = {
   selectedCandidateId: "",
+  /**
+   * PRACTICE MODE
+   */
+  practice: {
+    participantId: participantId,
+    appMode: "practice",
+    appType: "",
+    selections: [],
+  },
+  /**
+   * SERVICE MODE
+   */
+  service: {
+    participantId: participantId,
+    appMode: "service",
+    appType: "",
+    selections: [],
+  },
+  /**
+   * COOKING MODE
+   */
+  cooking: {
+    participantId: participantId,
+    appMode: "cooking",
+    appType: "",
+    selections: [],
+  },
 };

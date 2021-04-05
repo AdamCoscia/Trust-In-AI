@@ -70,6 +70,8 @@ def disconnect(sid):
 async def save_session_log(sid, data):
     try:
         pid = data["pid"]  # get participant ID
+        CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid] = pid  # update pid reference
+        CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid  # update sid reference
         log = data["log"]  # session page times
         payload = json.dumps(log)  # object to JSON
         r.set(f"user:{pid}:session", payload)
@@ -82,7 +84,9 @@ async def save_session_log(sid, data):
 async def save_selection_log(sid, data):
     try:
         pid = data["pid"]  # get participant ID
-        log = data["log"]  # session page times
+        CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid] = pid  # update pid reference
+        CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid  # update sid reference
+        log = data["log"]  # selections for appMode
         payload = json.dumps(log)  # object to JSON
         r.rpush(f"user:{pid}:selections", payload)
         r.sadd("users", pid)

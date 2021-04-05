@@ -29,6 +29,8 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   socketConnected: any;
   assets: any;
   currentScenario: any;
+  loadingRecommendation: any;
+  hideRecommendation: any;
   taskComplete: any;
 
   constructor(
@@ -50,8 +52,11 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     this.unableToLoad = true; // assume unable to load until all parameters can be verified
     this.socketConnected = false; // hide app HTML until socket connnection is established
     this.currentScenario = 0; // scenario number => increment by 1
+    this.loadingRecommendation = false; // shows loading symbol while fetching recommendation
+    this.hideRecommendation = true; // keep recommendation hidden until user asks for it
     this.taskComplete = false; // when finished, set this to true
     this.assets = this.appConfig[this.session.appMode]; // get task assets
+    this.userConfig[this.session.appMode].appType = this.session.appType; // set appType in user config
     if (this.session.appOrder && this.session.appType) {
       switch (this.session.appMode) {
         case "practice":
@@ -93,8 +98,10 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     app.chatService.sendInteractionResponse(message);
   }
 
-  // =========================== INTERACTION METHODS =========================
-
+  /**
+   * Get card filenames and filepaths to populate cards on page.
+   * @returns List of card id/fp objects
+   */
   getCards() {
     return this.assets.scenarios[this.currentScenario].choices.map((cn: any) => ({
       id: cn,
@@ -102,25 +109,63 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     }));
   }
 
+  /**
+   * Gets formatted string for card element.
+   * @param id Card id
+   * @returns String containing id for card element.
+   */
   getCardId(id: any) {
     return `candidate${id}`;
   }
 
+  // =========================== INTERACTION METHODS =========================
+
+  /**
+   * Updates user config with currently selected candidate id.
+   * @param event Event object
+   * @param id Card id
+   */
   onSelectCandidate(event: any, id: any): void {
-    this.taskComplete = true;
     const currID = this.userConfig.selectedCandidateId;
     if (currID !== id) this.userConfig.selectedCandidateId = id;
   }
 
+  /**
+   * Load recommendation element.
+   */
+  getRecommendation(): void {
+    let app = this;
+    app.loadingRecommendation = true; // show loading icon
+    // show recommendation after 3-5 seconds, randomly
+    setTimeout(function () {
+      app.loadingRecommendation = false; // hide loading icon
+      app.hideRecommendation = false; // show recommendation
+    }, Math.floor(Math.random() * (5 - 2) + 2 * 1000));
+  }
+
   // ============================== PAGE METHODS =============================
 
-  saveSelections(): void {
+  /**
+   * Saves selection to user config and prepares next scenario.
+   */
+  saveSelection(): void {
+    let app = this;
     // save a test selections log
-    let selections = {
-      appMode: this.session.appMode,
-      t1: ["p1", this.utilsService.getCurrentTime()],
-    };
-    this.chatService.sendMessageToSaveSelectionLog(selections, this.session.participantId);
+    app.userConfig[app.session.appMode].selections.push({
+      idSelected: app.userConfig.selectedCandidateId,
+      botChoice: app.assets.scenarios[app.currentScenario].answer,
+      recommendationShown: !app.hideRecommendation,
+      savedAt: app.utilsService.getCurrentTime(),
+    });
+    // reset current selection
+    app.userConfig.selectedCandidateId = "";
+    // check for next scenario
+    if (app.currentScenario == app.assets.scenarios.length - 1) {
+      app.taskComplete = true; // last scenario reached => enable Finish button
+    } else {
+      app.hideRecommendation = true; // hide recommendation again
+      app.currentScenario++; // increment scenario
+    }
   }
 
   /**
@@ -129,6 +174,7 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   next() {
     let app = this;
     // disconnect from socket
+    app.chatService.sendMessageToSaveSelectionLog(app.userConfig[app.session.appMode], app.session.participantId);
     app.chatService.removeAllListenersAndDisconnectFromSocket();
     // Record page complete timestamp
     switch (app.session.appMode) {
