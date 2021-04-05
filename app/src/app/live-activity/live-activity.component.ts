@@ -151,17 +151,18 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
    */
   saveSelection(): void {
     let app = this;
+    const scenarios = app.assets.scenarios;
     // save a test selections log
     app.userConfig[app.session.appMode].selections.push({
       idSelected: app.userConfig.selectedCandidateId,
-      botChoice: app.assets.scenarios[app.currentScenario].answer,
+      botChoice: scenarios[app.currentScenario].choices[scenarios[app.currentScenario].answer],
       recommendationShown: !app.hideRecommendation,
       savedAt: app.utilsService.getCurrentTime(),
     });
     // reset current selection
     app.userConfig.selectedCandidateId = "";
     // check for next scenario
-    if (app.currentScenario == app.assets.scenarios.length - 1) {
+    if (app.currentScenario == scenarios.length - 1) {
       app.taskComplete = true; // last scenario reached => enable Finish button
     } else {
       app.hideRecommendation = true; // hide recommendation again
