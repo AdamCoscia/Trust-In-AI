@@ -5,13 +5,12 @@ import os
 import time
 import urllib.parse as urlparse
 
-import pandas as pd
 import redis
 import socketio
 from aiohttp import web
 from aiohttp_index import IndexMiddleware
 
-DEPLOY_MODE = "local"  # local / heroku
+DEPLOY_MODE = "heroku"  # local / heroku
 print(f"deploy mode => {DEPLOY_MODE}")
 
 if DEPLOY_MODE == "local":
