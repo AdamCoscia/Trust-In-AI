@@ -4,7 +4,7 @@
 </div>
 
 <!-- Unable to load the correct appMode -->
-<div *ngIf="unableToLoad" class="container h-full min-width">
+<div *ngIf="unableToLoad" class="container min-width">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning text-center">
@@ -26,9 +26,9 @@
 </div>
 
 <!-- Load the task description, instructions and possible reviews -->
-<div *ngIf="!unableToLoad" class="container h-full min-width">
-  <div *ngIf="session.appMode == 'service'" class="row">
-    <div class="col-md-12">
+<div *ngIf="!unableToLoad" class="container min-width">
+  <div class="row">
+    <div class="col">
       <!-- DESCRIPTION -->
       <div>
         <p>{{ assets.task.description }}</p>
@@ -38,12 +38,12 @@
       <div>
         <!-- HEADER -->
         <h5 class="text-center">Your Task</h5>
-        <!-- BODY -->
+
+        <!-- CONTENT -->
         <div class="alert alert-info">
           <!-- OVERVIEW -->
-          <div>
-            {{ assets.task.instructions.overview }}
-          </div>
+          <div>{{ assets.task.instructions.overview }}</div>
+
           <!-- CONDITION-SPECIFIC -->
           <div *ngIf="assets.task.instructions[session.appType]">
             <br />
@@ -56,12 +56,12 @@
       <div *ngIf="['BTWN', 'WTHN', 'BOTH'].indexOf(session.appType) !== -1">
         <!-- HEADER -->
         <h5 class="text-center">Reviews</h5>
-        <!-- BODY -->
+
+        <!-- CONTENT -->
         <div>
           <!-- OVERVIEW -->
-          <div class="alert">
-            {{ assets.task.reviews.overview }}
-          </div>
+          <div class="alert">{{ assets.task.reviews.overview }}</div>
+
           <!-- CARDS -->
           <div class="card-grid text-center">
             <div *ngFor="let r of getReviews()" class="card">
@@ -81,26 +81,28 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <hr />
+      <hr />
 
-  <div class="row">
-    <div class="col">
-      <h5 class="text-center">Ready?</h5>
-      <div class="alert alert-warning">
-        <div class="row flex-nowrap">
-          <div class="col-10 col-md-11 text-center center-all">
-            <span>
-              Please complete the entire study in one session. Do not press the <strong>back</strong> or
-              <strong>forward</strong> buttons, or <strong>refresh</strong> any pages in the application, until you have
-              reached the 'Thank You' page at the end of the study. Click the <strong>Begin Task</strong> button at
-              right to continue!
-            </span>
-          </div>
-          <div class="col-2 col-md-1 center-all">
-            <button (click)="next()" class="btn btn-sm btn-outline-dark">Begin Task</button>
+      <!-- READY -->
+      <div class="container">
+        <!-- HEADER -->
+        <h5 class="text-center">Ready?</h5>
+
+        <!-- CONTENT -->
+        <div class="alert alert-warning">
+          <div class="row flex-nowrap">
+            <div class="col-10 col-md-11 text-center center-all">
+              <span>
+                Please complete the entire study in one session. Do not press the <strong>back</strong> or
+                <strong>forward</strong> buttons, or <strong>refresh</strong> any pages in the application, until you
+                have reached the 'Thank You' page at the end of the study. Click the <strong>Begin Task</strong> button
+                at right to continue!
+              </span>
+            </div>
+            <div class="col-2 col-md-1 center-all">
+              <button (click)="next()" class="btn btn-sm btn-outline-dark">Begin Task</button>
+            </div>
           </div>
         </div>
       </div>
