@@ -34,10 +34,10 @@ export class ConsentActivityComponent implements OnInit {
     if (this.route.snapshot.queryParams.hasOwnProperty("p1")) {
       switch (this.route.snapshot.queryParams["p1"]) {
         case "95u":
-          this.session.appOrder = ["practice", "service", "cooking"];
+          this.session.appOrder = ["practice", "hiring", "movies"];
           break;
         case "iq0":
-          this.session.appOrder = ["practice", "cooking", "service"];
+          this.session.appOrder = ["practice", "movies", "hiring"];
           break;
       }
       // Check for and set appType

@@ -1,0 +1,59 @@
+{
+  "description": "Hello! You are in charge of hiring for a fictious company. You will go through multiple rounds of hiring where you will be asked to select a single ficitious candidate that should continue on in the hiring process.",
+  "instructions": {
+    "overview": "For each round, please review each applicant's portfolio. The portfolios have been reduced to metrics that the company cares about. Using these metrics, please decide who should continue in the hiring process to the best of your ability. There will be feedback on some of the choices depending on how the company feels about your choice.",
+    "CTRL": "",
+    "BTWN": "You won't be alone -- we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation.",
+    "WTHN": "You won't be alone -- we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation.",
+    "BOTH": "You won't be alone -- we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation."
+  },
+  "reviews": {
+    "overview": "These reviews were collected to provide more information about the AI we chose to include in this study. Potentially identifiable information has been anonymized to protect privacy. We hope these reviews help you in your decision-making process.",
+    "BTWN": [
+      {
+        "type": "company",
+        "author": "'AI Monthly' Magazine",
+        "format": "Article",
+        "date": "02/05/2021",
+        "body": "This AI was built using similar technologies behind Siri and Watson."
+      },
+      {
+        "type": "company",
+        "author": "ai.powered.io",
+        "format": "Blog Post",
+        "date": "03/14/2021",
+        "body": "This AI is ... a complete upgrade to similar tools on the market."
+      },
+      {
+        "type": "company",
+        "author": "businessnewsonthedaily.com",
+        "format": "Article",
+        "date": "06/17/2020",
+        "body": "This is a great cognitive tool like the Watson Jeapordy player AI ... it understands what people look for."
+      }
+    ],
+    "WTHN": [
+      {
+        "type": "user",
+        "author": "Mary M.",
+        "job": "Hiring Manager",
+        "date": "10/15/2020",
+        "body": "I couldn't imagine doing my job without it."
+      },
+      {
+        "type": "user",
+        "author": "Kaley R.",
+        "job": "Software Developer",
+        "date": "09/23/2020",
+        "body": "I'm impressed by how well it can predict great candidates. Very powerful!"
+      },
+      {
+        "type": "user",
+        "author": "Sofie A.",
+        "job": "Hiring Manager",
+        "date": "01/13/2021",
+        "body": "It was really helpful when I was stuck between certain choices ... Definitely saved me some time."
+      }
+    ]
+  }
+}

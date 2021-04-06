@@ -39,13 +39,13 @@ export class TaskActivityComponent implements OnInit {
     this.assets = this.appConfig[this.session.appMode]; // get task assets
     if (this.session.appOrder && this.session.appType) {
       switch (this.session.appMode) {
-        case "service":
+        case "hiring":
           this.unableToLoad = false; // load the app!
-          this.titleService.setTitle("Service");
+          this.titleService.setTitle("hiring");
           break;
-        case "cooking":
+        case "movies":
           this.unableToLoad = false; // load the app!
-          this.titleService.setTitle("Cooking");
+          this.titleService.setTitle("movies");
           break;
         case "practice":
           this.titleService.setTitle("Error");
@@ -78,13 +78,13 @@ export class TaskActivityComponent implements OnInit {
 
   next() {
     switch (this.session.appMode) {
-      case "service":
-        this.session.task_service.complete(new Date().getTime());
-        this.router.navigateByUrl("/live-service");
+      case "hiring":
+        this.session.task_hiring.complete(new Date().getTime());
+        this.router.navigateByUrl("/live-hiring");
         break;
-      case "cooking":
-        this.session.task_cooking.complete(new Date().getTime());
-        this.router.navigateByUrl("/live-cooking");
+      case "movies":
+        this.session.task_movies.complete(new Date().getTime());
+        this.router.navigateByUrl("/live-movies");
         break;
     }
   }

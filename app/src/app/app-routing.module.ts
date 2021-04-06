@@ -18,12 +18,12 @@ const routes: Routes = [
   // appMode == "practice"
   { path: "live-practice", component: LiveActivityComponent },
   { path: "pre-survey", component: PreSurveyActivityComponent },
-  // appMode == "service"
-  { path: "task-service", component: TaskActivityComponent },
-  { path: "live-service", component: LiveActivityComponent },
-  // appMode == "cooking"
-  { path: "task-cooking", component: TaskActivityComponent },
-  { path: "live-cooking", component: LiveActivityComponent },
+  // appMode == "hiring"
+  { path: "task-hiring", component: TaskActivityComponent },
+  { path: "live-hiring", component: LiveActivityComponent },
+  // appMode == "movies"
+  { path: "task-movies", component: TaskActivityComponent },
+  { path: "live-movies", component: LiveActivityComponent },
   { path: "post-survey", component: PostSurveyActivityComponent },
   { path: "thanks", component: ThanksActivityComponent },
 ];

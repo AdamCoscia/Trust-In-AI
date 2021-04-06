@@ -1,7 +1,0 @@
-sid,processed_at,inputs
-4Un-QpzNu4XAMs6IAAAB,1617648794,"{'appMode': 'practice', 'interactionType': 'init_app', 'interactionAt': 1617648794315, 'participantId': 'rcSDqbgcUzJp', 'data': {}}"
-4Un-QpzNu4XAMs6IAAAB,1617648880,"{'appMode': 'practice', 'interactionType': 'close_app', 'interactionAt': 1617648880332, 'participantId': 'rcSDqbgcUzJp', 'data': {}}"
-C9dW0S7X0l2TwaPcAAAD,1617648896,"{'appMode': 'service', 'interactionType': 'init_app', 'interactionAt': 1617648896014, 'participantId': 'rcSDqbgcUzJp', 'data': {}}"
-C9dW0S7X0l2TwaPcAAAD,1617649021,"{'appMode': 'service', 'interactionType': 'close_app', 'interactionAt': 1617649020734, 'participantId': 'rcSDqbgcUzJp', 'data': {}}"
-ThECypmdEBeKzcQ_AAAF,1617649027,"{'appMode': 'cooking', 'interactionType': 'init_app', 'interactionAt': 1617649026958, 'participantId': 'rcSDqbgcUzJp', 'data': {}}"
-ThECypmdEBeKzcQ_AAAF,1617649037,"{'appMode': 'cooking', 'interactionType': 'close_app', 'interactionAt': 1617649037204, 'participantId': 'rcSDqbgcUzJp', 'data': {}}"

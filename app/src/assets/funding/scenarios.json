@@ -1,0 +1,77 @@
+[
+    {
+        "answer": 3,
+        "choices": [17, 19, 41, 23],
+        "bot": "I suggest going with proposal 2."
+    },
+    {
+        "answer": 1,
+        "choices": [13, 41, 24, 11],
+        "bot": "I suggest going with proposal 1."
+    },
+    {
+        "answer": 1,
+        "choices": [27, 29, 24, 44],
+        "bot": "I suggest going with proposal 0."
+    },
+    {
+        "answer": 1,
+        "choices": [4, 18, 11, 40],
+        "bot": "I suggest going with proposal 0."
+    },
+    {
+        "answer": 3,
+        "choices": [20, 11, 25, 2],
+        "bot": "I suggest going with proposal 0."
+    },
+    {
+        "answer": 3,
+        "choices": [41, 9, 45, 44],
+        "bot": "I suggest going with proposal 1."
+    },
+    {
+        "answer": 0,
+        "choices": [29, 40, 38, 37],
+        "bot": "I suggest going with proposal 1."
+    },
+    {
+        "answer": 1,
+        "choices": [35, 25, 3, 33],
+        "bot": "I suggest going with proposal 1."
+    },
+    {
+        "answer": 2,
+        "choices": [29, 35, 30, 19],
+        "bot": "I suggest going with proposal 0."
+    },
+    {
+        "answer": 3,
+        "choices": [2, 13, 30, 29],
+        "bot": "I suggest going with proposal 1."
+    },
+    {
+        "answer": 2,
+        "choices": [34, 33, 12, 5],
+        "bot": "I suggest going with proposal 1."
+    },
+    {
+        "answer": 2,
+        "choices": [20, 10, 31, 28],
+        "bot": "I suggest going with proposal 1."
+    },
+    {
+        "answer": 3,
+        "choices": [4, 39, 47, 35],
+        "bot": "I suggest going with proposal 1."
+    },
+    {
+        "answer": 2,
+        "choices": [38, 50, 28, 24],
+        "bot": "I suggest going with proposal 3."
+    },
+    {
+        "answer": 1,
+        "choices": [3, 36, 50, 14],
+        "bot": "I suggest going with proposal 0."
+    }
+]

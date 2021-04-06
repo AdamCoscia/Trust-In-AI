@@ -1,0 +1,1 @@
+Below are descriptions for three grocery stores. Your task is to predict which grocery store will have the most value for customers.

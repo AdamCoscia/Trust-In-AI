@@ -61,14 +61,14 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
           this.titleService.setTitle("Practice"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
-        case "service":
+        case "hiring":
           this.unableToLoad = false; // load the page!
-          this.titleService.setTitle("Service"); // set the page title
+          this.titleService.setTitle("hiring"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
-        case "cooking":
+        case "movies":
           this.unableToLoad = false; // load the page!
-          this.titleService.setTitle("Cooking"); // set the page title
+          this.titleService.setTitle("movies"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
         default:
@@ -186,11 +186,11 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
       case "practice":
         app.session.live_practice.complete(new Date().getTime());
         break;
-      case "service":
-        app.session.live_service.complete(new Date().getTime());
+      case "hiring":
+        app.session.live_hiring.complete(new Date().getTime());
         break;
-      case "cooking":
-        app.session.live_cooking.complete(new Date().getTime());
+      case "movies":
+        app.session.live_movies.complete(new Date().getTime());
         break;
     }
     // Move on to the next page

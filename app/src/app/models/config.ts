@@ -3,10 +3,10 @@ import { Injectable } from "@angular/core";
 // local
 import { UtilsService } from "../services/utils.service";
 import practiceScenarios from "../../assets/practice/scenarios.json";
-import serviceTask from "../../assets/service/task.json";
-import serviceScenarios from "../../assets/service/scenarios.json";
-import cookingTask from "../../assets/cooking/task.json";
-import cookingScenarios from "../../assets/cooking/scenarios.json";
+import hiringTask from "../../assets/service/task.json";
+import hiringScenarios from "../../assets/service/scenarios.json";
+import moviesTask from "../../assets/movies/task.json";
+import moviesScenarios from "../../assets/movies/scenarios.json";
 
 var UtilsServiceObj = new UtilsService();
 var participantId = UtilsServiceObj.generateRandomUniqueString(12);
@@ -41,10 +41,10 @@ export class SessionPage {
   background: any;
   live_practice: any;
   presurvey: any;
-  task_service: any;
-  live_service: any;
-  task_cooking: any;
-  live_cooking: any;
+  task_hiring: any;
+  live_hiring: any;
+  task_movies: any;
+  live_movies: any;
   postsurvey: any;
   thanks: any;
 
@@ -52,7 +52,7 @@ export class SessionPage {
     // ids
     this.participantId = participantId; // 12 character long unique identifier
     // conditions
-    this.appOrder = []; // Order of Tasks, e.g., {practice, service, cooking}
+    this.appOrder = []; // Order of Tasks, e.g., {practice, hiring, movies}
     this.appType = ""; // Condition {CTRL, WTHN, BTWN, BOTH}
     // states
     this.appMode = ""; // Current Task
@@ -62,10 +62,10 @@ export class SessionPage {
     this.background = new PageRecord();
     this.live_practice = new PageRecord();
     this.presurvey = new PageRecord();
-    this.task_service = new PageRecord();
-    this.live_service = new PageRecord();
-    this.task_cooking = new PageRecord();
-    this.live_cooking = new PageRecord();
+    this.task_hiring = new PageRecord();
+    this.live_hiring = new PageRecord();
+    this.task_movies = new PageRecord();
+    this.live_movies = new PageRecord();
     this.postsurvey = new PageRecord();
     this.thanks = new PageRecord();
   }
@@ -116,24 +116,24 @@ export const AppConfig: any = {
     scenarios: practiceScenarios,
   },
   /**
-   * SERVICE MODE
+   * hiring MODE
    */
-  service: {
-    dir: "assets/service",
+  hiring: {
+    dir: "assets/hiring",
     cards: Array.apply(null, Array(50)).map(function (_, i) {
       return i + 1;
     }),
-    task: serviceTask,
-    scenarios: serviceScenarios,
+    task: hiringTask,
+    scenarios: hiringScenarios,
   },
   /**
-   * COOKING MODE
+   * movies MODE
    */
-  cooking: {
-    dir: "assets/cooking",
+  movies: {
+    dir: "assets/movies",
     cards: [1, 2, 3, 4],
-    task: cookingTask,
-    scenarios: cookingScenarios,
+    task: moviesTask,
+    scenarios: moviesScenarios,
   },
 };
 
@@ -152,20 +152,20 @@ export var UserConfig: any = {
     selections: [],
   },
   /**
-   * SERVICE MODE
+   * hiring MODE
    */
-  service: {
+  hiring: {
     participantId: participantId,
-    appMode: "service",
+    appMode: "hiring",
     appType: "",
     selections: [],
   },
   /**
-   * COOKING MODE
+   * movies MODE
    */
-  cooking: {
+  movies: {
     participantId: participantId,
-    appMode: "cooking",
+    appMode: "movies",
     appType: "",
     selections: [],
   },

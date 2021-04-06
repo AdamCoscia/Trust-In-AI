@@ -1,7 +1,7 @@
 [
   {
-    "answer": 2,
-    "choices": [1, 2, 3, 4],
-    "bot": "Based on their portfolio, I would go with candidate 3."
+    "answer": 1,
+    "choices": [1, 2, 3],
+    "bot": "Based on this information, I would go with grocery store 2."
   }
 ]
