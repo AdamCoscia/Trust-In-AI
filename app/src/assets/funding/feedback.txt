@@ -1,5 +1,0 @@
-{
-    4: "Looks like your first picks weren't the strongest... Could you maybe review your criteria?",
-    9: "Hmm this strategy isn't working either, the manager is really upset with your performance.",
-    12: "I don't know what you changed, but these recent choices have been homeruns! Great job!"
-}
