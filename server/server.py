@@ -56,8 +56,8 @@ def connect(sid, environ, auth):
     if sid in CLIENT_SOCKET_ID_PARTICIPANT_MAPPING:
         pid = CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid]
     else:
-        pid = "unknown"
-    print(f"Connected: Participant ID: {pid} | Socket ID: {sid}")
+        pid = "unknown     "
+    print(f"Connected:    Participant ID: {pid} | Socket ID: {sid}")
 
 
 @SIO.event
@@ -65,7 +65,7 @@ def disconnect(sid):
     if sid in CLIENT_SOCKET_ID_PARTICIPANT_MAPPING:
         pid = CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid]
     else:
-        pid = "unknown"
+        pid = "unknown     "
     print(f"Disconnected: Participant ID: {pid} | Socket ID: {sid}")
 
 

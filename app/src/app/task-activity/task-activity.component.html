@@ -41,23 +41,21 @@
 
         <!-- CONTENT -->
         <div class="alert alert-info">
-          <!-- OVERVIEW -->
-          <div>{{ assets.task.instructions.overview }}</div>
+          <!-- ALL CONDITIONS -->
+          <p>{{ assets.task.instructions.overview }}</p>
 
           <!-- CONDITION-SPECIFIC -->
-          <ng-container *ngIf="assets.task.instructions[session.appType]">
-            <br />
+          <p>{{ assets.task.instructions[session.appType] }}</p>
 
-            <div>{{ assets.task.instructions[session.appType] }}</div>
+          <!-- Intervention ONLY -->
+          <p *ngIf="['BTWN', 'WTHN', 'BOTH'].indexOf(session.appType) !== -1">
+            Below are a set of reviews about the AI we chose to include in the study. These reviews were collected to
+            provide more information about the AI. Potentially identifiable information from these reviews has been
+            anonymized to protect privacy. We hope these reviews help you in your decision-making process.
+          </p>
 
-            <br />
-
-            <div>
-              Below are a set of reviews about the AI we chose to include in the study. These reviews were collected to
-              provide more information about the AI. Potentially identifiable information from these reviews has been
-              anonymized to protect privacy. We hope these reviews help you in your decision-making process.
-            </div>
-          </ng-container>
+          <!-- ALL CONDITIONS -->
+          <span>However, you are not required to use the AI at any point during the task.</span>
         </div>
       </div>
 
