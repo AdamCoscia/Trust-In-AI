@@ -126,8 +126,15 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
    */
   onSelectCard(event: any, id: any): void {
     if (!this.taskComplete) {
-      const currID = this.userConfig.selectedId;
-      if (currID !== id) this.userConfig.selectedId = id;
+      let app = this;
+      // set selected ID in user config
+      app.userConfig.selectedId = id;
+      // send card clicked message
+      let message = app.utilsService.initializeNewMessage(app);
+      message.interactionType = InteractionTypes.CARD_CLICKED;
+      message.currentScenario = app.currentScenario;
+      message.selectedId = app.userConfig.selectedId;
+      app.chatService.sendInteractionResponse(message);
     }
   }
 
@@ -136,15 +143,20 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
    */
   getRecommendation(): void {
     let app = this;
-    app.loadingRecommendation = true; // show loading icon
+    // send selection saved interaction message
+    let message = app.utilsService.initializeNewMessage(app);
+    message.interactionType = InteractionTypes.GET_RECOMMENDATION;
+    message.currentScenario = app.currentScenario;
+    message.selectedId = app.userConfig.selectedId;
+    app.chatService.sendInteractionResponse(message);
+    // show loading icon
+    app.loadingRecommendation = true;
     // show recommendation after 3-5 seconds, randomly
     setTimeout(function () {
       app.loadingRecommendation = false; // hide loading icon
       app.hideRecommendation = false; // show recommendation
     }, Math.floor(Math.random() * (3.8 - 1.3) + 1.3 * 1000));
   }
-
-  // ============================== PAGE METHODS =============================
 
   /**
    * Saves selection to user config and prepares next scenario.
@@ -159,6 +171,12 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
       recommendationShown: !app.hideRecommendation,
       savedAt: app.utilsService.getCurrentTime(),
     });
+    // send selection saved interaction message
+    let message = app.utilsService.initializeNewMessage(app);
+    message.interactionType = InteractionTypes.SAVE_SELECTION;
+    message.currentScenario = app.currentScenario;
+    message.selectedId = app.userConfig.selectedId;
+    app.chatService.sendInteractionResponse(message);
     // reset current selection
     app.userConfig.selectedId = "";
     // check for next scenario
@@ -170,16 +188,20 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // ============================== PAGE METHODS =============================
+
   /**
    * Moves the application to the next page.
    */
   next() {
     let app = this;
-    // send app closed message, save selection logs, and disconnect
+    // send app closed message
     let message = app.utilsService.initializeNewMessage(app);
     message.interactionType = InteractionTypes.CLOSE_APP;
     app.chatService.sendInteractionResponse(message);
+    // save selection logs
     app.chatService.sendMessageToSaveSelectionLog(app.userConfig[app.session.appMode], app.session.participantId);
+    // disconnect from socket
     app.chatService.removeAllListenersAndDisconnectFromSocket();
     // Record page complete timestamp
     switch (app.session.appMode) {

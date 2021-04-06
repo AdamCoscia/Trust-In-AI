@@ -43,11 +43,12 @@ export class UtilsService {
    */
   initializeNewMessage(app: any) {
     let message = new Message();
-    (message.appMode = app.session.appMode),
-      (message.interactionType = ""),
+    (message.participantId = app.session.participantId),
+      (message.appMode = app.session.appMode),
       (message.interactionAt = app.utilsService.getCurrentTime()),
-      (message.participantId = app.session.participantId),
-      (message.data = {});
+      (message.interactionType = ""),
+      (message.currentScenario = -1),
+      (message.selectedId = -1);
     return message;
   }
 }

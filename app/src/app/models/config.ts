@@ -81,6 +81,9 @@ export const DeploymentConfig = Object.freeze({
  */
 export const enum InteractionTypes {
   INITIALIZE_APP = "init_app",
+  CARD_CLICKED = "card_clicked",
+  GET_RECOMMENDATION = "get_recommendation",
+  SAVE_SELECTION = "save_selection",
   CLOSE_APP = "close_app",
 }
 
