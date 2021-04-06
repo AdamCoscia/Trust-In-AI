@@ -134,8 +134,8 @@
                   <strong>Recommend a {{ assets.title }}:</strong>
                 </div>
                 <div class="col-4 center-all">
-                  <button [disabled]="!hideRecommendation || taskComplete" (click)="getRecommendation()"
-                    class="btn btn-sm btn-outline-dark">
+                  <button [disabled]="loadingRecommendation || !hideRecommendation || taskComplete"
+                    (click)="getRecommendation()" class="btn btn-sm btn-outline-dark">
                     Recommend
                   </button>
                 </div>
