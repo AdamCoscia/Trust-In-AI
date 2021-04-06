@@ -99,12 +99,12 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
 
   /**
    * Get card filenames and filepaths to populate cards on page.
-   * @returns List of card id/fp objects
+   * @returns List of card objects
    */
   getCards() {
     return this.assets.scenarios[this.currentScenario].choices.map((cn: any) => ({
       id: cn,
-      fp: `${this.assets.dir}/cards/${cn}.png`,
+      filepath: `${this.assets.dir}/cards/${cn}.png`,
     }));
   }
 
@@ -114,20 +114,20 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
    * @returns String containing id for card element.
    */
   getCardId(id: any) {
-    return `candidate${id}`;
+    return `card${id}`;
   }
 
   // =========================== INTERACTION METHODS =========================
 
   /**
-   * Updates user config with currently selected candidate id.
+   * Updates user config with currently selected id.
    * @param event Event object
    * @param id Card id
    */
-  onSelectCandidate(event: any, id: any): void {
+  onSelectCard(event: any, id: any): void {
     if (!this.taskComplete) {
-      const currID = this.userConfig.selectedCandidateId;
-      if (currID !== id) this.userConfig.selectedCandidateId = id;
+      const currID = this.userConfig.selectedId;
+      if (currID !== id) this.userConfig.selectedId = id;
     }
   }
 
@@ -154,13 +154,13 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     const scenarios = app.assets.scenarios;
     // save a test selections log
     app.userConfig[app.session.appMode].selections.push({
-      idSelected: app.userConfig.selectedCandidateId,
+      idSelected: app.userConfig.selectedId,
       botChoice: scenarios[app.currentScenario].choices[scenarios[app.currentScenario].answer],
       recommendationShown: !app.hideRecommendation,
       savedAt: app.utilsService.getCurrentTime(),
     });
     // reset current selection
-    app.userConfig.selectedCandidateId = "";
+    app.userConfig.selectedId = "";
     // check for next scenario
     if (app.currentScenario == scenarios.length - 1) {
       app.taskComplete = true; // last scenario reached => enable Finish button

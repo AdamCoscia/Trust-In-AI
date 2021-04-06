@@ -2,6 +2,6 @@
   {
     "answer": 1,
     "choices": [1, 2, 3],
-    "bot": "Based on this information, I would go with grocery store 2."
+    "bot": "Based on their metrics, I would go with grocery store 2."
   }
 ]

@@ -10,7 +10,7 @@ import socketio
 from aiohttp import web
 from aiohttp_index import IndexMiddleware
 
-DEPLOY_MODE = "heroku"  # local / heroku
+DEPLOY_MODE = "local"  # local / heroku
 print(f"deploy mode => {DEPLOY_MODE}")
 
 if DEPLOY_MODE == "local":
@@ -53,7 +53,11 @@ def get_current_time():
 
 @SIO.event
 def connect(sid, environ, auth):
-    print(f"Connected: Socket ID: {sid}")
+    if sid in CLIENT_SOCKET_ID_PARTICIPANT_MAPPING:
+        pid = CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid]
+    else:
+        pid = "unknown"
+    print(f"Connected: Participant ID: {pid} | Socket ID: {sid}")
 
 
 @SIO.event

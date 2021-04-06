@@ -94,21 +94,21 @@
 
             <ul>
               <li>
-                Below are {{ assets.scenarios[currentScenario].choices.length }} portfolios of ficitious people. Your
-                task is to pick the <strong>best</strong> portfolio by clicking on the card below.
+                Below are performance metrics for {{ assets.scenarios[currentScenario].choices.length }} grocery stores.
+                Your task is to choose what you feel is the <strong>best</strong> grocery store based on these metrics.
               </li>
               <li>
                 You can optionally choose to get a <strong>recommendation</strong> from our AI by clicking the
                 <i>"Recommend"</i> button.
               </li>
               <li>
-                When you are comfortable with your candidate selection, click the <i>"Save"</i> button. During the
-                actual tasks, clicking save will bring up another round of portfolios as the task requires. For now,
-                only one round will be presented.
+                When you are comfortable with your selection, click the <i>"Save"</i> button. During the real tasks,
+                clicking the <i>"Save"</i> button will bring up another round as the task requires. For now, only one
+                round will be presented.
               </li>
               <li>
-                Once your selection during the final round of portfolios has been saved, the <i>"Finish"</i> button in
-                the top-right corner will become active, allowing you to move on to the next task.
+                Once your selection during the final round has been saved, the <i>"Finish"</i> button in the top-right
+                corner will become active, allowing you to move on to the next task.
               </li>
             </ul>
           </div>
@@ -117,7 +117,7 @@
           <div *ngIf="session.appMode !== 'practice'">
             <div class="alert alert-info text-center">
               <strong>Task {{ currentScenario + 1 }}&nbsp;/&nbsp;{{ assets.scenarios.length }}:&nbsp;</strong>
-              <i>Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} candidates below.</i>
+              <i>Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} {{}}s below.</i>
             </div>
           </div>
 
@@ -126,7 +126,9 @@
             <div class="row">
               <!-- LEFT COL: RECOMMENDATION -->
               <div class="col-6 center-all text-center" style="border-right: 1px solid lightgrey">
-                <div class="col-8 center-all text-center"><strong>Recommend a candidate:</strong></div>
+                <div class="col-8 center-all text-center">
+                  <strong>Recommend a {{ assets.title }}:</strong>
+                </div>
                 <div class="col-4 center-all">
                   <button [disabled]="!hideRecommendation || taskComplete" (click)="getRecommendation()"
                     class="btn btn-sm btn-outline-dark">
@@ -136,9 +138,11 @@
               </div>
               <!-- RIGHT COL: SAVE SELECTION -->
               <div class="col-6 center-all text-center" style="border-left: 1px solid lightgrey">
-                <div class="col-8 center-all text-center"><strong>Save selected candidate:</strong></div>
+                <div class="col-8 center-all text-center">
+                  <strong>Save selected {{ assets.title }}:</strong>
+                </div>
                 <div class="col-4 center-all">
-                  <button [disabled]="!userConfig.selectedCandidateId || taskComplete" (click)="saveSelection()"
+                  <button [disabled]="!userConfig.selectedId || taskComplete" (click)="saveSelection()"
                     class="btn btn-sm btn-outline-dark">
                     {{ taskComplete ? "Saved" : "Save" }}
                   </button>
@@ -160,10 +164,10 @@
           <!-- SELECTIONS -->
           <div class="card-grid text-center">
             <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
-              [ngClass]="c.id == userConfig.selectedCandidateId ? 'card-selected' : 'card-unselected'"
-              (click)="onSelectCandidate($event, c.id)">
-              <h5 class="card-header">Candidate {{ c.id }}</h5>
-              <img class="img-thumbnail card-image" [src]="c.fp" />
+              [ngClass]="c.id == userConfig.selectedId ? 'card-selected' : 'card-unselected'"
+              (click)="onSelectCard($event, c.id)">
+              <h5 class="card-header">{{ capitalize(assets.title) }}&nbsp;{{ c.id }}</h5>
+              <img class="img-thumbnail card-image" [src]="c.filepath" />
             </div>
           </div>
         </div>

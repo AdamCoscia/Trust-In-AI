@@ -3,8 +3,8 @@ import { Injectable } from "@angular/core";
 // local
 import { UtilsService } from "../services/utils.service";
 import practiceScenarios from "../../assets/practice/scenarios.json";
-import hiringTask from "../../assets/service/task.json";
-import hiringScenarios from "../../assets/service/scenarios.json";
+import hiringTask from "../../assets/hiring/task.json";
+import hiringScenarios from "../../assets/hiring/scenarios.json";
 import moviesTask from "../../assets/movies/task.json";
 import moviesScenarios from "../../assets/movies/scenarios.json";
 
@@ -72,8 +72,8 @@ export class SessionPage {
 }
 
 export const DeploymentConfig = Object.freeze({
-  SERVER_URL: "https://cs6795-group-project-server.herokuapp.com/",
-  // SERVER_URL: "http://localhost:3000",
+  // SERVER_URL: "https://cs6795-group-project-server.herokuapp.com/",
+  SERVER_URL: "http://localhost:3000",
 });
 
 /**
@@ -112,8 +112,9 @@ export const AppConfig: any = {
    */
   practice: {
     dir: "assets/practice",
-    cards: [1, 2, 3, 4],
+    cards: [1, 2, 3],
     scenarios: practiceScenarios,
+    title: "Grocery Store",
   },
   /**
    * hiring MODE
@@ -125,15 +126,19 @@ export const AppConfig: any = {
     }),
     task: hiringTask,
     scenarios: hiringScenarios,
+    title: "candidate",
   },
   /**
    * movies MODE
    */
   movies: {
     dir: "assets/movies",
-    cards: [1, 2, 3, 4],
+    cards: Array.apply(null, Array(50)).map(function (_, i) {
+      return i + 1;
+    }),
     task: moviesTask,
     scenarios: moviesScenarios,
+    title: "movie",
   },
 };
 
@@ -141,7 +146,7 @@ export const AppConfig: any = {
  * USER-SPECIFIC SETTINGS
  */
 export var UserConfig: any = {
-  selectedCandidateId: "",
+  selectedId: "",
   /**
    * PRACTICE MODE
    */

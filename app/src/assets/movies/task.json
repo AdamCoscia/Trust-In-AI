@@ -1,14 +1,14 @@
 {
-  "description": "Hi! You have been hired to select movies that will be shown at your local cinema. You will go through multiple rounds of selection where you will be asked to select a single movie out of a set of choices to be added to the cinema's catalog",
+  "description": "Hi! You have been hired to select movies that will be shown at your local cinema. You will go through multiple rounds of selection where you will be asked to select a single movie out of a set of choices to be added to the cinema's catalog.",
   "instructions": {
-    "overview": "For each round, please review each movie's characteristics. These characteristics are the indicators that the cinema believes indicate whether a movie will be popular and turn a profit. Using the provided information, please decide which movies should be included in the catalog to the best of your ability. There will be feedback on some of the choices depending on how the owner feels about your choice.",
+    "overview": "For each round, please review each movie's characteristics. These characteristics are the indicators that the cinema believes predict whether a movie will be popular and turn a profit. Using the provided information, please decide which movies should be included in the catalog to the best of your ability. There will be feedback on some of the choices depending on how the owner of the cinema feels about your choice.",
     "CTRL": "",
     "BTWN": "You won't be alone -- we have provided an AI assistant that has been trained to look at a movie's characteristics and use the cinema's past catalogs and their success level to give you its recommendation.",
     "WTHN": "You won't be alone -- we have provided an AI assistant that has been trained to look at a movie's characteristics and use the cinema's past catalogs and their success level to give you its recommendation.",
     "BOTH": "You won't be alone -- we have provided an AI assistant that has been trained to look at a movie's characteristics and use the cinema's past catalogs and their success level to give you its recommendation."
   },
   "reviews": {
-    "description": "These reviews were collected to provide more information about the AI we chose to include in this study. Potentially identifiable information has been anonymized to protect privacy. We hope these reviews help you in your decision-making process.",
+    "overview": "These reviews were collected to provide more information about the AI we chose to include in this study. Potentially identifiable information has been anonymized to protect privacy. We hope these reviews help you in your decision-making process.",
     "BTWN": [
       {
         "type": "company",
@@ -19,19 +19,18 @@
       },
       {
         "type": "company",
-        "author": "'Technology Now' Magazine",
+        "author": "'Tech Now' E-Zine",
         "date": "08/31/2020",
-        "format": "Article",
-        "body": "This assistant really proves the great things AI is capable of."
+        "format": "Newsletter",
+        "body": "This 'assistant', like Google Maps, really shows the great things AI tools are capable of."
       },
       {
         "type": "company",
-        "author": "thebusinessreviewsite.com",
+        "author": "bizreview.org",
         "date": "01/23/2020",
-        "format": "Review",
-        "body": "Sometimes it feels like this AI knows people better than people do."
+        "format": "Product Review",
+        "body": "Sometimes it feels like this AI knows movies better than people do ... watch out, Hulu!"
       }
-
     ],
     "WTHN": [
       {
@@ -45,7 +44,7 @@
         "type": "user",
         "author": "Helen T.",
         "date": "11/12/2020",
-        "job": "Software Developer",
+        "job": "Investor",
         "body": "I didn't expect it to be so effective!"
       },
       {
