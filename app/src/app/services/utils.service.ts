@@ -48,7 +48,8 @@ export class UtilsService {
       (message.interactionAt = app.utilsService.getCurrentTime()),
       (message.interactionType = ""),
       (message.currentScenario = -1),
-      (message.selectedId = -1);
+      (message.selectedId = -1),
+      (message.recommendationShown = false);
     return message;
   }
 }

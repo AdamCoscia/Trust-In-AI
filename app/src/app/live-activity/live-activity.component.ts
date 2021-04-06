@@ -134,6 +134,7 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
       message.interactionType = InteractionTypes.CARD_CLICKED;
       message.currentScenario = app.currentScenario;
       message.selectedId = app.userConfig.selectedId;
+      message.recommendationShown = !app.hideRecommendation;
       app.chatService.sendInteractionResponse(message);
     }
   }
@@ -143,18 +144,19 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
    */
   getRecommendation(): void {
     let app = this;
-    // send selection saved interaction message
-    let message = app.utilsService.initializeNewMessage(app);
-    message.interactionType = InteractionTypes.GET_RECOMMENDATION;
-    message.currentScenario = app.currentScenario;
-    message.selectedId = app.userConfig.selectedId;
-    app.chatService.sendInteractionResponse(message);
     // show loading icon
     app.loadingRecommendation = true;
     // show recommendation after 3-5 seconds, randomly
     setTimeout(function () {
       app.loadingRecommendation = false; // hide loading icon
       app.hideRecommendation = false; // show recommendation
+      // send recommendation shown interaction message
+      let message = app.utilsService.initializeNewMessage(app);
+      message.interactionType = InteractionTypes.GET_RECOMMENDATION;
+      message.currentScenario = app.currentScenario;
+      message.selectedId = app.userConfig.selectedId;
+      message.recommendationShown = !app.hideRecommendation;
+      app.chatService.sendInteractionResponse(message);
     }, Math.floor(Math.random() * (3.8 - 1.3) + 1.3 * 1000));
   }
 
@@ -166,7 +168,7 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     const scenarios = app.assets.scenarios;
     // save a test selections log
     app.userConfig[app.session.appMode].selections.push({
-      idSelected: app.userConfig.selectedId,
+      selectedId: app.userConfig.selectedId,
       botChoice: scenarios[app.currentScenario].choices[scenarios[app.currentScenario].answer],
       recommendationShown: !app.hideRecommendation,
       savedAt: app.utilsService.getCurrentTime(),
@@ -176,6 +178,7 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     message.interactionType = InteractionTypes.SAVE_SELECTION;
     message.currentScenario = app.currentScenario;
     message.selectedId = app.userConfig.selectedId;
+    message.recommendationShown = !app.hideRecommendation;
     app.chatService.sendInteractionResponse(message);
     // reset current selection
     app.userConfig.selectedId = "";

@@ -5,4 +5,5 @@ export class Message {
   interactionType!: string;
   currentScenario!: number;
   selectedId!: number;
+  recommendationShown!: boolean;
 }
