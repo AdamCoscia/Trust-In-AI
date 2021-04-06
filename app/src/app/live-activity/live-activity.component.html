@@ -94,8 +94,9 @@
 
             <ul>
               <li>
-                Below are performance metrics for {{ assets.scenarios[currentScenario].choices.length }} grocery stores.
-                Your task is to choose what you feel is the <strong>best</strong> grocery store based on these metrics.
+                Below are performance metrics for {{ assets.scenarios[currentScenario].choices.length }} fictitious
+                grocery stores. Your task is to choose what you feel is the <strong>best</strong> grocery store based on
+                these metrics.
               </li>
               <li>
                 You can optionally choose to get a <strong>recommendation</strong> from our AI by clicking the
@@ -117,7 +118,10 @@
           <div *ngIf="session.appMode !== 'practice'">
             <div class="alert alert-info text-center">
               <strong>Task {{ currentScenario + 1 }}&nbsp;/&nbsp;{{ assets.scenarios.length }}:&nbsp;</strong>
-              <i>Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} {{}}s below.</i>
+              <i>
+                Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} {{ assets.title }}s
+                below.
+              </i>
             </div>
           </div>
 

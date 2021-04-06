@@ -41,11 +41,11 @@ export class TaskActivityComponent implements OnInit {
       switch (this.session.appMode) {
         case "hiring":
           this.unableToLoad = false; // load the app!
-          this.titleService.setTitle("hiring");
+          this.titleService.setTitle("Hiring");
           break;
         case "movies":
           this.unableToLoad = false; // load the app!
-          this.titleService.setTitle("movies");
+          this.titleService.setTitle("Movies");
           break;
         case "practice":
           this.titleService.setTitle("Error");

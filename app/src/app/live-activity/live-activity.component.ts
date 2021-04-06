@@ -63,12 +63,12 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
           break;
         case "hiring":
           this.unableToLoad = false; // load the page!
-          this.titleService.setTitle("hiring"); // set the page title
+          this.titleService.setTitle("Hiring"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
         case "movies":
           this.unableToLoad = false; // load the page!
-          this.titleService.setTitle("movies"); // set the page title
+          this.titleService.setTitle("Movies"); // set the page title
           this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
           break;
         default:

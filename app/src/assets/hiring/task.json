@@ -3,12 +3,11 @@
   "instructions": {
     "overview": "For each round, please review each applicant's portfolio. The portfolios have been reduced to metrics that the company cares about. Using these metrics, please decide who should continue in the hiring process to the best of your ability. There will be feedback on some of the choices depending on how the company feels about your choice.",
     "CTRL": "",
-    "BTWN": "You won't be alone -- we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation.",
-    "WTHN": "You won't be alone -- we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation.",
-    "BOTH": "You won't be alone -- we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation."
+    "BTWN": "You won't be alone; we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation.",
+    "WTHN": "You won't be alone; we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation.",
+    "BOTH": "You won't be alone; we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation."
   },
   "reviews": {
-    "overview": "These reviews were collected to provide more information about the AI we chose to include in this study. Potentially identifiable information has been anonymized to protect privacy. We hope these reviews help you in your decision-making process.",
     "BTWN": [
       {
         "type": "company",

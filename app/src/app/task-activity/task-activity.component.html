@@ -45,10 +45,19 @@
           <div>{{ assets.task.instructions.overview }}</div>
 
           <!-- CONDITION-SPECIFIC -->
-          <div *ngIf="assets.task.instructions[session.appType]">
+          <ng-container *ngIf="assets.task.instructions[session.appType]">
             <br />
-            {{ assets.task.instructions[session.appType] }}
-          </div>
+
+            <div>{{ assets.task.instructions[session.appType] }}</div>
+
+            <br />
+
+            <div>
+              Below are a set of reviews about the AI we chose to include in the study. These reviews were collected to
+              provide more information about the AI. Potentially identifiable information from these reviews has been
+              anonymized to protect privacy. We hope these reviews help you in your decision-making process.
+            </div>
+          </ng-container>
         </div>
       </div>
 
@@ -57,26 +66,20 @@
         <!-- HEADER -->
         <h5 class="text-center">Reviews</h5>
 
-        <!-- CONTENT -->
-        <div>
-          <!-- OVERVIEW -->
-          <div class="alert">{{ assets.task.reviews.overview }}</div>
-
-          <!-- CARDS -->
-          <div class="card-grid text-center">
-            <div *ngFor="let r of getReviews()" class="card">
-              <h5 class="card-header">{{ r.author }}</h5>
-              <div class="card-body">
-                <p>
-                  <span>{{ r.date }}</span>
-                  <br />
-                  <span *ngIf="r.type == 'company'">{{ r.location }}</span>
-                  <span *ngIf="r.type == 'user'">{{ r.job }}</span>
-                </p>
-                <p>
-                  <i>"{{ r.body }}"</i>
-                </p>
-              </div>
+        <!-- CARDS -->
+        <div class="card-grid text-center">
+          <div *ngFor="let r of getReviews()" class="card">
+            <h5 class="card-header">{{ r.author }}</h5>
+            <div class="card-body">
+              <p>
+                <span *ngIf="r.type == 'company'">{{ r.format }}</span>
+                <span *ngIf="r.type == 'user'">{{ r.job }}</span>
+                <br />
+                <span>{{ r.date }}</span>
+              </p>
+              <p>
+                <i>"{{ r.body }}"</i>
+              </p>
             </div>
           </div>
         </div>
@@ -85,7 +88,7 @@
       <hr />
 
       <!-- READY -->
-      <div class="container">
+      <div>
         <!-- HEADER -->
         <h5 class="text-center">Ready?</h5>
 
