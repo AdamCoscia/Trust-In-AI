@@ -94,9 +94,9 @@ async def get_new_app_state(sid, data):
     CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid
 
     # get next app state in the cycle
-    app_state = next(APP_STATES)
+    new_app_state = next(APP_STATES)
 
-    await SIO.emit("app_state_response", app_state, room=sid)
+    await SIO.emit("new_app_state_response", new_app_state, room=sid)
 
 
 @SIO.event

@@ -6,58 +6,39 @@ import { map } from "rxjs/operators";
 @Injectable()
 export class ChatService {
   page: any;
-  activeSubscriptions: any;
 
   constructor(private socket: Socket) {
-    this.activeSubscriptions = [];
-    this.socket.on("connect", () => this.page.socketOnConnect());
+    let context = this;
+    // call method attached to page that sent the connection request
+    context.socket.on("connect", () => context.page.socketOnConnect());
+    // NOTE: ensure any Observables created are UNSUBSCRIBED before disconnecting!!
+    context.socket.on("disconnect", () => context.socket.removeAllListeners());
   }
 
   connectToSocket(app: any) {
     this.page = app; // save reference to page
-    this.socket.connect();
+    this.socket.connect(); // connect to socket
   }
 
-  removeAllListenersAndDisconnectFromSocket() {
-    // unsubscribe all event listeners
-    for (const evt in this.activeSubscriptions) this.socket.removeAllListeners(evt);
-    // clear list of event listeners
-    this.activeSubscriptions = [];
-    // disconnect from the socket
-    this.socket.disconnect();
+  disconnectFromSocket() {
+    this.socket.disconnect(); // disconnect from socket
   }
 
-  sendAppStateRequest(payload: any) {
-    this.socket.emit("get_new_app_state", payload);
+  /**
+   * Registers event listener for event and returns `Observable` for event.
+   * @param evt Name of event to listen for.
+   * @returns `Observable` for event that you can subscribe to.
+   */
+  registerEventHandler(evt: string) {
+    return this.socket.fromEvent(evt).pipe(map((data) => data));
   }
 
-  getNewAppState() {
-    this.activeSubscriptions.push("app_state_response"); // add to active subscriptions
-    return this.socket.fromEvent("app_state_response").pipe(map((data) => data));
-  }
-
-  sendInteractionResponse(payload: any) {
-    this.socket.emit("on_interaction", payload);
-  }
-
-  getInteractionResponse() {
-    this.activeSubscriptions.push("interaction_response"); // add to active subscriptions
-    return this.socket.fromEvent("interaction_response").pipe(map((data) => data));
-  }
-
-  sendMessageToSaveSessionLog(data: any, pid: any) {
-    let payload = {
-      log: data,
-      pid: pid,
-    };
-    this.socket.emit("save_session_log", payload);
-  }
-
-  sendMessageToSaveSelectionLog(data: any, pid: any) {
-    let payload = {
-      log: data,
-      pid: pid,
-    };
-    this.socket.emit("save_selection_log", payload);
+  /**
+   * Sends `payload` to server routine specified by `evt`.
+   * @param evt Event name specifying server operation to perform.
+   * @param payload Data to send to server.
+   */
+  sendMessage(evt: string, payload: any) {
+    this.socket.emit(evt, payload);
   }
 }

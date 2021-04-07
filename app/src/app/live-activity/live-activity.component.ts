@@ -2,10 +2,11 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
+import { Subscription } from "rxjs";
 // local
 import { ChatService } from "../services/socket.service";
 import { UtilsService } from "../services/utils.service";
-import { SessionPage, AppConfig, InteractionTypes, UserConfig } from "../models/config";
+import { SessionPage, InteractionTypes, EventTypes, AppConfig, UserConfig } from "../models/config";
 
 window.addEventListener("beforeunload", function (e) {
   // Cancel the event
@@ -21,6 +22,8 @@ window.addEventListener("beforeunload", function (e) {
   providers: [ChatService],
 })
 export class LiveActivityComponent implements OnInit, AfterViewInit {
+  private subscription: Subscription = new Subscription();
+
   capitalize: any;
   appConfig: any;
   userConfig: any;
@@ -28,6 +31,7 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   socketConnected: any;
   assets: any;
   currentScenario: any;
+  selectedId: any;
   loadingRecommendation: any;
   hideRecommendation: any;
   taskComplete: any;
@@ -50,6 +54,7 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     this.unableToLoad = true; // assume unable to load until all parameters can be verified
     this.socketConnected = false; // hide app HTML until socket connnection is established
     this.currentScenario = 0; // scenario number => increment by 1
+    this.selectedId = ""; // currently selected card's id number
     this.loadingRecommendation = false; // shows loading symbol while fetching recommendation
     this.hideRecommendation = true; // keep recommendation hidden until user asks for it
     this.taskComplete = false; // when finished, set this to true
@@ -89,14 +94,16 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     let app = this;
     // get assets from appConfig
     app.assets = app.appConfig[app.session.appMode]; // get task assets
-    // subscribe to interaction responses from the server
-    app.chatService.getInteractionResponse().subscribe((obj) => {
-      app.socketConnected = true; // load the page!
-    });
+    // subscribe to listen for interaction response coming from server
+    app.subscription.add(
+      app.chatService.registerEventHandler(EventTypes.INTERACTION_RESPONSE).subscribe((obj) => {
+        app.socketConnected = true; // load the page!
+      })
+    );
     // send init message to initialize PID in server logs and load the page
     let message = app.utilsService.initializeNewMessage(app);
     message.interactionType = InteractionTypes.INITIALIZE_APP;
-    app.chatService.sendInteractionResponse(message);
+    app.chatService.sendMessage(EventTypes.ON_INTERACTION, message);
   }
 
   /**
@@ -130,14 +137,14 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     if (!this.taskComplete) {
       let app = this;
       // set selected ID in user config
-      app.userConfig.selectedId = id;
+      app.selectedId = id;
       // send card clicked message
       let message = app.utilsService.initializeNewMessage(app);
-      message.interactionType = InteractionTypes.CARD_CLICKED;
-      message.currentScenario = app.currentScenario;
-      message.selectedId = app.userConfig.selectedId;
-      message.recommendationShown = !app.hideRecommendation;
-      app.chatService.sendInteractionResponse(message);
+      (message.interactionType = InteractionTypes.CARD_CLICKED),
+        (message.currentScenario = app.currentScenario),
+        (message.selectedId = app.selectedId),
+        (message.recommendationShown = !app.hideRecommendation);
+      app.chatService.sendMessage(EventTypes.ON_INTERACTION, message);
     }
   }
 
@@ -146,19 +153,19 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
    */
   getRecommendation(): void {
     let app = this;
+    // send recommendation shown interaction message
+    let message = app.utilsService.initializeNewMessage(app);
+    (message.interactionType = InteractionTypes.GET_RECOMMENDATION),
+      (message.currentScenario = app.currentScenario),
+      (message.selectedId = app.selectedId),
+      (message.recommendationShown = true);
+    app.chatService.sendMessage(EventTypes.ON_INTERACTION, message);
     // show loading icon
     app.loadingRecommendation = true;
     // show recommendation after 3-5 seconds, randomly
     setTimeout(function () {
       app.loadingRecommendation = false; // hide loading icon
       app.hideRecommendation = false; // show recommendation
-      // send recommendation shown interaction message
-      let message = app.utilsService.initializeNewMessage(app);
-      message.interactionType = InteractionTypes.GET_RECOMMENDATION;
-      message.currentScenario = app.currentScenario;
-      message.selectedId = app.userConfig.selectedId;
-      message.recommendationShown = !app.hideRecommendation;
-      app.chatService.sendInteractionResponse(message);
     }, Math.floor(Math.random() * (3.8 - 1.3) + 1.3 * 1000));
   }
 
@@ -168,22 +175,22 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   saveSelection(): void {
     let app = this;
     const scenarios = app.assets.scenarios;
-    // save a test selections log
+    // save selections log to user config
     app.userConfig[app.session.appMode].selections.push({
-      selectedId: app.userConfig.selectedId,
+      selectedId: app.selectedId,
       botChoice: scenarios[app.currentScenario].choices[scenarios[app.currentScenario].answer],
       recommendationShown: !app.hideRecommendation,
       savedAt: app.utilsService.getCurrentTime(),
     });
     // send selection saved interaction message
     let message = app.utilsService.initializeNewMessage(app);
-    message.interactionType = InteractionTypes.SAVE_SELECTION;
-    message.currentScenario = app.currentScenario;
-    message.selectedId = app.userConfig.selectedId;
-    message.recommendationShown = !app.hideRecommendation;
-    app.chatService.sendInteractionResponse(message);
+    (message.interactionType = InteractionTypes.SAVE_SELECTION),
+      (message.currentScenario = app.currentScenario),
+      (message.selectedId = app.selectedId),
+      (message.recommendationShown = !app.hideRecommendation);
+    app.chatService.sendMessage(EventTypes.ON_INTERACTION, message);
     // reset current selection
-    app.userConfig.selectedId = "";
+    app.selectedId = "";
     // check for next scenario
     if (app.currentScenario == scenarios.length - 1) {
       app.taskComplete = true; // last scenario reached => enable Finish button
@@ -203,11 +210,16 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     // send app closed message
     let message = app.utilsService.initializeNewMessage(app);
     message.interactionType = InteractionTypes.CLOSE_APP;
-    app.chatService.sendInteractionResponse(message);
-    // save selection logs
-    app.chatService.sendMessageToSaveSelectionLog(app.userConfig[app.session.appMode], app.session.participantId);
+    app.chatService.sendMessage(EventTypes.ON_INTERACTION, message);
+    // save message to save selection logs
+    app.chatService.sendMessage(EventTypes.SAVE_SELECTION_LOG, {
+      log: app.userConfig[app.session.appMode],
+      pid: app.session.participantId,
+    });
+    // unsubscribe from any event listener streams registered
+    app.subscription.unsubscribe();
     // disconnect from socket
-    app.chatService.removeAllListenersAndDisconnectFromSocket();
+    app.chatService.disconnectFromSocket();
     // Record page complete timestamp
     switch (app.session.appMode) {
       case "practice":

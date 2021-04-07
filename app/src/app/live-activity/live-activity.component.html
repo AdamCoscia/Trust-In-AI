@@ -143,7 +143,7 @@
                     <strong>Save selected {{ assets.title }}:</strong>
                   </div>
                   <div class="col-4 center-all">
-                    <button [disabled]="!userConfig.selectedId || taskComplete" (click)="saveSelection()"
+                    <button [disabled]="!selectedId || taskComplete" (click)="saveSelection()"
                       class="btn btn-sm btn-outline-dark">
                       {{ taskComplete ? "Saved" : "Save" }}
                     </button>
@@ -165,7 +165,7 @@
             <!-- SELECTIONS -->
             <div class="card-grid text-center">
               <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
-                [ngClass]="c.id == userConfig.selectedId ? 'card-selected' : 'card-unselected'"
+                [ngClass]="c.id == selectedId ? 'card-selected' : 'card-unselected'"
                 (click)="onSelectCard($event, c.id)">
                 <h5 class="card-header">{{ capitalize(assets.title) }}&nbsp;{{ c.id }}</h5>
                 <img class="img-thumbnail card-image" [src]="c.filepath" />

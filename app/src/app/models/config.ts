@@ -77,15 +77,29 @@ export const DeploymentConfig = Object.freeze({
 });
 
 /**
- * SUPPORTED INTERACTION TYPES
+ * INTERACTION TYPES
  */
-export const enum InteractionTypes {
-  INITIALIZE_APP = "init_app",
-  CARD_CLICKED = "card_clicked",
-  GET_RECOMMENDATION = "get_recommendation",
-  SAVE_SELECTION = "save_selection",
-  CLOSE_APP = "close_app",
-}
+export const InteractionTypes = Object.freeze({
+  INITIALIZE_APP: "init_app",
+  CARD_CLICKED: "card_clicked",
+  GET_RECOMMENDATION: "get_recommendation",
+  SAVE_SELECTION: "save_selection",
+  CLOSE_APP: "close_app",
+});
+
+/**
+ * SERVER EVENT TYPES
+ */
+export const EventTypes = Object.freeze({
+  CONNECT: "connect",
+  DISCONNECT: "disconnect",
+  SAVE_SESSION_LOG: "save_session_log",
+  SAVE_SELECTION_LOG: "save_selection_log",
+  GET_NEW_APP_STATE: "get_new_app_state",
+  NEW_APP_STATE_RESPONSE: "new_app_state_response",
+  ON_INTERACTION: "on_interaction",
+  INTERACTION_RESPONSE: "interaction_response",
+});
 
 /**
  * APPLICATION-SPECIFIC SETTINGS
@@ -149,7 +163,6 @@ export const AppConfig: any = {
  * USER-SPECIFIC SETTINGS
  */
 export var UserConfig: any = {
-  selectedId: "",
   /**
    * PRACTICE MODE
    */

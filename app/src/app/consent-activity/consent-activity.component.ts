@@ -2,9 +2,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
+import { Subscription } from "rxjs";
 // local
-import { SessionPage } from "../models/config";
 import { ChatService } from "../services/socket.service";
+import { SessionPage, EventTypes } from "../models/config";
 
 window.addEventListener("beforeunload", function (e) {
   // Cancel the event
@@ -20,6 +21,8 @@ window.addEventListener("beforeunload", function (e) {
   providers: [ChatService],
 })
 export class ConsentActivityComponent implements OnInit {
+  private subscription: Subscription = new Subscription();
+
   socketConnected: any;
   acceptedConsent: any;
 
@@ -41,19 +44,18 @@ export class ConsentActivityComponent implements OnInit {
    */
   socketOnConnect(): void {
     let app = this;
-    // subscribe to interaction responses from the server
-    app.chatService.getNewAppState().subscribe((obj: any) => {
-      if (obj && obj.hasOwnProperty("appType") && obj.hasOwnProperty("appOrder")) {
-        app.session.appType = obj.appType;
-        app.session.appOrder = obj.appOrder;
-        app.socketConnected = true; // load the page!
-      } else {
-        console.log("Cound not understand incoming server message:");
-        console.log(obj);
-      }
-    });
-    // send message to request app state
-    app.chatService.sendAppStateRequest({ participantId: app.session.participantId });
+    // subscribe to listen for new app state coming from server
+    app.subscription.add(
+      app.chatService.registerEventHandler(EventTypes.NEW_APP_STATE_RESPONSE).subscribe((obj: any) => {
+        if (obj && obj.hasOwnProperty("appType") && obj.hasOwnProperty("appOrder")) {
+          app.session.appType = obj.appType;
+          app.session.appOrder = obj.appOrder;
+          app.socketConnected = true; // load the page!
+        }
+      })
+    );
+    // send message to request app state from server
+    app.chatService.sendMessage(EventTypes.GET_NEW_APP_STATE, { participantId: app.session.participantId });
   }
 
   usingMobileDevice() {
@@ -61,8 +63,13 @@ export class ConsentActivityComponent implements OnInit {
   }
 
   next() {
-    this.chatService.removeAllListenersAndDisconnectFromSocket();
+    // unsubscribe from any event listener streams registered
+    this.subscription.unsubscribe();
+    // disconnect from the socket
+    this.chatService.disconnectFromSocket();
+    // record completion time for this activity
     this.session.consent.complete(new Date().getTime());
+    // move on to the next page
     this.router.navigateByUrl("/overview");
   }
 }
