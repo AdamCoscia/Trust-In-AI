@@ -27,14 +27,17 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   capitalize: any;
   appConfig: any;
   userConfig: any;
-  unableToLoad: any;
-  socketConnected: any;
+
+  unableToLoad!: boolean;
+  socketConnected!: boolean;
+  loadingRecommendation!: boolean;
+  showingRecommendation!: boolean;
+  reviewingRecommendation!: boolean;
+  taskComplete!: boolean;
+
   assets: any;
-  currentScenario: any;
-  selectedId: any;
-  loadingRecommendation: any;
-  hideRecommendation: any;
-  taskComplete: any;
+  currentScenario!: number;
+  selectedId!: number;
 
   constructor(
     public session: SessionPage,
@@ -51,13 +54,16 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   // ========================= INITIALIZATION METHODS ========================
 
   ngOnInit(): void {
+    // flags
     this.unableToLoad = true; // assume unable to load until all parameters can be verified
     this.socketConnected = false; // hide app HTML until socket connnection is established
-    this.currentScenario = 0; // scenario number => increment by 1
-    this.selectedId = ""; // currently selected card's id number
     this.loadingRecommendation = false; // shows loading symbol while fetching recommendation
-    this.hideRecommendation = true; // keep recommendation hidden until user asks for it
+    this.showingRecommendation = false; // keep recommendation hidden until user asks for it
+    this.reviewingRecommendation = false; // if user doesn't get recommendation before hitting save, this becomes true
     this.taskComplete = false; // when finished, set this to true
+    // values
+    this.currentScenario = 0; // scenario number => increment by 1
+    this.selectedId = -1; // currently selected card's id number
     if (this.session.appOrder && this.session.appType) {
       this.userConfig[this.session.appMode].appType = this.session.appType; // set appType in user config
       switch (this.session.appMode) {
@@ -143,7 +149,7 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
       (message.interactionType = InteractionTypes.CARD_CLICKED),
         (message.currentScenario = app.currentScenario),
         (message.selectedId = app.selectedId),
-        (message.recommendationShown = !app.hideRecommendation);
+        (message.recommendationShown = app.showingRecommendation);
       app.chatService.sendMessage(EventTypes.ON_INTERACTION, message);
     }
   }
@@ -151,21 +157,23 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
   /**
    * Load recommendation element.
    */
-  getRecommendation(): void {
+  getRecommendation(fromClick: boolean): void {
     let app = this;
-    // send recommendation shown interaction message
-    let message = app.utilsService.initializeNewMessage(app);
-    (message.interactionType = InteractionTypes.GET_RECOMMENDATION),
-      (message.currentScenario = app.currentScenario),
-      (message.selectedId = app.selectedId),
-      (message.recommendationShown = true);
-    app.chatService.sendMessage(EventTypes.ON_INTERACTION, message);
+    if (fromClick) {
+      // send recommendation shown interaction message
+      let message = app.utilsService.initializeNewMessage(app);
+      (message.interactionType = InteractionTypes.GET_RECOMMENDATION),
+        (message.currentScenario = app.currentScenario),
+        (message.selectedId = app.selectedId),
+        (message.recommendationShown = true);
+      app.chatService.sendMessage(EventTypes.ON_INTERACTION, message);
+    }
     // show loading icon
     app.loadingRecommendation = true;
     // show recommendation after 3-5 seconds, randomly
     setTimeout(function () {
       app.loadingRecommendation = false; // hide loading icon
-      app.hideRecommendation = false; // show recommendation
+      app.showingRecommendation = true; // show recommendation
     }, Math.floor(Math.random() * (3.8 - 1.3) + 1.3 * 1000));
   }
 
@@ -179,7 +187,7 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     app.userConfig[app.session.appMode].selections.push({
       selectedId: app.selectedId,
       botChoice: scenarios[app.currentScenario].choices[scenarios[app.currentScenario].answer],
-      recommendationShown: !app.hideRecommendation,
+      recommendationShown: app.showingRecommendation,
       savedAt: app.utilsService.getCurrentTime(),
     });
     // send selection saved interaction message
@@ -187,16 +195,38 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     (message.interactionType = InteractionTypes.SAVE_SELECTION),
       (message.currentScenario = app.currentScenario),
       (message.selectedId = app.selectedId),
-      (message.recommendationShown = !app.hideRecommendation);
+      (message.recommendationShown = app.showingRecommendation);
     app.chatService.sendMessage(EventTypes.ON_INTERACTION, message);
     // reset current selection
-    app.selectedId = "";
-    // check for next scenario
-    if (app.currentScenario == scenarios.length - 1) {
+    app.selectedId = -1;
+    if (!app.showingRecommendation) {
+      // force user to review recommendation
+      app.reviewingRecommendation = true;
+      app.getRecommendation(false);
+    } else {
+      // move on to the next round
+      app.nextRound();
+    }
+  }
+
+  nextRound(): void {
+    let app = this;
+    if (app.currentScenario == app.assets.scenarios.length - 1) {
       app.taskComplete = true; // last scenario reached => enable Finish button
     } else {
-      app.hideRecommendation = true; // hide recommendation again
-      app.currentScenario++; // increment scenario
+      if (app.reviewingRecommendation) {
+        // continue button clicked => send interaction message to server
+        let message = app.utilsService.initializeNewMessage(app);
+        (message.interactionType = InteractionTypes.CONTINUE),
+          (message.currentScenario = app.currentScenario),
+          (message.selectedId = app.selectedId),
+          (message.recommendationShown = app.showingRecommendation);
+        app.chatService.sendMessage(EventTypes.ON_INTERACTION, message);
+      }
+      // reset recommendations and get next scenario
+      app.reviewingRecommendation = false;
+      app.showingRecommendation = false;
+      app.currentScenario++;
     }
   }
 

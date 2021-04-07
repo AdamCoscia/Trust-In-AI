@@ -94,13 +94,29 @@
                 these metrics.
               </li>
               <li>
-                You can optionally choose to get a <strong>recommendation</strong> from our AI by clicking the
-                <i>"Recommend"</i> button.
+                You can optionally choose to get a <strong>recommendation</strong> from our AI before submitting by
+                clicking the <i>"Recommend"</i> button.
               </li>
               <li>
-                When you are comfortable with your selection, click the <i>"Save"</i> button. During the real tasks,
-                clicking the <i>"Save"</i> button will bring up another round as the task requires. For now, only one
-                round will be presented.
+                When you are comfortable with your selection, click the <i>"Save"</i> button. One of two things will
+                happen next:
+                <ol>
+                  <li>
+                    If you did <strong>not</strong> get a recommendation before clicking the <i>"Save"</i> button, the
+                    AI will then make a recommendation for you; in other words, allowing you to see what the AI would
+                    have said during a given round, but not allowing you to change your response. You will then be able
+                    to click a <i>"Continue"</i> button to move on to the next round of choices.
+                  </li>
+                  <li>
+                    If you did get a recommendation before clicking the <i>"Save"</i> button, the interface will simply
+                    load the next round of choices for you.
+                  </li>
+                </ol>
+              </li>
+              <li>
+                During the real tasks, clicking the <i>"Save"</i> or <i>"Continue"</i> buttons will bring up another
+                round of choices, as the task requires, until no more rounds remain. For now, only one round will be
+                presented.
               </li>
               <li>
                 Once your selection during the final round has been saved, the <i>"Finish"</i> button in the top-right
@@ -125,30 +141,46 @@
             <!-- OPTIONS -->
             <div class="alert alert-warning">
               <div class="row">
-                <!-- LEFT COL: RECOMMENDATION -->
-                <div class="col-6 center-all text-center" style="border-right: 1px solid lightgrey">
-                  <div class="col-8 center-all text-center">
-                    <strong>Recommend a {{ assets.title }}:</strong>
+                <!-- NOT REVIEWING RECOMMENDATION -->
+                <ng-container *ngIf="!reviewingRecommendation">
+                  <!-- LEFT COL: RECOMMENDATION -->
+                  <div class="col-6 center-all text-center" style="border-right: 1px solid lightgrey">
+                    <div class="col-8 center-all text-center">
+                      <strong>Recommend a {{ assets.title }}:</strong>
+                    </div>
+                    <div class="col-4 center-all">
+                      <button [disabled]="loadingRecommendation || showingRecommendation || taskComplete"
+                        (click)="getRecommendation(true)" class="btn btn-sm btn-outline-dark">
+                        Recommend
+                      </button>
+                    </div>
                   </div>
-                  <div class="col-4 center-all">
-                    <button [disabled]="loadingRecommendation || !hideRecommendation || taskComplete"
-                      (click)="getRecommendation()" class="btn btn-sm btn-outline-dark">
-                      Recommend
-                    </button>
+                  <!-- RIGHT COL: SAVE SELECTION -->
+                  <div class="col-6 center-all text-center" style="border-left: 1px solid lightgrey">
+                    <div class="col-8 center-all text-center">
+                      <strong>Save selected {{ assets.title }}:</strong>
+                    </div>
+                    <div class="col-4 center-all">
+                      <button [disabled]="selectedId == -1 || taskComplete" (click)="saveSelection()"
+                        class="btn btn-sm btn-outline-dark">
+                        {{ taskComplete ? "Saved" : "Save" }}
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <!-- RIGHT COL: SAVE SELECTION -->
-                <div class="col-6 center-all text-center" style="border-left: 1px solid lightgrey">
-                  <div class="col-8 center-all text-center">
-                    <strong>Save selected {{ assets.title }}:</strong>
+                </ng-container>
+
+                <!-- REVIEWING RECOMMENDATION -->
+                <ng-container *ngIf="reviewingRecommendation">
+                  <div class="col-6 v-center h-right" style="padding-right: 1.5rem">
+                    <strong>Next Round:</strong>
                   </div>
-                  <div class="col-4 center-all">
-                    <button [disabled]="!selectedId || taskComplete" (click)="saveSelection()"
+                  <div class="col-6 v-center h-left" style="padding-left: 1.5rem">
+                    <button [disabled]="loadingRecommendation" (click)="nextRound()"
                       class="btn btn-sm btn-outline-dark">
-                      {{ taskComplete ? "Saved" : "Save" }}
+                      Continue
                     </button>
                   </div>
-                </div>
+                </ng-container>
               </div>
             </div>
 
@@ -158,7 +190,7 @@
                 <span class="sr-only">Loading...</span>
               </div>
             </div>
-            <div *ngIf="!hideRecommendation" class="alert alert-info text-center" style="margin-bottom: 0">
+            <div *ngIf="showingRecommendation" class="alert alert-info text-center" style="margin-bottom: 0">
               <strong>AI recommendation:&nbsp;</strong><i>"{{ assets.scenarios[currentScenario].bot }}"</i>
             </div>
 
@@ -166,7 +198,7 @@
             <div class="card-grid text-center">
               <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
                 [ngClass]="c.id == selectedId ? 'card-selected' : 'card-unselected'"
-                (click)="onSelectCard($event, c.id)">
+                (click)="!(reviewingRecommendation || taskComplete) && onSelectCard($event, c.id)">
                 <h5 class="card-header">{{ capitalize(assets.title) }}&nbsp;{{ c.id }}</h5>
                 <img class="img-thumbnail card-image" [src]="c.filepath" />
               </div>
