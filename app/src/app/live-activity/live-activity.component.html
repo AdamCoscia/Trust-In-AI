@@ -109,66 +109,76 @@
             </ul>
           </div>
 
-          <!-- INSTRUCTIONS: LIVE -->
-          <div *ngIf="session.appMode !== 'practice'">
-            <div class="alert alert-info text-center">
-              <strong>Task {{ currentScenario + 1 }}&nbsp;/&nbsp;{{ assets.scenarios.length }}:&nbsp;</strong>
-              <i>
-                Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} {{ assets.title }}s
-                below.
-              </i>
-            </div>
-          </div>
-
-          <!-- OPTIONS -->
-          <div class="alert alert-warning">
-            <div class="row">
-              <!-- LEFT COL: RECOMMENDATION -->
-              <div class="col-6 center-all text-center" style="border-right: 1px solid lightgrey">
-                <div class="col-8 center-all text-center">
-                  <strong>Recommend a {{ assets.title }}:</strong>
-                </div>
-                <div class="col-4 center-all">
-                  <button [disabled]="loadingRecommendation || !hideRecommendation || taskComplete"
-                    (click)="getRecommendation()" class="btn btn-sm btn-outline-dark">
-                    Recommend
-                  </button>
-                </div>
-              </div>
-              <!-- RIGHT COL: SAVE SELECTION -->
-              <div class="col-6 center-all text-center" style="border-left: 1px solid lightgrey">
-                <div class="col-8 center-all text-center">
-                  <strong>Save selected {{ assets.title }}:</strong>
-                </div>
-                <div class="col-4 center-all">
-                  <button [disabled]="!userConfig.selectedId || taskComplete" (click)="saveSelection()"
-                    class="btn btn-sm btn-outline-dark">
-                    {{ taskComplete ? "Saved" : "Save" }}
-                  </button>
-                </div>
+          <!-- TASK INCOMPLETE -->
+          <ng-container *ngIf="!taskComplete">
+            <!-- INSTRUCTIONS: LIVE -->
+            <div *ngIf="session.appMode !== 'practice'">
+              <div class="alert alert-info text-center">
+                <strong>Task {{ currentScenario + 1 }}&nbsp;/&nbsp;{{ assets.scenarios.length }}:&nbsp;</strong>
+                <i>
+                  Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} {{ assets.title }}s
+                  below.
+                </i>
               </div>
             </div>
-          </div>
 
-          <!-- RECOMMENDATION -->
-          <div *ngIf="loadingRecommendation" class="alert alert-info text-center" style="margin-bottom: 0">
-            <div class="spinner-border" role="status">
-              <span class="sr-only">Loading...</span>
+            <!-- OPTIONS -->
+            <div class="alert alert-warning">
+              <div class="row">
+                <!-- LEFT COL: RECOMMENDATION -->
+                <div class="col-6 center-all text-center" style="border-right: 1px solid lightgrey">
+                  <div class="col-8 center-all text-center">
+                    <strong>Recommend a {{ assets.title }}:</strong>
+                  </div>
+                  <div class="col-4 center-all">
+                    <button [disabled]="loadingRecommendation || !hideRecommendation || taskComplete"
+                      (click)="getRecommendation()" class="btn btn-sm btn-outline-dark">
+                      Recommend
+                    </button>
+                  </div>
+                </div>
+                <!-- RIGHT COL: SAVE SELECTION -->
+                <div class="col-6 center-all text-center" style="border-left: 1px solid lightgrey">
+                  <div class="col-8 center-all text-center">
+                    <strong>Save selected {{ assets.title }}:</strong>
+                  </div>
+                  <div class="col-4 center-all">
+                    <button [disabled]="!userConfig.selectedId || taskComplete" (click)="saveSelection()"
+                      class="btn btn-sm btn-outline-dark">
+                      {{ taskComplete ? "Saved" : "Save" }}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div *ngIf="!hideRecommendation" class="alert alert-info text-center" style="margin-bottom: 0">
-            <strong>AI recommendation:&nbsp;</strong><i>"{{ assets.scenarios[currentScenario].bot }}"</i>
-          </div>
 
-          <!-- SELECTIONS -->
-          <div class="card-grid text-center">
-            <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
-              [ngClass]="c.id == userConfig.selectedId ? 'card-selected' : 'card-unselected'"
-              (click)="onSelectCard($event, c.id)">
-              <h5 class="card-header">{{ capitalize(assets.title) }}&nbsp;{{ c.id }}</h5>
-              <img class="img-thumbnail card-image" [src]="c.filepath" />
+            <!-- RECOMMENDATION -->
+            <div *ngIf="loadingRecommendation" class="alert alert-info text-center" style="margin-bottom: 0">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
             </div>
-          </div>
+            <div *ngIf="!hideRecommendation" class="alert alert-info text-center" style="margin-bottom: 0">
+              <strong>AI recommendation:&nbsp;</strong><i>"{{ assets.scenarios[currentScenario].bot }}"</i>
+            </div>
+
+            <!-- SELECTIONS -->
+            <div class="card-grid text-center">
+              <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
+                [ngClass]="c.id == userConfig.selectedId ? 'card-selected' : 'card-unselected'"
+                (click)="onSelectCard($event, c.id)">
+                <h5 class="card-header">{{ capitalize(assets.title) }}&nbsp;{{ c.id }}</h5>
+                <img class="img-thumbnail card-image" [src]="c.filepath" />
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- TASK COMPLETE -->
+          <ng-container *ngIf="taskComplete">
+            <div class="alert alert-info">
+              Task complete! Please click the <i>"Finish"</i> button in the top-right corner to continue.
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>

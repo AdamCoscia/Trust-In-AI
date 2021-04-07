@@ -6,12 +6,11 @@ import { map } from "rxjs/operators";
 @Injectable()
 export class ChatService {
   page: any;
+  activeSubscriptions: any;
 
   constructor(private socket: Socket) {
-    this.socket.on("connect", () => {
-      // once connection is established, load the page
-      this.page.socketOnConnect();
-    });
+    this.activeSubscriptions = [];
+    this.socket.on("connect", () => this.page.socketOnConnect());
   }
 
   connectToSocket(app: any) {
@@ -20,7 +19,11 @@ export class ChatService {
   }
 
   removeAllListenersAndDisconnectFromSocket() {
-    this.socket.removeAllListeners();
+    // unsubscribe all event listeners
+    for (const evt in this.activeSubscriptions) this.socket.removeAllListeners(evt);
+    // clear list of event listeners
+    this.activeSubscriptions = [];
+    // disconnect from the socket
     this.socket.disconnect();
   }
 
@@ -29,6 +32,7 @@ export class ChatService {
   }
 
   getNewAppState() {
+    this.activeSubscriptions.push("app_state_response"); // add to active subscriptions
     return this.socket.fromEvent("app_state_response").pipe(map((data) => data));
   }
 
@@ -37,6 +41,7 @@ export class ChatService {
   }
 
   getInteractionResponse() {
+    this.activeSubscriptions.push("interaction_response"); // add to active subscriptions
     return this.socket.fromEvent("interaction_response").pipe(map((data) => data));
   }
 

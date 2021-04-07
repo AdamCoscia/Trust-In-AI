@@ -61,6 +61,7 @@ export class ConsentActivityComponent implements OnInit {
   }
 
   next() {
+    this.chatService.removeAllListenersAndDisconnectFromSocket();
     this.session.consent.complete(new Date().getTime());
     this.router.navigateByUrl("/overview");
   }
