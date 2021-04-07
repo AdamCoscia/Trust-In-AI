@@ -43,7 +43,7 @@ def connect(sid, environ, auth):
         pid = CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid]
     else:
         pid = "unknown     "
-    print(f"Connected:    Participant ID: {pid} | Socket ID: {sid}")
+    print(f"      Connected | SID: {sid} | PID: {pid}")
 
 
 @SIO.event
@@ -52,19 +52,20 @@ def disconnect(sid):
         pid = CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid]
     else:
         pid = "unknown     "
-    print(f"Disconnected: Participant ID: {pid} | Socket ID: {sid}")
+    print(f"   Disconnected | SID: {sid} | PID: {pid}")
 
 
 @SIO.event
 async def save_session_log(sid, data):
     try:
-        pid = data["pid"]  # get participant ID
+        pid = data["pid"]  # get PID
         CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid] = pid  # update pid reference
         CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid  # update sid reference
         log = data["log"]  # session page times
         payload = json.dumps(log)  # object to JSON
         R.set(f"user:{pid}:session", payload)
         R.sadd("users", pid)
+        print(f"  Session Saved | SID: {sid} | PID: {pid}")
     except Exception as e:
         print(e)
 
@@ -72,13 +73,14 @@ async def save_session_log(sid, data):
 @SIO.event
 async def save_selection_log(sid, data):
     try:
-        pid = data["pid"]  # get participant ID
+        pid = data["pid"]  # get PID
         CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid] = pid  # update pid reference
         CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid  # update sid reference
         log = data["log"]  # selections for appMode
         payload = json.dumps(log)  # object to JSON
         R.rpush(f"user:{pid}:selections", payload)
         R.sadd("users", pid)
+        print(f"Selection Saved | SID: {sid} | PID: {pid}")
     except Exception as e:
         print(e)
 
@@ -95,6 +97,9 @@ async def get_new_app_state(sid, data):
 
     # get next app state in the cycle
     new_app_state = next(APP_STATES)
+    print(
+        f" New Type/Order | SID: {sid} | PID: {pid} | appType: {new_app_state['appType']} | appOrder: {new_app_state['appOrder']}"
+    )
 
     await SIO.emit("new_app_state_response", new_app_state, room=sid)
 
