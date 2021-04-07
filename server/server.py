@@ -132,16 +132,18 @@ if __name__ == "__main__":
     # Collect redis url endpoint
     try:
         url = json.load(open("redis.json", "r"))  #  stored remotely for safety
+        hostname, port, password = url["hostname"], url["port"], url["password"]
     except FileNotFoundError as e:
         if "REDISCLOUD_URL" in os.environ and os.environ.get("REDISCLOUD_URL"):
-            url = dict(urlparse.urlparse(os.environ.get("REDISCLOUD_URL")))
+            url = urlparse.urlparse(os.environ.get("REDISCLOUD_URL"))
+            hostname, port, password = url.hostname, url.port, url.password
         else:
             raise KeyError("'REDISCLOUD_URL' not found in environment variables.")
 
     # Connect to redis client
     print("Connecting to redis server", end="\r")
     try:
-        R = redis.Redis(host=url["hostname"], port=url["port"], password=url["password"])
+        R = redis.Redis(host=hostname, port=port, password=password)
         R.ping()
         print(f"Connected  ")
     except redis.RedisError as e:
