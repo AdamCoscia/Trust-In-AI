@@ -1,7 +1,7 @@
 {
   "description": "Hello! You are in charge of hiring for a fictious company. You will go through multiple rounds of hiring where you will be asked to select a single ficitious candidate out of a set of choices that should continue on in the hiring process.",
   "instructions": {
-    "overview": "For each round, please review each applicant's portfolio. The portfolios have been reduced to metrics that the company cares about. Using these metrics, please decide who should continue in the hiring process to the best of your ability. There will be feedback on some of the choices depending on how the company feels about your choice.",
+    "overview": "For each round, please review each applicant's portfolio. The portfolios have been reduced to metrics that the company cares about. Using these metrics, please decide who should continue in the hiring process to the best of your ability. Your choices in each round will be used to assess and rank your overall performance, so use your best judgement in every decision.",
     "CTRL": "You won't be alone; we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation.",
     "BTWN": "You won't be alone; we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation.",
     "WTHN": "You won't be alone; we have implemented an AI assistant that can has been trained to look at an applicant's portfolio and use the company's prior hiring history to give you its recommendation.",

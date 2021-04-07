@@ -1,32 +1,32 @@
 [
   {
     "answer": 1,
-    "choices": [35, 15, 4, 38],
-    "bot": "Based on their metrics, I would go with movie 15."
+    "choices": [2, 12, 30, 31],
+    "bot": "Based on their metrics, I suggest going with movie 12."
   },
   {
     "answer": 2,
-    "choices": [13, 45, 2],
-    "bot": "Based on their metrics, I would go with movie 2."
+    "choices": [13, 26, 6, 7],
+    "bot": "Based on their metrics, I suggest going with movie 6."
   },
   {
-    "answer": 1,
-    "choices": [19, 39, 41],
-    "bot": "Based on their metrics, I would go with movie 39."
+    "answer": 0,
+    "choices": [45, 37, 33],
+    "bot": "Based on their metrics, I suggest going with movie 45."
   },
   {
     "answer": 3,
-    "choices": [6, 16, 42, 5],
-    "bot": "Based on their metrics, I would go with movie 5."
+    "choices": [35, 29, 48, 20],
+    "bot": "Based on their metrics, I suggest going with movie 20."
   },
   {
     "answer": 2,
-    "choices": [20, 50, 3],
-    "bot": "Based on their metrics, I would go with movie 3."
+    "choices": [1, 10, 15],
+    "bot": "Based on their metrics, I suggest going with movie 15."
   },
   {
-    "answer": 1,
-    "choices": [47, 34, 25, 22],
-    "bot": "Based on their metrics, I would go with movie 34."
+    "answer": 0,
+    "choices": [47, 40, 42, 3],
+    "bot": "Based on their metrics, I suggest going with movie 47."
   }
 ]

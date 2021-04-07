@@ -151,7 +151,7 @@ export const AppConfig: any = {
    */
   movies: {
     dir: "assets/movies",
-    cards: Array.apply(null, Array(50)).map(function (_, i) {
+    cards: Array.apply(null, Array(49)).map(function (_, i) {
       return i + 1;
     }),
     task: moviesTask,
