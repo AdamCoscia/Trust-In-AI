@@ -3,27 +3,23 @@
   <h2 *ngIf="!unableToLoad">Background Questionnaire</h2>
 </div>
 
-<div *ngIf="unableToLoad" class="container  min-width" style="padding-bottom: 15px">
+<div *ngIf="unableToLoad" class="container min-width" style="padding-bottom: 15px">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning text-center">
-        We apologize for the inconvenience. The application may have been refreshed, reset, or navigated in an
-        unauthorized way. The application cannot continue.
-        <br />
-        <br />
-        Please close this page and click on the link provided for this study and start the assignment over from the
-        beginning.
-        <br />
-        <br />
-        If you reach this page multiple times, please contact Adam Coscia at
-        <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-        to let us know what happened and close this page.
+        <p>We apologize for the inconvenience. The application has been reset and cannot continue.</p>
+        <p>
+          Please <strong>contact</strong> Adam Coscia at
+          <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+          to let us know what happened and include the approximate time this failure occured. Then close this page.
+        </p>
+        <strong>Do NOT attempt to redo this study.</strong>
       </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="!unableToLoad" class="container  min-width">
+<div *ngIf="!unableToLoad" class="container min-width">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning">

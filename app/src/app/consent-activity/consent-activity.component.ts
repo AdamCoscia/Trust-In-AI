@@ -44,11 +44,12 @@ export class ConsentActivityComponent implements OnInit {
     // subscribe to interaction responses from the server
     app.chatService.getNewAppState().subscribe((obj: any) => {
       if (obj && obj.hasOwnProperty("appType") && obj.hasOwnProperty("appOrder")) {
-        app.session.appOrder = obj.appType;
-        app.session.appType = obj.appOrder;
+        app.session.appType = obj.appType;
+        app.session.appOrder = obj.appOrder;
         app.socketConnected = true; // load the page!
-        console.log(app.session.appOrder);
-        console.log(app.session.appType);
+      } else {
+        console.log("Cound not understand incoming server message:");
+        console.log(obj);
       }
     });
     // send message to request app state
