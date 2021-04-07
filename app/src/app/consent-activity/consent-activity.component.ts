@@ -1,9 +1,10 @@
 // global
 import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 // local
 import { SessionPage } from "../models/config";
+import { ChatService } from "../services/socket.service";
 
 window.addEventListener("beforeunload", function (e) {
   // Cancel the event
@@ -16,54 +17,42 @@ window.addEventListener("beforeunload", function (e) {
   selector: "app-consent-activity",
   templateUrl: "./consent-activity.component.html",
   styleUrls: ["./consent-activity.component.scss"],
+  providers: [ChatService],
 })
 export class ConsentActivityComponent implements OnInit {
-  unableToLoad: any;
+  socketConnected: any;
   acceptedConsent: any;
 
   constructor(
     public session: SessionPage,
-    private route: ActivatedRoute,
     private router: Router,
-    private titleService: Title
+    private titleService: Title,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
     this.acceptedConsent = false; // until user clicks 'I Accept' Next button is disabled
-    this.unableToLoad = true; // assume poorly formatted URL until all parameters can be verified
-    if (this.route.snapshot.queryParams.hasOwnProperty("p1")) {
-      switch (this.route.snapshot.queryParams["p1"]) {
-        case "95u":
-          this.session.appOrder = ["practice", "hiring", "movies"];
-          break;
-        case "iq0":
-          this.session.appOrder = ["practice", "movies", "hiring"];
-          break;
+    this.titleService.setTitle("Consent"); // set the page title
+    this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
+  }
+
+  /**
+   * Called by chatService when connection is established.
+   */
+  socketOnConnect(): void {
+    let app = this;
+    // subscribe to interaction responses from the server
+    app.chatService.getNewAppState().subscribe((obj: any) => {
+      if (obj && obj.hasOwnProperty("appType") && obj.hasOwnProperty("appOrder")) {
+        app.session.appOrder = obj.appType;
+        app.session.appType = obj.appOrder;
+        app.socketConnected = true; // load the page!
+        console.log(app.session.appOrder);
+        console.log(app.session.appType);
       }
-      // Check for and set appType
-      if (this.route.snapshot.queryParams.hasOwnProperty("p2")) {
-        switch (this.route.snapshot.queryParams["p2"]) {
-          case "t24":
-            this.session.appType = "CTRL";
-            break;
-          case "ozz":
-            this.session.appType = "WTHN";
-            break;
-          case "8gv":
-            this.session.appType = "BTWN";
-            break;
-          case "n5a":
-            this.session.appType = "BOTH";
-            break;
-        }
-      }
-    }
-    if (this.session.appOrder && this.session.appType) {
-      this.unableToLoad = false;
-      this.titleService.setTitle("Consent");
-    } else {
-      this.titleService.setTitle("Error");
-    }
+    });
+    // send message to request app state
+    app.chatService.sendAppStateRequest({ participantId: app.session.participantId });
   }
 
   usingMobileDevice() {

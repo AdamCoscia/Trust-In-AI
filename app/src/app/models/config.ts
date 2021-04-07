@@ -72,8 +72,8 @@ export class SessionPage {
 }
 
 export const DeploymentConfig = Object.freeze({
-  SERVER_URL: "https://cs6795-group-project-server.herokuapp.com/",
-  // SERVER_URL: "http://localhost:3000",
+  // SERVER_URL: "https://cs6795-group-project-server.herokuapp.com/",
+  SERVER_URL: "http://localhost:3000",
 });
 
 /**
@@ -105,10 +105,10 @@ export const AppConfig: any = {
   backgroundSurveyURL: "https://gatech.co1.qualtrics.com/jfe/form/SV_7OIzFHat7ALsmZo",
   preSurveyURL: "https://gatech.co1.qualtrics.com/jfe/form/SV_6zdbHRJf6D2NKDA",
   postSurveyURL: {
-    CTRL: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
-    WTHN: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
-    BTWN: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
-    BOTH: "https://gatech.co1.qualtrics.com/jfe/form/SV_4MB48PzlEKHIE5w",
+    CTRL: "https://gatech.co1.qualtrics.com/jfe/form/SV_cvxQpGOAeYHHlhY",
+    WTHN: "https://gatech.co1.qualtrics.com/jfe/form/SV_0wVgA6nk0lY5x6m",
+    BTWN: "https://gatech.co1.qualtrics.com/jfe/form/SV_0wVgA6nk0lY5x6m",
+    BOTH: "https://gatech.co1.qualtrics.com/jfe/form/SV_0wVgA6nk0lY5x6m",
   },
   /**
    * PRACTICE MODE

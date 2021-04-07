@@ -10,7 +10,6 @@ export class ChatService {
   constructor(private socket: Socket) {
     this.socket.on("connect", () => {
       // once connection is established, load the page
-      this.page.socketConnected = true;
       this.page.socketOnConnect();
     });
   }
@@ -23,6 +22,14 @@ export class ChatService {
   removeAllListenersAndDisconnectFromSocket() {
     this.socket.removeAllListeners();
     this.socket.disconnect();
+  }
+
+  sendAppStateRequest(payload: any) {
+    this.socket.emit("get_new_app_state", payload);
+  }
+
+  getNewAppState() {
+    return this.socket.fromEvent("app_state_response").pipe(map((data) => data));
   }
 
   sendInteractionResponse(payload: any) {

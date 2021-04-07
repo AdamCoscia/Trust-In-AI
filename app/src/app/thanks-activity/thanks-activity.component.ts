@@ -39,8 +39,13 @@ export class ThanksActivityComponent implements OnInit {
    * Called by chatService when connection is established.
    */
   socketOnConnect(): void {
+    // record page complete
     this.session.thanks.complete(new Date().getTime());
+    // save the session logs to redis
     this.chatService.sendMessageToSaveSessionLog(this.session, this.session["participantId"]);
+    // load the page
+    this.socketConnected = true;
+    // disconnect from socket
     this.chatService.removeAllListenersAndDisconnectFromSocket();
   }
 }

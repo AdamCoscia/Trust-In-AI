@@ -4,39 +4,25 @@ import json
 import os
 import time
 import urllib.parse as urlparse
+from itertools import cycle
 
 import redis
 import socketio
 from aiohttp import web
 from aiohttp_index import IndexMiddleware
 
-DEPLOY_MODE = "heroku"  # local / heroku
-print(f"deploy mode => {DEPLOY_MODE}")
-
-if DEPLOY_MODE == "local":
-    # for when developing locally
-    keys = json.load(open("redis.json", "r"))  #  stored remotely for safety
-    if keys:
-        print("Connecting to redis server", end="\r")
-        r = redis.Redis(host=keys["hostname"], password=keys["password"], port=keys["port"])
-        while not r.ping():
-            time.sleep(1.0)
-    else:
-        raise FileNotFoundError("Count not load redis.json")
-
-elif DEPLOY_MODE == "heroku":
-    # for when pushing to heroku
-    if os.environ.get("REDISCLOUD_URL"):
-        print("Connecting to redis server ...", end="\r")
-        url = urlparse.urlparse(os.environ.get("REDISCLOUD_URL"))
-        r = redis.Redis(host=url.hostname, port=url.port, password=url.password)
-        while not r.ping():
-            time.sleep(1.0)
-    else:
-        raise FileNotFoundError("REDISCLOUD_URL not found.")
-
-print("Connected ")
-
+APP_STATES = cycle(
+    [
+        {"appOrder": ["practice", "movies", "hiring"], "appType": "BTWN"},
+        {"appOrder": ["practice", "hiring", "movies"], "appType": "BOTH"},
+        {"appOrder": ["practice", "movies", "hiring"], "appType": "CTRL"},
+        {"appOrder": ["practice", "movies", "hiring"], "appType": "WTHN"},
+        {"appOrder": ["practice", "hiring", "movies"], "appType": "BTWN"},
+        {"appOrder": ["practice", "hiring", "movies"], "appType": "WTHN"},
+        {"appOrder": ["practice", "hiring", "movies"], "appType": "CTRL"},
+        {"appOrder": ["practice", "movies", "hiring"], "appType": "BOTH"},
+    ]
+)
 
 CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING = {}
 CLIENT_SOCKET_ID_PARTICIPANT_MAPPING = {}
@@ -77,8 +63,8 @@ async def save_session_log(sid, data):
         CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid  # update sid reference
         log = data["log"]  # session page times
         payload = json.dumps(log)  # object to JSON
-        r.set(f"user:{pid}:session", payload)
-        r.sadd("users", pid)
+        R.set(f"user:{pid}:session", payload)
+        R.sadd("users", pid)
     except Exception as e:
         print(e)
 
@@ -91,10 +77,26 @@ async def save_selection_log(sid, data):
         CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid  # update sid reference
         log = data["log"]  # selections for appMode
         payload = json.dumps(log)  # object to JSON
-        r.rpush(f"user:{pid}:selections", payload)
-        r.sadd("users", pid)
+        R.rpush(f"user:{pid}:selections", payload)
+        R.sadd("users", pid)
     except Exception as e:
         print(e)
+
+
+@SIO.event
+async def get_new_app_state(sid, data):
+    # Get client PID
+    pid = data["participantId"]
+
+    # Let these get updated everytime an interaction occurs, to handle the
+    #   worst case scenario of random restart of the server.
+    CLIENT_SOCKET_ID_PARTICIPANT_MAPPING[sid] = pid
+    CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid
+
+    # get next app state in the cycle
+    app_state = next(APP_STATES)
+
+    await SIO.emit("app_state_response", app_state, room=sid)
 
 
 @SIO.event
@@ -115,12 +117,31 @@ async def on_interaction(sid, data):
 
     # persist each interaction to redis
     payload = json.dumps(response)
-    r.rpush(f"user:{pid}:interactions", payload)
-    r.sadd("users", pid)
+    R.rpush(f"user:{pid}:interactions", payload)
+    R.sadd("users", pid)
 
     await SIO.emit("interaction_response", response, room=sid)
 
 
 if __name__ == "__main__":
+    # Collect redis url endpoint
+    try:
+        url = json.load(open("redis.json", "r"))  #  stored remotely for safety
+    except FileNotFoundError as e:
+        if "REDISCLOUD_URL" in os.environ and os.environ.get("REDISCLOUD_URL"):
+            url = dict(urlparse.urlparse(os.environ.get("REDISCLOUD_URL")))
+        else:
+            raise KeyError("'REDISCLOUD_URL' not found in environment variables.")
+
+    # Connect to redis client
+    print("Connecting to redis server", end="\r")
+    try:
+        R = redis.Redis(host=url["hostname"], port=url["port"], password=url["password"])
+        R.ping()
+        print(f"Connected  ")
+    except redis.RedisError as e:
+        raise e
+
+    # Run the web server
     port = int(os.environ.get("PORT", 3000))
     web.run_app(APP, port=port)

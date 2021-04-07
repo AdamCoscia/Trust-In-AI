@@ -90,8 +90,10 @@ export class LiveActivityComponent implements OnInit, AfterViewInit {
     // get assets from appConfig
     app.assets = app.appConfig[app.session.appMode]; // get task assets
     // subscribe to interaction responses from the server
-    app.chatService.getInteractionResponse().subscribe((obj) => {});
-    // send init message to initialize PID in server logs
+    app.chatService.getInteractionResponse().subscribe((obj) => {
+      if (!app.socketConnected) app.socketConnected = true; // load the page!
+    });
+    // send init message to initialize PID in server logs and load the page
     let message = app.utilsService.initializeNewMessage(app);
     message.interactionType = InteractionTypes.INITIALIZE_APP;
     app.chatService.sendInteractionResponse(message);
