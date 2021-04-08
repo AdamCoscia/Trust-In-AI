@@ -61,29 +61,39 @@ else:
         # Create output directory
         if not os.path.exists(os.path.join("output", pid)):
             os.makedirs(os.path.join("output", pid))
+
+        # Use session log to get user appType for sorting outputs
+        if user_logs[pid]["session_log"]:
+            df = pd.DataFrame(user_logs[pid]["session_log"])
+            app_type = df.at[0, "appType"]  # get appType
+            if not os.path.exists(os.path.join("output", app_type, pid)):
+                os.makedirs(os.path.join("output", app_type, pid))
+            df.to_csv(os.path.join("output", app_type, pid, "session_log.csv"), index=False)
+            print("     Session log | Yes")
+            r.delete(f"user:{pid}:session")
+        else:
+            app_type = "unknown"
+            if not os.path.exists(os.path.join("output", app_type, pid)):
+                os.makedirs(os.path.join("output", app_type, pid))
+            print("     Session log | No")
+
         # Save interactions
         if user_logs[pid]["interactions"]:
             df = pd.DataFrame.from_records(user_logs[pid]["interactions"])
-            df.to_csv(os.path.join("output", pid, "interactions.csv"), index=False)
-            print(df.head(), end="\n")
+            df.to_csv(os.path.join("output", app_type, pid, "interactions.csv"), index=False)
+            print("Interactions Log | Yes")
             r.delete(f"user:{pid}:interactions")
         else:
-            print("No interactions.")
+            print("Interactions Log | No")
+
         # Save selections
         if user_logs[pid]["selections"]:
             df = pd.DataFrame.from_records(user_logs[pid]["selections"])
-            df.to_csv(os.path.join("output", pid, "selections.csv"), index=False)
-            print(df.head(), end="\n")
+            df.to_csv(os.path.join("output", app_type, pid, "selections.csv"), index=False)
+            print("  Selections Log | Yes")
             r.delete(f"user:{pid}:selections")
         else:
-            print("No selections.")
-        # Save session log
-        if user_logs[pid]["session_log"]:
-            df = pd.DataFrame(user_logs[pid]["session_log"])
-            df.to_csv(os.path.join("output", pid, "session_log.csv"), index=False)
-            print(df.head(), end="\n")
-            r.delete(f"user:{pid}:session")
-        else:
-            print("No session log.")
+            print("  Selections Log | No")
+
     # delete users set of redis
     r.delete("users")
