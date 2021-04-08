@@ -12,8 +12,8 @@ keys = json.load(open("redis.json", "r"))  #  stored remotely for safety
 
 sys.stdout.write(f"\rConnecting to {keys['hostname']}")
 sys.stdout.flush()
-r = redis.Redis(host=keys["hostname"], password=keys["password"], port=keys["port"])
-while not r.ping():
+R = redis.Redis(host=keys["hostname"], password=keys["password"], port=keys["port"])
+while not R.ping():
     for c in ["|", "/", "-", "\\"]:
         sys.stdout.write(f"\rConnecting to {keys['hostname']} ... {c}")
         sys.stdout.flush()
@@ -35,16 +35,16 @@ sys.stdout.flush()
 
 users = []
 user_logs = {}
-if r.smembers("users"):
-    users = [u.decode("utf-8") for u in r.smembers("users")]
+if R.smembers("users"):
+    users = [u.decode("utf-8") for u in R.smembers("users")]
     for u in users:
         user_logs[u] = {"interactions": None, "selections": None, "session_log": None}
-        if r.lrange(f"user:{u}:interactions", 0, -1):
-            user_logs[u]["interactions"] = [json.loads(l) for l in r.lrange(f"user:{u}:interactions", 0, -1)]
-        if r.lrange(f"user:{u}:selections", 0, -1):
-            user_logs[u]["selections"] = [json.loads(l) for l in r.lrange(f"user:{u}:selections", 0, -1)]
-        if r.get(f"user:{u}:session"):
-            user_logs[u]["session_log"] = (json.loads(r.get(f"user:{u}:session")),)
+        if R.lrange(f"user:{u}:interactions", 0, -1):
+            user_logs[u]["interactions"] = [json.loads(l) for l in R.lrange(f"user:{u}:interactions", 0, -1)]
+        if R.lrange(f"user:{u}:selections", 0, -1):
+            user_logs[u]["selections"] = [json.loads(l) for l in R.lrange(f"user:{u}:selections", 0, -1)]
+        if R.get(f"user:{u}:session"):
+            user_logs[u]["session_log"] = (json.loads(R.get(f"user:{u}:session")),)
 
 sys.stdout.write(f"\rFetching user data ... Complete!\n")
 sys.stdout.flush()
@@ -68,7 +68,7 @@ else:
                 os.makedirs(os.path.join("output", app_type, pid))
             df.to_csv(os.path.join("output", app_type, pid, "session_log.csv"), index=False)
             print("     Session log | Yes")
-            r.delete(f"user:{pid}:session")
+            # R.delete(f"user:{pid}:session")
         else:
             app_type = "unknown"
             # create output directory
@@ -81,7 +81,7 @@ else:
             df = pd.DataFrame.from_records(user_logs[pid]["interactions"])
             df.to_csv(os.path.join("output", app_type, pid, "interactions.csv"), index=False)
             print("Interactions Log | Yes")
-            r.delete(f"user:{pid}:interactions")
+            # R.delete(f"user:{pid}:interactions")
         else:
             print("Interactions Log | No")
 
@@ -90,9 +90,9 @@ else:
             df = pd.DataFrame.from_records(user_logs[pid]["selections"])
             df.to_csv(os.path.join("output", app_type, pid, "selections.csv"), index=False)
             print("  Selections Log | Yes")
-            r.delete(f"user:{pid}:selections")
+            # R.delete(f"user:{pid}:selections")
         else:
             print("  Selections Log | No")
 
     # delete users set of redis
-    r.delete("users")
+    # R.delete("users")
