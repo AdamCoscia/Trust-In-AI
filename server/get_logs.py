@@ -58,14 +58,12 @@ else:
     for pid in users:
         print(pid)
         print("-" * len(pid))
-        # Create output directory
-        if not os.path.exists(os.path.join("output", pid)):
-            os.makedirs(os.path.join("output", pid))
 
         # Use session log to get user appType for sorting outputs
         if user_logs[pid]["session_log"]:
             df = pd.DataFrame(user_logs[pid]["session_log"])
             app_type = df.at[0, "appType"]  # get appType
+            # create output directory
             if not os.path.exists(os.path.join("output", app_type, pid)):
                 os.makedirs(os.path.join("output", app_type, pid))
             df.to_csv(os.path.join("output", app_type, pid, "session_log.csv"), index=False)
@@ -73,6 +71,7 @@ else:
             r.delete(f"user:{pid}:session")
         else:
             app_type = "unknown"
+            # create output directory
             if not os.path.exists(os.path.join("output", app_type, pid)):
                 os.makedirs(os.path.join("output", app_type, pid))
             print("     Session log | No")
