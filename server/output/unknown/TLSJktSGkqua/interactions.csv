@@ -1,0 +1,7 @@
+sid,processed_at,inputs
+mO5EkyYiZ1q7z3gHAABb,1617899550,"{'participantId': 'TLSJktSGkqua', 'appMode': 'practice', 'interactionAt': 1617899550622, 'interactionType': 'init_app', 'currentScenario': -1, 'selectedId': -1, 'recommendationShown': False}"
+mO5EkyYiZ1q7z3gHAABb,1617899573,"{'participantId': 'TLSJktSGkqua', 'appMode': 'practice', 'interactionAt': 1617899573077, 'interactionType': 'get_recommendation', 'currentScenario': 0, 'selectedId': -1, 'recommendationShown': True}"
+mO5EkyYiZ1q7z3gHAABb,1617899584,"{'participantId': 'TLSJktSGkqua', 'appMode': 'practice', 'interactionAt': 1617899584708, 'interactionType': 'card_clicked', 'currentScenario': 0, 'selectedId': 3, 'recommendationShown': True}"
+mO5EkyYiZ1q7z3gHAABb,1617899587,"{'participantId': 'TLSJktSGkqua', 'appMode': 'practice', 'interactionAt': 1617899587477, 'interactionType': 'save_selection', 'currentScenario': 0, 'selectedId': 3, 'recommendationShown': True}"
+mO5EkyYiZ1q7z3gHAABb,1617899593,"{'participantId': 'TLSJktSGkqua', 'appMode': 'practice', 'interactionAt': 1617899593380, 'interactionType': 'close_app', 'currentScenario': -1, 'selectedId': -1, 'recommendationShown': False}"
+g8o4uyl8SBPAcd6yAABd,1617899599,"{'participantId': 'TLSJktSGkqua', 'appMode': 'practice', 'interactionAt': 1617899599129, 'interactionType': 'init_app', 'currentScenario': -1, 'selectedId': -1, 'recommendationShown': False}"

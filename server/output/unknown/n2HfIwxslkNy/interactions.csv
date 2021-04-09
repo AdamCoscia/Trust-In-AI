@@ -1,0 +1,6 @@
+sid,processed_at,inputs
+9Mpi8D-zs0RTEkD4AAAz,1617897743,"{'participantId': 'n2HfIwxslkNy', 'appMode': 'practice', 'interactionAt': 1617897743757, 'interactionType': 'init_app', 'currentScenario': -1, 'selectedId': -1, 'recommendationShown': False}"
+9Mpi8D-zs0RTEkD4AAAz,1617897768,"{'participantId': 'n2HfIwxslkNy', 'appMode': 'practice', 'interactionAt': 1617897768698, 'interactionType': 'get_recommendation', 'currentScenario': 0, 'selectedId': -1, 'recommendationShown': True}"
+9Mpi8D-zs0RTEkD4AAAz,1617897805,"{'participantId': 'n2HfIwxslkNy', 'appMode': 'practice', 'interactionAt': 1617897805266, 'interactionType': 'card_clicked', 'currentScenario': 0, 'selectedId': 2, 'recommendationShown': True}"
+9Mpi8D-zs0RTEkD4AAAz,1617897807,"{'participantId': 'n2HfIwxslkNy', 'appMode': 'practice', 'interactionAt': 1617897807582, 'interactionType': 'save_selection', 'currentScenario': 0, 'selectedId': 2, 'recommendationShown': True}"
+9Mpi8D-zs0RTEkD4AAAz,1617897811,"{'participantId': 'n2HfIwxslkNy', 'appMode': 'practice', 'interactionAt': 1617897811372, 'interactionType': 'close_app', 'currentScenario': -1, 'selectedId': -1, 'recommendationShown': False}"

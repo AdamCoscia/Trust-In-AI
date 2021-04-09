@@ -1,0 +1,3 @@
+participantId,appMode,appType,selections
+iqUB4bUUMmYD,practice,BOTH,"[{'selectedId': 2, 'botChoice': 2, 'recommendationShown': False, 'savedAt': 1617932957015}]"
+iqUB4bUUMmYD,hiring,BOTH,"[{'selectedId': 8, 'botChoice': 8, 'recommendationShown': True, 'savedAt': 1617933424463}, {'selectedId': 4, 'botChoice': 1, 'recommendationShown': True, 'savedAt': 1617933471925}, {'selectedId': 12, 'botChoice': 9, 'recommendationShown': True, 'savedAt': 1617933510037}, {'selectedId': 18, 'botChoice': 13, 'recommendationShown': True, 'savedAt': 1617933533857}, {'selectedId': 48, 'botChoice': 48, 'recommendationShown': True, 'savedAt': 1617933576204}, {'selectedId': 45, 'botChoice': 45, 'recommendationShown': True, 'savedAt': 1617933599277}]"
