@@ -11,14 +11,23 @@ import socketio
 from aiohttp import web
 from aiohttp_index import IndexMiddleware
 
+# APP_STATES = cycle(
+#     [
+#         {"appOrder": ["practice", "movies", "hiring"], "appType": "BTWN"},
+#         {"appOrder": ["practice", "hiring", "movies"], "appType": "BOTH"},
+#         {"appOrder": ["practice", "movies", "hiring"], "appType": "CTRL"},
+#         {"appOrder": ["practice", "movies", "hiring"], "appType": "WTHN"},
+#         {"appOrder": ["practice", "hiring", "movies"], "appType": "BTWN"},
+#         {"appOrder": ["practice", "hiring", "movies"], "appType": "WTHN"},
+#         {"appOrder": ["practice", "hiring", "movies"], "appType": "CTRL"},
+#         {"appOrder": ["practice", "movies", "hiring"], "appType": "BOTH"},
+#     ]
+# )
+
 APP_STATES = cycle(
     [
-        {"appOrder": ["practice", "movies", "hiring"], "appType": "BTWN"},
         {"appOrder": ["practice", "hiring", "movies"], "appType": "BOTH"},
         {"appOrder": ["practice", "movies", "hiring"], "appType": "CTRL"},
-        {"appOrder": ["practice", "movies", "hiring"], "appType": "WTHN"},
-        {"appOrder": ["practice", "hiring", "movies"], "appType": "BTWN"},
-        {"appOrder": ["practice", "hiring", "movies"], "appType": "WTHN"},
         {"appOrder": ["practice", "hiring", "movies"], "appType": "CTRL"},
         {"appOrder": ["practice", "movies", "hiring"], "appType": "BOTH"},
     ]
