@@ -1,6 +1,6 @@
 # The Role of Transitivity and Implicit Bias in Decision-Making with AI
 
-Last updated: 03/18/2021
+Last updated: 04/12/2021
 
 ## Screenshots
 
