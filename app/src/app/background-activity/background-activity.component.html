@@ -3,31 +3,28 @@
   <h2 *ngIf="!unableToLoad">Background Questionnaire</h2>
 </div>
 
-<div *ngIf="unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
+<div *ngIf="unableToLoad" class="container min-width" style="padding-bottom: 15px">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning text-center">
-        We apologize for the inconvenience. The application may have been refreshed, reset, or navigated in an
-        unauthorized way. The application cannot continue.
-        <br />
-        <br />
-        Please close this page and click on the link provided for this study and start the assignment over from the
-        beginning.
-        <br />
-        <br />
-        If you reach this page multiple times, please contact Adam Coscia at
-        <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-        to let us know what happened and close this page.
+        <p>We apologize for the inconvenience. The application has been reset and cannot continue.</p>
+        <p>
+          Please <strong>contact</strong> Adam Coscia at
+          <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+          to let us know what happened and include the approximate time this failure occured. Then close this page.
+        </p>
+        <strong>Do NOT attempt to redo this study.</strong>
       </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="!unableToLoad" class="container h-full min-width">
+<div *ngIf="!unableToLoad" class="container min-width">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning">
-        Please be sure to scroll through to complete the entire survey before continuing.
+        Please <strong>copy and paste</strong> this 12-digit code into the first text box of the survey:
+        <strong style="color: red">{{ session.participantId }}</strong>
       </div>
 
       <div class="text-center" style="margin-bottom: 1rem">
@@ -52,18 +49,18 @@
 
       <div class="alert alert-info">
         <div class="row flex-nowrap">
-          <div class="col-md-8 text-center">
+          <div class="col-7 col-md-8 center-all text-center">
             <span>
-              Once you have <strong>submitted</strong> the survey, please type in the code displayed above to enable the
-              <strong>Next</strong> button.
+              Once you have <strong>submitted</strong> the survey, please type in the 5-digit code displayed at the end
+              of the survey to enable the <strong>Next</strong> button.
             </span>
           </div>
 
-          <div class="col-md-3 center-all">
+          <div class="col-3 col-md-3 center-all">
             <input (keyup)="onKey($event)" />
           </div>
 
-          <div class="col-md-1 center-all">
+          <div class="col-2 col-md-1 center-all">
             <button [disabled]="!inputValid" (click)="next()" class="btn btn-sm btn-outline-dark">Next</button>
           </div>
         </div>

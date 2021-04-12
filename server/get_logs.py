@@ -12,8 +12,8 @@ keys = json.load(open("redis.json", "r"))  #  stored remotely for safety
 
 sys.stdout.write(f"\rConnecting to {keys['hostname']}")
 sys.stdout.flush()
-r = redis.Redis(host=keys["hostname"], password=keys["password"], port=keys["port"])
-while not r.ping():
+R = redis.Redis(host=keys["hostname"], password=keys["password"], port=keys["port"])
+while not R.ping():
     for c in ["|", "/", "-", "\\"]:
         sys.stdout.write(f"\rConnecting to {keys['hostname']} ... {c}")
         sys.stdout.flush()
@@ -30,43 +30,69 @@ sys.stdout.flush()
 #   if value is of type sorted sets -> ZRANGEBYSCORE <key> <min> <max>
 #
 
-users = [u.decode("utf-8") for u in r.smembers("users")]
-user_logs = {
-    u: {
-        "interactions": [json.loads(l) for l in r.lrange(f"user:{u}:interactions", 0, -1)],
-        "selections": [json.loads(l) for l in r.lrange(f"user:{u}:selections", 0, -1)],
-        "session_log": [json.loads(r.get(f"user:{u}:session"))],
-    }
-    for u in users
-}
+sys.stdout.write(f"\rFetching user data ...")
+sys.stdout.flush()
 
-print("=== SUMMARY ===\n")
+users = []
+user_logs = {}
+if R.smembers("users"):
+    users = [u.decode("utf-8") for u in R.smembers("users")]
+    for u in users:
+        user_logs[u] = {"interactions": None, "selections": None, "session_log": None}
+        if R.lrange(f"user:{u}:interactions", 0, -1):
+            user_logs[u]["interactions"] = [json.loads(l) for l in R.lrange(f"user:{u}:interactions", 0, -1)]
+        if R.lrange(f"user:{u}:selections", 0, -1):
+            user_logs[u]["selections"] = [json.loads(l) for l in R.lrange(f"user:{u}:selections", 0, -1)]
+        if R.get(f"user:{u}:session"):
+            user_logs[u]["session_log"] = (json.loads(R.get(f"user:{u}:session")),)
+
+sys.stdout.write(f"\rFetching user data ... Complete!\n")
+sys.stdout.flush()
+
+print("=== SUMMARY ===")
 
 if len(users) == 0:
     print("No users.")
 else:
+    print(f"{len(users)} users' data pulled:\n")
     for pid in users:
         print(pid)
         print("-" * len(pid))
-        # Create output directory
-        if not os.path.exists(os.path.join("output", pid)):
-            os.makedirs(os.path.join("output", pid))
-        # Save interactions
-        df = pd.DataFrame.from_records(user_logs[pid]["interactions"])
-        df.to_csv(os.path.join("output", pid, "interactions.csv"), index=False)
-        print(df.head(), end="\n")
-        # Save selections
-        df = pd.DataFrame.from_records(user_logs[pid]["selections"])
-        df.to_csv(os.path.join("output", pid, "selections.csv"), index=False)
-        print(df.head(), end="\n")
-        # Save session log
-        df = pd.DataFrame(user_logs[pid]["session_log"])
-        df.to_csv(os.path.join("output", pid, "session_log.csv"), index=False)
-        print(df.head(), end="\n")
-        # Delete keys off redis
-        r.delete(f"user:{pid}:interactions")
-        r.delete(f"user:{pid}:selections")
-        r.delete(f"user:{pid}:session")
 
-# delete users set of redis
-r.delete("users")
+        # Use session log to get user appType for sorting outputs
+        if user_logs[pid]["session_log"]:
+            df = pd.DataFrame(user_logs[pid]["session_log"])
+            app_type = df.at[0, "appType"]  # get appType
+            # create output directory
+            if not os.path.exists(os.path.join("output", app_type, pid)):
+                os.makedirs(os.path.join("output", app_type, pid))
+            df.to_csv(os.path.join("output", app_type, pid, "session_log.csv"), index=False)
+            print("     Session log | Yes")
+            # R.delete(f"user:{pid}:session")
+        else:
+            app_type = "unknown"
+            # create output directory
+            if not os.path.exists(os.path.join("output", app_type, pid)):
+                os.makedirs(os.path.join("output", app_type, pid))
+            print("     Session log | No")
+
+        # Save interactions
+        if user_logs[pid]["interactions"]:
+            df = pd.DataFrame.from_records(user_logs[pid]["interactions"])
+            df.to_csv(os.path.join("output", app_type, pid, "interactions.csv"), index=False)
+            print("Interactions Log | Yes")
+            # R.delete(f"user:{pid}:interactions")
+        else:
+            print("Interactions Log | No")
+
+        # Save selections
+        if user_logs[pid]["selections"]:
+            df = pd.DataFrame.from_records(user_logs[pid]["selections"])
+            df.to_csv(os.path.join("output", app_type, pid, "selections.csv"), index=False)
+            print("  Selections Log | Yes")
+            # R.delete(f"user:{pid}:selections")
+        else:
+            print("  Selections Log | No")
+
+    # delete users set of redis
+    # R.delete("users")

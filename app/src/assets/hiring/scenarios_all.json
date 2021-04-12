@@ -1,0 +1,77 @@
+[
+  {
+    "answer": 0,
+    "choices": [8, 15, 16, 28],
+    "bot": "Based on their portfolio, I would go with candidate 8."
+  },
+  {
+    "answer": 0,
+    "choices": [1, 4, 5],
+    "bot": "Based on their portfolio, I would go with candidate 1."
+  },
+  {
+    "answer": 1,
+    "choices": [7, 9, 12],
+    "bot": "Based on their portfolio, I would go with candidate 9."
+  },
+  {
+    "answer": 0,
+    "choices": [13, 18, 25],
+    "bot": "Based on their portfolio, I would go with candidate 13."
+  },
+  {
+    "answer": 3,
+    "choices": [32, 35, 36, 48],
+    "bot": "Based on their portfolio, I would go with candidate 48."
+  },
+  {
+    "answer": 2,
+    "choices": [37, 42, 45, 49],
+    "bot": "Based on their portfolio, I would go with candidate 45."
+  },
+  {
+    "answer": 1,
+    "choices": [3, 10, 11],
+    "bot": "Based on their portfolio, I would go with candidate 10."
+  },
+  {
+    "answer": 0,
+    "choices": [20, 23, 26, 50],
+    "bot": "Based on their portfolio, I would go with candidate 20."
+  },
+  {
+    "answer": 0,
+    "choices": [27, 29, 30],
+    "bot": "Based on their portfolio, I would go with candidate 27."
+  },
+  {
+    "answer": 2,
+    "choices": [33, 34, 38],
+    "bot": "Based on their portfolio, I would go with candidate 38."
+  },
+  {
+    "answer": 1,
+    "choices": [39, 43, 44],
+    "bot": "Based on their portfolio, I would go with candidate 43."
+  },
+  {
+    "answer": 1,
+    "choices": [2, 6, 14],
+    "bot": "Based on their portfolio, I would go with candidate 6."
+  },
+  {
+    "answer": 2,
+    "choices": [17, 22, 24],
+    "bot": "Based on their portfolio, I would go with candidate 24."
+  },
+  {
+    "answer": 1,
+    "choices": [31, 46, 47],
+    "bot": "Based on their portfolio, I would go with candidate 46."
+  },
+  {
+    "answer": 3,
+    "choices": [19, 21, 40, 41],
+    "bot": "Based on their portfolio, I would go with candidate 41."
+  }
+]

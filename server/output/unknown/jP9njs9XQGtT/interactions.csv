@@ -1,0 +1,5 @@
+sid,processed_at,inputs
+6WQRP2AF3N6GzBVnAAAF,1618034157,"{'participantId': 'jP9njs9XQGtT', 'appMode': 'practice', 'interactionAt': 1618034158258, 'interactionType': 'init_app', 'currentScenario': -1, 'selectedId': -1, 'recommendationShown': False}"
+6WQRP2AF3N6GzBVnAAAF,1618034231,"{'participantId': 'jP9njs9XQGtT', 'appMode': 'practice', 'interactionAt': 1618034231868, 'interactionType': 'card_clicked', 'currentScenario': 0, 'selectedId': 2, 'recommendationShown': False}"
+6WQRP2AF3N6GzBVnAAAF,1618034233,"{'participantId': 'jP9njs9XQGtT', 'appMode': 'practice', 'interactionAt': 1618034233939, 'interactionType': 'save_selection', 'currentScenario': 0, 'selectedId': 2, 'recommendationShown': False}"
+6WQRP2AF3N6GzBVnAAAF,1618034257,"{'participantId': 'jP9njs9XQGtT', 'appMode': 'practice', 'interactionAt': 1618034257478, 'interactionType': 'close_app', 'currentScenario': -1, 'selectedId': -1, 'recommendationShown': False}"

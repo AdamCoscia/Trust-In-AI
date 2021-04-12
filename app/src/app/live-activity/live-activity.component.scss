@@ -1,3 +1,36 @@
 .min-width {
-  min-width: 300px;
+  min-width: 768px;
+}
+
+.card-grid {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+  grid-gap: 1rem;
+}
+
+.card {
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  cursor: pointer;
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -o-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+.card-selected {
+  border-color: green;
+  border-width: 4px;
+}
+
+.card-unselected {
+  border-color: lightgray;
+  border-width: 1px;
+}
+
+.card-image {
+  border: none;
 }

@@ -1,47 +1,92 @@
-<div class="page-header text-center min-width">
-  <h2 *ngIf="unableToLoad">Something went wrong.</h2>
-  <h2 *ngIf="!unableToLoad">Thank You!</h2>
-</div>
+<!-- UNABLE TO LOAD -->
+<ng-container *ngIf="unableToLoad">
+  <!-- HEADER -->
+  <div class="container page-header min-width">
+    <div class="row">
+      <div class="col text-center">
+        <h2>Something went wrong.</h2>
+      </div>
+    </div>
+  </div>
 
-<!-- Unable to load the correct appMode -->
-<div *ngIf="unableToLoad" class="container h-full min-width">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="alert alert-warning text-center">
-        <div>
+  <!-- BODY -->
+  <div class="container min-width">
+    <div class="row">
+      <div class="col">
+        <div class="alert alert-warning text-center">
+          <p>We apologize for the inconvenience. The application has been reset and cannot continue.</p>
           <p>
-            We apologize for the inconvenience. The application has been reset in the middle of the study and cannot
-            continue.
-          </p>
-          <span>
             Please <strong>contact</strong> Adam Coscia at
             <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-            to let us know what happened. Please include the approximate time this failure occured.
-          </span>
+            to let us know what happened and include the approximate time this failure occured. Then close this page.
+          </p>
+          <strong>Do NOT attempt to redo this study.</strong>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
 
-<!-- Load the page -->
-<div *ngIf="!unableToLoad" class="container h-full min-width">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="alert alert-warning text-center">
-        <h2 style="color: red"><strong>BEFORE YOU GO</strong></h2>
-      </div>
-
-      <div class="text-center" style="width: 90%; margin-left: auto; margin-right: auto; margin-bottom: 1rem">
-        <span>
-          Please email the following <strong>unique</strong> completion code Adam Coscia at
-          <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>.
-        </span>
-      </div>
-
-      <div class="alert alert-info text-center">
-        <strong style="color: red">{{ session.participantId }}</strong>
+<!-- APPLICATION CAN LOAD -->
+<ng-container *ngIf="!unableToLoad">
+  <!-- WHILE APP IS NOT CONNECTED DISPLAY THIS -->
+  <ng-container *ngIf="!socketConnected">
+    <!-- HEADER -->
+    <div class="container page-header text-center min-width">
+      <div class="row">
+        <div class="col text-center">
+          <h2>Connecting...</h2>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
+    <!-- BODY -->
+    <div class="container min-width">
+      <div class="row">
+        <div class="col">
+          <div class="alert alert-info text-center">
+            Please wait while the application establishes a connection to our server...
+          </div>
+          <br />
+          <div class="alert alert-warning text-center">
+            <p>Please <strong>DO NOT</strong> refresh the page during this process.</p>
+            <p><strong>Note: This may take 2-3 minutes, depending on your internet connection speed.</strong></p>
+            <p>
+              If the application does not load after 3 minutes, please <strong>contact</strong> Adam Coscia at
+              <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+              to let us know what happened and include the approximate time this failure occured. Then close this page.
+            </p>
+            <strong>Do NOT attempt to redo this study.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- ONCE APP IS CONNECTED DISPLAY THIS -->
+  <ng-container *ngIf="socketConnected">
+    <!-- HEADER -->
+    <div class="container page-header min-width">
+      <div class="row">
+        <div class="col text-center">
+          <h2>Thank You!</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div *ngIf="!unableToLoad" class="container min-width">
+      <div class="row">
+        <div class="col">
+          <div class="alert alert-info text-center">
+            <p>
+              If you'd like to learn more about this study, please <strong>contact</strong> Adam Coscia at
+              <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+            </p>
+            <strong>You may now close this page.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

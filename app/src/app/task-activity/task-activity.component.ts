@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 // local
-import { SessionPage } from "../models/config";
+import { SessionPage, AppConfig } from "../models/config";
 import { UtilsService } from "../services/utils.service";
 
 window.addEventListener("beforeunload", function (e) {
@@ -19,8 +19,10 @@ window.addEventListener("beforeunload", function (e) {
   styleUrls: ["./task-activity.component.scss"],
 })
 export class TaskActivityComponent implements OnInit {
+  appConfig: any;
   capitalize: any;
   unableToLoad: any;
+  assets: any;
 
   constructor(
     public session: SessionPage,
@@ -28,20 +30,22 @@ export class TaskActivityComponent implements OnInit {
     private titleService: Title,
     private utilsService: UtilsService
   ) {
+    this.appConfig = AppConfig; // for use in HTML
     this.capitalize = this.utilsService.capitalize; // for use in the HTML
   }
 
   ngOnInit(): void {
     this.unableToLoad = true; // assume unable to load until all parameters can be verified
+    this.assets = this.appConfig[this.session.appMode]; // get task assets
     if (this.session.appOrder && this.session.appType) {
       switch (this.session.appMode) {
-        case "service":
-          this.unableToLoad = false;
-          this.titleService.setTitle("Service");
+        case "hiring":
+          this.unableToLoad = false; // load the app!
+          this.titleService.setTitle("Hiring");
           break;
-        case "cooking":
-          this.unableToLoad = false;
-          this.titleService.setTitle("Cooking");
+        case "movies":
+          this.unableToLoad = false; // load the app!
+          this.titleService.setTitle("Movies");
           break;
         case "practice":
           this.titleService.setTitle("Error");
@@ -55,15 +59,32 @@ export class TaskActivityComponent implements OnInit {
     }
   }
 
+  getReviews() {
+    // collect reviews
+    let allReviews = this.assets.task.reviews;
+    let reviews = [];
+    if (this.session.appType == "BOTH") {
+      reviews = [...allReviews["BTWN"], ...allReviews["WTHN"]];
+    } else {
+      reviews = allReviews[this.session.appType];
+    }
+    // randomly sort them
+    for (let i = reviews.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [reviews[i], reviews[j]] = [reviews[j], reviews[i]];
+    }
+    return reviews;
+  }
+
   next() {
     switch (this.session.appMode) {
-      case "service":
-        this.session.task_service.complete(new Date().getTime());
-        this.router.navigateByUrl("/live-service");
+      case "hiring":
+        this.session.task_hiring.complete(new Date().getTime());
+        this.router.navigateByUrl("/live-hiring");
         break;
-      case "cooking":
-        this.session.task_cooking.complete(new Date().getTime());
-        this.router.navigateByUrl("/live-cooking");
+      case "movies":
+        this.session.task_movies.complete(new Date().getTime());
+        this.router.navigateByUrl("/live-movies");
         break;
     }
   }

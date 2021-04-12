@@ -4,66 +4,99 @@
 </div>
 
 <!-- Unable to load the correct appMode -->
-<div *ngIf="unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
+<div *ngIf="unableToLoad" class="container min-width">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning text-center">
-        <div>
-          <p>
-            We apologize for the inconvenience. The application has been reset in the middle of the study and cannot
-            continue.
-          </p>
-          <span>
-            Please <strong>contact</strong> Adam Coscia at
-            <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-            to let us know what happened. Please include the approximate time this failure occured.
-          </span>
-        </div>
+        <p>We apologize for the inconvenience. The application has been reset and cannot continue.</p>
+        <p>
+          Please <strong>contact</strong> Adam Coscia at
+          <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+          to let us know what happened and include the approximate time this failure occured. Then close this page.
+        </p>
+        <strong>Do NOT attempt to redo this study.</strong>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SERVICE TASK -->
-<div *ngIf="!unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
-  <div *ngIf="session.appMode == 'service'" class="row">
-    <div class="col-md-12">
-      <p>Service Task Description</p>
-
-      <h5 class="text-center">Your Task</h5>
-
-      <div class="alert alert-info">Instructions</div>
-    </div>
-  </div>
-
-  <!-- COOKING TASK -->
-  <div *ngIf="session.appMode == 'cooking'" class="row">
-    <div class="col-md-12">
-      <p>Cooking Task Description</p>
-
-      <h5 class="text-center">Your Task</h5>
-
-      <div class="alert alert-info">Instructions</div>
-    </div>
-  </div>
-
-  <hr />
-
+<!-- Load the task description, instructions and possible reviews -->
+<div *ngIf="!unableToLoad" class="container min-width">
   <div class="row">
-    <div class="col-md-12">
-      <h5 class="text-center">Ready?</h5>
-      <div class="alert alert-warning">
-        <div class="row flex-nowrap">
-          <div class="col-md-11 text-center center-all">
-            <span>
-              Please complete the entire study in one session. Do not press the <strong>back</strong> or
-              <strong>forward</strong> buttons, or <strong>refresh</strong> any pages in the application, until you have
-              reached the 'Thank You' page at the end of the study. Click the <strong>Begin Task</strong> button at
-              right to continue!
-            </span>
+    <div class="col">
+      <!-- DESCRIPTION -->
+      <p>{{ assets.task.description }}</p>
+
+      <!-- INSTRUCTIONS -->
+      <div>
+        <!-- HEADER -->
+        <h5 class="text-center">Your Task</h5>
+
+        <!-- CONTENT -->
+        <div class="alert alert-info">
+          <!-- ALL CONDITIONS -->
+          <p>{{ assets.task.instructions.overview }}</p>
+
+          <!-- CONDITION-SPECIFIC -->
+          <p>{{ assets.task.instructions[session.appType] }}</p>
+
+          <!-- Intervention ONLY -->
+          <p *ngIf="['BTWN', 'WTHN', 'BOTH'].indexOf(session.appType) !== -1">
+            Below are a set of reviews about the AI we chose to include in the study. These reviews were collected to
+            provide more information about the AI. Potentially identifiable information from these reviews has been
+            anonymized to protect privacy. We hope these reviews help you in your decision-making process.
+          </p>
+
+          <!-- ALL CONDITIONS -->
+          <span>However, you are not required to use the AI at any point during the task.</span>
+        </div>
+      </div>
+
+      <!-- REVIEWS (Intervention ONLY) -->
+      <div *ngIf="['BTWN', 'WTHN', 'BOTH'].indexOf(session.appType) !== -1">
+        <!-- HEADER -->
+        <h5 class="text-center">Reviews</h5>
+
+        <!-- CARDS -->
+        <div class="card-grid text-center">
+          <div *ngFor="let r of getReviews()" class="card">
+            <h5 class="card-header">{{ r.author }}</h5>
+            <div class="card-body">
+              <p>
+                <span *ngIf="r.type == 'company'">{{ r.format }}</span>
+                <span *ngIf="r.type == 'user'">{{ r.job }}</span>
+                <br />
+                <span>{{ r.date }}</span>
+              </p>
+              <p>
+                <i>"{{ r.body }}"</i>
+              </p>
+            </div>
           </div>
-          <div class="col-md-1 center-all">
-            <button (click)="next()" class="btn btn-sm btn-outline-dark">Begin Task</button>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- READY -->
+      <div>
+        <!-- HEADER -->
+        <h5 class="text-center">Ready?</h5>
+
+        <!-- CONTENT -->
+        <div class="alert alert-warning">
+          <div class="row flex-nowrap">
+            <div class="col-10 col-md-11 text-center center-all">
+              <span>
+                Please complete the entire study in one session. Do not press the <strong>back</strong> or
+                <strong>forward</strong> buttons, or <strong>refresh</strong> any pages in the application, until you
+                have reached the 'Thank You' page at the end of the study. Click the <strong>Begin Task</strong> button
+                at right to continue!
+              </span>
+            </div>
+            <div class="col-2 col-md-1 center-all">
+              <button (click)="next()" class="btn btn-sm btn-outline-dark">Begin Task</button>
+            </div>
           </div>
         </div>
       </div>

@@ -8,44 +8,37 @@ export class ChatService {
   page: any;
 
   constructor(private socket: Socket) {
-    this.socket.on("connect", () => {
-      // once connection is established, load the page
-      this.page.socketConnected = true;
-      this.page.socketOnConnect();
-    });
+    let context = this;
+    // call method attached to page that sent the connection request
+    context.socket.on("connect", () => context.page.socketOnConnect());
+    // NOTE: ensure any Observables created are UNSUBSCRIBED before disconnecting!!
+    context.socket.on("disconnect", () => context.socket.removeAllListeners());
   }
 
   connectToSocket(app: any) {
     this.page = app; // save reference to page
-    this.socket.connect();
+    this.socket.connect(); // connect to socket
   }
 
-  removeAllListenersAndDisconnectFromSocket() {
-    this.socket.removeAllListeners();
-    this.socket.disconnect();
+  disconnectFromSocket() {
+    this.socket.disconnect(); // disconnect from socket
   }
 
-  sendInteractionResponse(payload: any) {
-    this.socket.emit("on_interaction", payload);
+  /**
+   * Registers event listener for event and returns `Observable` for event.
+   * @param evt Name of event to listen for.
+   * @returns `Observable` for event that you can subscribe to.
+   */
+  registerEventHandler(evt: string) {
+    return this.socket.fromEvent(evt).pipe(map((data) => data));
   }
 
-  getInteractionResponse() {
-    return this.socket.fromEvent("interaction_response").pipe(map((data) => data));
-  }
-
-  sendMessageToSaveSessionLog(data: any, pid: any) {
-    let payload = {
-      log: data,
-      pid: pid,
-    };
-    this.socket.emit("save_session_log", payload);
-  }
-
-  sendMessageToSaveSelectionLog(data: any, pid: any) {
-    let payload = {
-      log: data,
-      pid: pid,
-    };
-    this.socket.emit("save_selection_log", payload);
+  /**
+   * Sends `payload` to server routine specified by `evt`.
+   * @param evt Event name specifying server operation to perform.
+   * @param payload Data to send to server.
+   */
+  sendMessage(evt: string, payload: any) {
+    this.socket.emit(evt, payload);
   }
 }

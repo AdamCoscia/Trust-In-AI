@@ -1,18 +1,15 @@
-img {
-  max-height: 90%;
-  max-width: 90%;
-}
-
 .min-width {
   min-width: 559px;
 }
 
-.darken {
-  background: linear-gradient(rgba(0, 0, 0, 0.075), rgba(0, 0, 0, 0.075));
+.card-grid {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+  grid-gap: 1rem;
 }
 
-.center-all {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }

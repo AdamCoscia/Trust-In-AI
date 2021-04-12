@@ -1,7 +1,12 @@
-// libraries
+// global
 import { Injectable } from "@angular/core";
 // local
 import { UtilsService } from "../services/utils.service";
+import practiceScenarios from "../../assets/practice/scenarios.json";
+import hiringTask from "../../assets/hiring/task.json";
+import hiringScenarios from "../../assets/hiring/scenarios.json";
+import moviesTask from "../../assets/movies/task.json";
+import moviesScenarios from "../../assets/movies/scenarios.json";
 
 var UtilsServiceObj = new UtilsService();
 var participantId = UtilsServiceObj.generateRandomUniqueString(12);
@@ -36,10 +41,10 @@ export class SessionPage {
   background: any;
   live_practice: any;
   presurvey: any;
-  task_service: any;
-  live_service: any;
-  task_cooking: any;
-  live_cooking: any;
+  task_hiring: any;
+  live_hiring: any;
+  task_movies: any;
+  live_movies: any;
   postsurvey: any;
   thanks: any;
 
@@ -47,7 +52,7 @@ export class SessionPage {
     // ids
     this.participantId = participantId; // 12 character long unique identifier
     // conditions
-    this.appOrder = []; // Order of Tasks, e.g., {practice, service, cooking}
+    this.appOrder = []; // Order of Tasks, e.g., {practice, hiring, movies}
     this.appType = ""; // Condition {CTRL, WTHN, BTWN, BOTH}
     // states
     this.appMode = ""; // Current Task
@@ -57,10 +62,10 @@ export class SessionPage {
     this.background = new PageRecord();
     this.live_practice = new PageRecord();
     this.presurvey = new PageRecord();
-    this.task_service = new PageRecord();
-    this.live_service = new PageRecord();
-    this.task_cooking = new PageRecord();
-    this.live_cooking = new PageRecord();
+    this.task_hiring = new PageRecord();
+    this.live_hiring = new PageRecord();
+    this.task_movies = new PageRecord();
+    this.live_movies = new PageRecord();
     this.postsurvey = new PageRecord();
     this.thanks = new PageRecord();
   }
@@ -68,15 +73,34 @@ export class SessionPage {
 
 export const DeploymentConfig = Object.freeze({
   SERVER_URL: "https://cs6795-group-project-server.herokuapp.com/",
-  // SERVER_URL: "https://localhost:3000",
+  // SERVER_URL: "http://localhost:3000",
 });
 
 /**
- * SUPPORTED INTERACTION TYPES
+ * INTERACTION TYPES
  */
-export const enum InteractionTypes {
-  TEST_INTERACTION = "test_interaction",
-}
+export const InteractionTypes = Object.freeze({
+  INITIALIZE_APP: "init_app",
+  CARD_CLICKED: "card_clicked",
+  GET_RECOMMENDATION: "get_recommendation",
+  SAVE_SELECTION: "save_selection",
+  CONTINUE: "continue",
+  CLOSE_APP: "close_app",
+});
+
+/**
+ * SERVER EVENT TYPES
+ */
+export const EventTypes = Object.freeze({
+  CONNECT: "connect",
+  DISCONNECT: "disconnect",
+  SAVE_SESSION_LOG: "save_session_log",
+  SAVE_SELECTION_LOG: "save_selection_log",
+  GET_NEW_APP_STATE: "get_new_app_state",
+  NEW_APP_STATE_RESPONSE: "new_app_state_response",
+  ON_INTERACTION: "on_interaction",
+  INTERACTION_RESPONSE: "interaction_response",
+});
 
 /**
  * APPLICATION-SPECIFIC SETTINGS
@@ -88,18 +112,51 @@ export const AppConfig: any = {
   continueCode: {
     "background-activity": "qp5mz",
     "pre-survey-activity": "8sb34",
-    "post-survey-activity": "l3h0a",
+    "post-survey-activity": "e3h0a",
   },
   /**
    * URLs for embedded Qualtrics surveys.
    */
-  backgroundSurveyURL: "", // TODO
-  preSurveyURL: "", // TODO
+  backgroundSurveyURL: "https://gatech.co1.qualtrics.com/jfe/form/SV_7OIzFHat7ALsmZo",
+  preSurveyURL: "https://gatech.co1.qualtrics.com/jfe/form/SV_6zdbHRJf6D2NKDA",
   postSurveyURL: {
-    CTRL: "", // TODO
-    WTHN: "", // TODO
-    BTWN: "", // TODO
-    BOTH: "", // TODO
+    CTRL: "https://gatech.co1.qualtrics.com/jfe/form/SV_cvxQpGOAeYHHlhY",
+    WTHN: "https://gatech.co1.qualtrics.com/jfe/form/SV_0wVgA6nk0lY5x6m",
+    BTWN: "https://gatech.co1.qualtrics.com/jfe/form/SV_0wVgA6nk0lY5x6m",
+    BOTH: "https://gatech.co1.qualtrics.com/jfe/form/SV_0wVgA6nk0lY5x6m",
+  },
+  /**
+   * PRACTICE MODE
+   */
+  practice: {
+    dir: "assets/practice",
+    cards: [1, 2, 3],
+    scenarios: practiceScenarios,
+    title: "Grocery Store",
+  },
+  /**
+   * hiring MODE
+   */
+  hiring: {
+    dir: "assets/hiring",
+    cards: Array.apply(null, Array(50)).map(function (_, i) {
+      return i + 1;
+    }),
+    task: hiringTask,
+    scenarios: hiringScenarios,
+    title: "candidate",
+  },
+  /**
+   * movies MODE
+   */
+  movies: {
+    dir: "assets/movies",
+    cards: Array.apply(null, Array(49)).map(function (_, i) {
+      return i + 1;
+    }),
+    task: moviesTask,
+    scenarios: moviesScenarios,
+    title: "movie",
   },
 };
 
@@ -107,5 +164,31 @@ export const AppConfig: any = {
  * USER-SPECIFIC SETTINGS
  */
 export var UserConfig: any = {
-  // TODO
+  /**
+   * PRACTICE MODE
+   */
+  practice: {
+    participantId: participantId,
+    appMode: "practice",
+    appType: "",
+    selections: [],
+  },
+  /**
+   * hiring MODE
+   */
+  hiring: {
+    participantId: participantId,
+    appMode: "hiring",
+    appType: "",
+    selections: [],
+  },
+  /**
+   * movies MODE
+   */
+  movies: {
+    participantId: participantId,
+    appMode: "movies",
+    appType: "",
+    selections: [],
+  },
 };

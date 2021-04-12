@@ -1,0 +1,58 @@
+{
+  "description": "Hi! You have been hired to select movies that will be shown at your local cinema. You will go through multiple rounds of selection where you will be asked to select a single movie out of a set of choices to be added to the cinema's catalog.",
+  "instructions": {
+    "overview": "For each round, please review each movie's metrics. These metrics are the indicators that the cinema believes predict whether a movie will be popular and turn a profit. Using the provided information, please decide which movies should be included in the catalog to the best of your ability. Your choices in each round will be used to assess and rank your overall performance, so use your best judgement in every decision.",
+    "CTRL": "You won't be alone; we have provided an AI assistant that has been trained to use a movie's metrics as well as the success of the cinema's past catalogs to give you its recommendation.",
+    "BTWN": "You won't be alone; we have provided an AI assistant that has been trained to use a movie's metrics as well as the success of the cinema's past catalogs to give you its recommendation.",
+    "WTHN": "You won't be alone; we have provided an AI assistant that has been trained to use a movie's metrics as well as the success of the cinema's past catalogs to give you its recommendation.",
+    "BOTH": "You won't be alone; we have provided an AI assistant that has been trained to use a movie's metrics as well as the success of the cinema's past catalogs to give you its recommendation."
+  },
+  "reviews": {
+    "BTWN": [
+      {
+        "type": "company",
+        "author": "aigeekweek.com",
+        "date": "03/08/2020",
+        "format": "Blog Post",
+        "body": "An excellent tool ... like a spiritual successor to Netflix's recommendation technology."
+      },
+      {
+        "type": "company",
+        "author": "'Tech Now' E-Zine",
+        "date": "08/31/2020",
+        "format": "Newsletter",
+        "body": "This 'assistant', like Google Maps, really shows the great things AI tools are capable of."
+      },
+      {
+        "type": "company",
+        "author": "bizreview.org",
+        "date": "01/23/2020",
+        "format": "Product Review",
+        "body": "Sometimes it feels like this AI knows movies better than people do ... watch out, Hulu!"
+      }
+    ],
+    "WTHN": [
+      {
+        "type": "user",
+        "author": "Nick V.",
+        "date": "05/10/2020",
+        "job": "Movie Theater Owner",
+        "body": "Saved my business a lot of unnecessary purchases ... can't imagine operating without it."
+      },
+      {
+        "type": "user",
+        "author": "Helen T.",
+        "date": "11/12/2020",
+        "job": "Investor",
+        "body": "I didn't expect it to be so effective!"
+      },
+      {
+        "type": "user",
+        "author": "Jim D.",
+        "date": "03/30/2020",
+        "job": "Movie Theater Operator",
+        "body": "It helped me pick some hidden movie gems I would have otherwise missed ... definitely improved our final catalog."
+      }
+    ]
+  }
+}

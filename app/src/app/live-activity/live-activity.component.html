@@ -3,28 +3,24 @@
   <!-- HEADER -->
   <div class="container page-header min-width">
     <div class="row">
-      <div class="col-md-12 text-center">
+      <div class="col text-center">
         <h2>Something went wrong.</h2>
       </div>
     </div>
   </div>
 
   <!-- BODY -->
-  <div class="container h-full min-width">
+  <div class="container min-width">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col">
         <div class="alert alert-warning text-center">
-          <div>
-            <p>
-              We apologize for the inconvenience. The application has been reset in the middle of the study and cannot
-              continue.
-            </p>
-            <span>
-              Please <strong>contact</strong> Adam Coscia at
-              <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-              to let us know what happened. Please include the approximate time this failure occured.
-            </span>
-          </div>
+          <p>We apologize for the inconvenience. The application has been reset and cannot continue.</p>
+          <p>
+            Please <strong>contact</strong> Adam Coscia at
+            <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+            to let us know what happened and include the approximate time this failure occured. Then close this page.
+          </p>
+          <strong>Do NOT attempt to redo this study.</strong>
         </div>
       </div>
     </div>
@@ -38,16 +34,16 @@
     <!-- HEADER -->
     <div class="container page-header text-center min-width">
       <div class="row">
-        <div class="col-md-12 text-center">
+        <div class="col text-center">
           <h2>Connecting...</h2>
         </div>
       </div>
     </div>
 
     <!-- BODY -->
-    <div class="container h-full min-width">
+    <div class="container min-width">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col">
           <div class="alert alert-info text-center">
             Please wait while the application establishes a connection to our server...
           </div>
@@ -55,11 +51,12 @@
           <div class="alert alert-warning text-center">
             <p>Please <strong>DO NOT</strong> refresh the page during this process.</p>
             <p><strong>Note: This may take 2-3 minutes, depending on your internet connection speed.</strong></p>
-            <span>
+            <p>
               If the application does not load after 3 minutes, please <strong>contact</strong> Adam Coscia at
               <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-              to let us know what happened. Please include the approximate time this failure occured.
-            </span>
+              to let us know what happened and include the approximate time this failure occured. Then close this page.
+            </p>
+            <strong>Do NOT attempt to redo this study.</strong>
           </div>
         </div>
       </div>
@@ -81,25 +78,139 @@
     </div>
 
     <!-- BODY -->
-    <div class="container h-full min-width">
-      <!-- PRACTICE TASK -->
-      <div *ngIf="session.appMode == 'practice'" class="row">
-        <div class="col-md-12">
-          <p>Practice Task - Coming Soon</p>
-        </div>
-      </div>
+    <div class="container min-width">
+      <div class="row">
+        <div class="col">
+          <!-- INSTRUCTIONS: PRACTICE -->
+          <div *ngIf="session.appMode == 'practice'">
+            <div class="alert alert-info">
+              This is an example of a decision-making task you will be performing during the study.
+            </div>
 
-      <!-- SERVICE TASK -->
-      <div *ngIf="session.appMode == 'service'" class="row">
-        <div class="col-md-12">
-          <p>Service Task - Coming Soon</p>
-        </div>
-      </div>
+            <ul>
+              <li>
+                Below are performance metrics for {{ assets.scenarios[currentScenario].choices.length }} fictitious
+                grocery stores. Your task is to choose what you feel is the <strong>best</strong> grocery store based on
+                these metrics.
+              </li>
+              <li>
+                You can optionally choose to get a <strong>recommendation</strong> from our AI before submitting by
+                clicking the <i>"Recommend"</i> button.
+              </li>
+              <li>
+                When you are comfortable with your selection, click the <i>"Save"</i> button. One of two things will
+                happen next:
+                <ol>
+                  <li>
+                    If you did <strong>not</strong> get a recommendation before clicking the <i>"Save"</i> button, the
+                    AI will then make a recommendation for you; in other words, allowing you to see what the AI would
+                    have said during a given round, but not allowing you to change your response. You will then be able
+                    to click a <i>"Continue"</i> button to move on to the next round of choices.
+                  </li>
+                  <li>
+                    If you did get a recommendation before clicking the <i>"Save"</i> button, the interface will simply
+                    load the next round of choices for you.
+                  </li>
+                </ol>
+              </li>
+              <li>
+                During the real tasks, clicking the <i>"Save"</i> or <i>"Continue"</i> buttons will bring up another
+                round of choices, as the task requires, until no more rounds remain. For now, only one round will be
+                presented.
+              </li>
+              <li>
+                Once your selection during the final round has been saved, the <i>"Finish"</i> button in the top-right
+                corner will become active, allowing you to move on to the next task.
+              </li>
+            </ul>
+          </div>
 
-      <!-- COOKING TASK -->
-      <div *ngIf="session.appMode == 'cooking'" class="row">
-        <div class="col-md-12">
-          <p>Cooking Task - Coming Soon</p>
+          <!-- TASK INCOMPLETE -->
+          <ng-container *ngIf="!taskComplete">
+            <!-- INSTRUCTIONS: LIVE -->
+            <div *ngIf="session.appMode !== 'practice'">
+              <div class="alert alert-info text-center">
+                <strong>Task {{ currentScenario + 1 }}&nbsp;/&nbsp;{{ assets.scenarios.length }}:&nbsp;</strong>
+                <i>
+                  Please choose 1 out of the {{ assets.scenarios[currentScenario].choices.length }} {{ assets.title }}s
+                  below.
+                </i>
+              </div>
+            </div>
+
+            <!-- OPTIONS -->
+            <div class="alert alert-warning">
+              <div class="row">
+                <!-- NOT REVIEWING RECOMMENDATION -->
+                <ng-container *ngIf="!reviewingRecommendation">
+                  <!-- LEFT COL: RECOMMENDATION -->
+                  <div class="col-6 center-all text-center" style="border-right: 1px solid lightgrey">
+                    <div class="col-8 center-all text-center">
+                      <strong>Recommend a {{ assets.title }}:</strong>
+                    </div>
+                    <div class="col-4 center-all">
+                      <button [disabled]="loadingRecommendation || showingRecommendation || taskComplete"
+                        (click)="getRecommendation(true)" class="btn btn-sm btn-outline-dark">
+                        Recommend
+                      </button>
+                    </div>
+                  </div>
+                  <!-- RIGHT COL: SAVE SELECTION -->
+                  <div class="col-6 center-all text-center" style="border-left: 1px solid lightgrey">
+                    <div class="col-8 center-all text-center">
+                      <strong>Save selected {{ assets.title }}:</strong>
+                    </div>
+                    <div class="col-4 center-all">
+                      <button [disabled]="selectedId == -1 || taskComplete" (click)="saveSelection()"
+                        class="btn btn-sm btn-outline-dark">
+                        {{ taskComplete ? "Saved" : "Save" }}
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <!-- REVIEWING RECOMMENDATION -->
+                <ng-container *ngIf="reviewingRecommendation">
+                  <div class="col-6 v-center h-right" style="padding-right: 1.5rem">
+                    <strong>Next Round:</strong>
+                  </div>
+                  <div class="col-6 v-center h-left" style="padding-left: 1.5rem">
+                    <button [disabled]="loadingRecommendation" (click)="nextRound()"
+                      class="btn btn-sm btn-outline-dark">
+                      Continue
+                    </button>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <!-- RECOMMENDATION -->
+            <div *ngIf="loadingRecommendation" class="alert alert-info text-center" style="margin-bottom: 0">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <div *ngIf="showingRecommendation" class="alert alert-info text-center" style="margin-bottom: 0">
+              <strong>AI recommendation:&nbsp;</strong><i>"{{ assets.scenarios[currentScenario].bot }}"</i>
+            </div>
+
+            <!-- SELECTIONS -->
+            <div class="card-grid text-center">
+              <div *ngFor="let c of getCards()" class="card" [id]="getCardId(c.id)"
+                [ngClass]="c.id == selectedId ? 'card-selected' : 'card-unselected'"
+                (click)="!(reviewingRecommendation || taskComplete) && onSelectCard($event, c.id)">
+                <h5 class="card-header">{{ capitalize(assets.title) }}&nbsp;{{ c.id }}</h5>
+                <img class="img-thumbnail card-image" [src]="c.filepath" />
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- TASK COMPLETE -->
+          <ng-container *ngIf="taskComplete">
+            <div class="alert alert-info">
+              Task complete! Please click the <i>"Finish"</i> button in the top-right corner to continue.
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>

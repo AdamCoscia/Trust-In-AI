@@ -1,5 +1,7 @@
-// libraries
+// global
 import { Injectable } from "@angular/core";
+// local
+import { Message } from "../models/message";
 
 @Injectable()
 export class UtilsService {
@@ -32,5 +34,22 @@ export class UtilsService {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
+  }
+
+  /**
+   * Creates message object to send to server for logging.
+   * @param app Application class instance.
+   * @returns Message object to populate.
+   */
+  initializeNewMessage(app: any) {
+    let message = new Message();
+    (message.participantId = app.session.participantId),
+      (message.appMode = app.session.appMode),
+      (message.interactionAt = app.utilsService.getCurrentTime()),
+      (message.interactionType = ""),
+      (message.currentScenario = -1),
+      (message.selectedId = -1),
+      (message.recommendationShown = false);
+    return message;
   }
 }

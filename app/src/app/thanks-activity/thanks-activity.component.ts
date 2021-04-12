@@ -2,8 +2,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 // local
-import { SessionPage } from "../models/config";
 import { ChatService } from "../services/socket.service";
+import { SessionPage, EventTypes } from "../models/config";
 
 window.addEventListener("beforeunload", function (e) {
   // Cancel the event
@@ -16,6 +16,7 @@ window.addEventListener("beforeunload", function (e) {
   selector: "app-thanks-activity",
   templateUrl: "./thanks-activity.component.html",
   styleUrls: ["./thanks-activity.component.scss"],
+  providers: [ChatService],
 })
 export class ThanksActivityComponent implements OnInit {
   unableToLoad: any;
@@ -39,8 +40,16 @@ export class ThanksActivityComponent implements OnInit {
    * Called by chatService when connection is established.
    */
   socketOnConnect(): void {
+    // record page complete
     this.session.thanks.complete(new Date().getTime());
-    this.chatService.sendMessageToSaveSessionLog(this.session, this.session["participantId"]);
-    this.chatService.removeAllListenersAndDisconnectFromSocket();
+    // save message to save the session log to redis
+    this.chatService.sendMessage(EventTypes.SAVE_SESSION_LOG, {
+      log: this.session,
+      pid: this.session["participantId"],
+    });
+    // disconnect from socket
+    this.chatService.disconnectFromSocket();
+    // load the page
+    this.socketConnected = true;
   }
 }

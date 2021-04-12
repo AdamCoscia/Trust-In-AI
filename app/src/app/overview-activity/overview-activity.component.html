@@ -3,27 +3,23 @@
   <h2 *ngIf="!unableToLoad">Overview</h2>
 </div>
 
-<div *ngIf="unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
+<div *ngIf="unableToLoad" class="container min-width" style="padding-bottom: 15px">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-warning text-center">
-        We apologize for the inconvenience. The application may have been refreshed, reset, or navigated in an
-        unauthorized way. The application cannot continue.
-        <br />
-        <br />
-        Please close this page and click on the link provided for this study and start the assignment over from the
-        beginning.
-        <br />
-        <br />
-        If you reach this page multiple times, please contact Adam Coscia at
-        <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-        to let us know what happened and close this page.
+        <p>We apologize for the inconvenience. The application has been reset and cannot continue.</p>
+        <p>
+          Please <strong>contact</strong> Adam Coscia at
+          <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+          to let us know what happened and include the approximate time this failure occured. Then close this page.
+        </p>
+        <strong>Do NOT attempt to redo this study.</strong>
       </div>
     </div>
   </div>
 </div>
 
-<div *ngIf="!unableToLoad" class="container h-full min-width" style="padding-bottom: 15px">
+<div *ngIf="!unableToLoad" class="container min-width" style="padding-bottom: 15px">
   <div class="row">
     <div class="col-md-12">
       <div class="alert alert-info text-center">
@@ -42,33 +38,28 @@
             <span>&nbsp;<strong>[1 min]</strong>&nbsp;Background questionnaire</span>
           </li>
           <li class="list-group-item">
-            <span>&nbsp;<strong>[3 min]</strong>&nbsp;Practice using the interface</span>
+            <span>&nbsp;<strong>[2 min]</strong>&nbsp;Practice using the interface</span>
           </li>
           <li class="list-group-item">
-            <span>&nbsp;<strong>[2 min]</strong>&nbsp;Pre-study questionnaire</span>
+            <span>&nbsp;<strong>[4 min]</strong>&nbsp;Pre-study questionnaire</span>
           </li>
           <li class="list-group-item">
-            <span>&nbsp;<strong>[6 min]</strong>&nbsp;{{ capitalize(session.appOrder[1]) }} task</span>
+            <span>&nbsp;<strong>[3 min]</strong>&nbsp;{{ capitalize(session.appOrder[1]) }} task</span>
           </li>
           <li class="list-group-item">
-            <span>&nbsp;<strong>[6 min]</strong>&nbsp;{{ capitalize(session.appOrder[2]) }} task </span>
+            <span>&nbsp;<strong>[3 min]</strong>&nbsp;{{ capitalize(session.appOrder[2]) }} task </span>
           </li>
           <li class="list-group-item">
-            <span>&nbsp;<strong>[2 min]</strong>&nbsp;Post-study questionnaire</span>
+            <span>&nbsp;<strong>[4 min]</strong>&nbsp;Post-study questionnaire</span>
           </li>
         </ol>
       </div>
-
-      <p>
-        The study will conclude by presenting you with a <strong>completion code</strong> that you must email back to us
-        at <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-      </p>
 
       <br />
 
       <div class="alert alert-warning">
         <div class="row flex-nowrap">
-          <div class="col-md-11 text-center center-all">
+          <div class="col-10 col-md-11 text-center center-all">
             <span>
               Please complete the entire study in one session. Do not press the <strong>back</strong> or
               <strong>forward</strong> buttons, or <strong>refresh</strong> any pages in the application, until you have
@@ -76,7 +67,7 @@
               continue!
             </span>
           </div>
-          <div class="col-md-1 center-all">
+          <div class="col-2 col-md-1 center-all">
             <button (click)="next()" class="btn btn-sm btn-outline-dark">Next</button>
           </div>
         </div>

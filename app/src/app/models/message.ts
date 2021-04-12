@@ -3,5 +3,7 @@ export class Message {
   appMode!: string;
   interactionAt!: number;
   interactionType!: string;
-  data!: object;
+  currentScenario!: number;
+  selectedId!: number;
+  recommendationShown!: boolean;
 }
