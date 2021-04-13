@@ -2,6 +2,7 @@
 """
 import json
 import os
+import secrets
 import time
 import urllib.parse as urlparse
 from itertools import cycle
@@ -11,18 +12,24 @@ import socketio
 from aiohttp import web
 from aiohttp_index import IndexMiddleware
 
-APP_STATES = cycle(
-    [
-        {"appOrder": ["practice", "movies", "hiring"], "appType": "CTRL"},
-        {"appOrder": ["practice", "movies", "hiring"], "appType": "BTWN"},
-        {"appOrder": ["practice", "hiring", "movies"], "appType": "BOTH"},
-        {"appOrder": ["practice", "hiring", "movies"], "appType": "CTRL"},
-        {"appOrder": ["practice", "movies", "hiring"], "appType": "WTHN"},
-        {"appOrder": ["practice", "hiring", "movies"], "appType": "BTWN"},
-        {"appOrder": ["practice", "hiring", "movies"], "appType": "WTHN"},
-        {"appOrder": ["practice", "movies", "hiring"], "appType": "BOTH"},
-    ]
-)
+# APP_STATES = [
+#     {"appOrder": ["practice", "movies", "hiring"], "appType": "CTRL"},
+#     {"appOrder": ["practice", "movies", "hiring"], "appType": "BTWN"},
+#     {"appOrder": ["practice", "hiring", "movies"], "appType": "BOTH"},
+#     {"appOrder": ["practice", "hiring", "movies"], "appType": "CTRL"},
+#     {"appOrder": ["practice", "movies", "hiring"], "appType": "WTHN"},
+#     {"appOrder": ["practice", "hiring", "movies"], "appType": "BTWN"},
+#     {"appOrder": ["practice", "hiring", "movies"], "appType": "WTHN"},
+#     {"appOrder": ["practice", "movies", "hiring"], "appType": "BOTH"},
+# ]
+
+APP_STATES = [
+    {"appOrder": ["practice", "hiring", "movies"], "appType": "BOTH"},
+    {"appOrder": ["practice", "hiring", "movies"], "appType": "CTRL"},
+    {"appOrder": ["practice", "hiring", "movies"], "appType": "BTWN"},
+    {"appOrder": ["practice", "hiring", "movies"], "appType": "WTHN"},
+]
+
 
 CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING = {}
 CLIENT_SOCKET_ID_PARTICIPANT_MAPPING = {}
@@ -96,7 +103,7 @@ async def get_new_app_state(sid, data):
     CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid
 
     # get next app state in the cycle
-    new_app_state = next(APP_STATES)
+    new_app_state = secrets.choice(APP_STATES)
     print(
         f" New Type/Order | SID: {sid} | PID: {pid} | appType: {new_app_state['appType']} | appOrder: {new_app_state['appOrder']}"
     )
