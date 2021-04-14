@@ -1,0 +1,14 @@
+task,appMode,selectedId,botChoice,recommendationShown,savedAt
+0,practice,2,2,False,1617901429590
+0,hiring,28,8,False,1617901578524
+1,hiring,4,1,False,1617901597278
+2,hiring,12,9,False,1617901616159
+3,hiring,18,13,False,1617901629320
+4,hiring,48,48,False,1617901640335
+5,hiring,37,45,False,1617901653722
+0,movies,2,12,False,1617901668742
+1,movies,6,6,False,1617901678603
+2,movies,45,45,False,1617901686496
+3,movies,48,20,False,1617901693365
+4,movies,10,15,False,1617901702400
+5,movies,40,47,False,1617901710066

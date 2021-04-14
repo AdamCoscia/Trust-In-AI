@@ -1,0 +1,186 @@
+{
+  "CTRL": {
+    "participants": [
+      "0jjk2LtlRwXu",
+      "BDIPCGcOdllu",
+      "fimUvwh9JPRU",
+      "jHPt9jOOmoXM",
+      "nyEXxPkdgP81",
+      "WvfHfFBIfx6m",
+      "YqgrTs5hzcsj"
+    ],
+    "0jjk2LtlRwXu": {
+      "interactions": "..\\output\\CTRL\\0jjk2LtlRwXu\\interactions.csv",
+      "selections": "..\\output\\CTRL\\0jjk2LtlRwXu\\selections.csv",
+      "session_log": "..\\output\\CTRL\\0jjk2LtlRwXu\\session_log.csv",
+      "file_unknown": []
+    },
+    "BDIPCGcOdllu": {
+      "interactions": "..\\output\\CTRL\\BDIPCGcOdllu\\interactions.csv",
+      "selections": "..\\output\\CTRL\\BDIPCGcOdllu\\selections.csv",
+      "session_log": "..\\output\\CTRL\\BDIPCGcOdllu\\session_log.csv",
+      "file_unknown": []
+    },
+    "fimUvwh9JPRU": {
+      "interactions": "..\\output\\CTRL\\fimUvwh9JPRU\\interactions.csv",
+      "selections": "..\\output\\CTRL\\fimUvwh9JPRU\\selections.csv",
+      "session_log": "..\\output\\CTRL\\fimUvwh9JPRU\\session_log.csv",
+      "file_unknown": []
+    },
+    "jHPt9jOOmoXM": {
+      "interactions": "..\\output\\CTRL\\jHPt9jOOmoXM\\interactions.csv",
+      "selections": "..\\output\\CTRL\\jHPt9jOOmoXM\\selections.csv",
+      "session_log": "..\\output\\CTRL\\jHPt9jOOmoXM\\session_log.csv",
+      "file_unknown": []
+    },
+    "nyEXxPkdgP81": {
+      "interactions": "..\\output\\CTRL\\nyEXxPkdgP81\\interactions.csv",
+      "selections": "..\\output\\CTRL\\nyEXxPkdgP81\\selections.csv",
+      "session_log": "..\\output\\CTRL\\nyEXxPkdgP81\\session_log.csv",
+      "file_unknown": []
+    },
+    "WvfHfFBIfx6m": {
+      "interactions": "..\\output\\CTRL\\WvfHfFBIfx6m\\interactions.csv",
+      "selections": "..\\output\\CTRL\\WvfHfFBIfx6m\\selections.csv",
+      "session_log": "..\\output\\CTRL\\WvfHfFBIfx6m\\session_log.csv",
+      "file_unknown": []
+    },
+    "YqgrTs5hzcsj": {
+      "interactions": "..\\output\\CTRL\\YqgrTs5hzcsj\\interactions.csv",
+      "selections": "..\\output\\CTRL\\YqgrTs5hzcsj\\selections.csv",
+      "session_log": "..\\output\\CTRL\\YqgrTs5hzcsj\\session_log.csv",
+      "file_unknown": []
+    }
+  },
+  "WTHN": {
+    "participants": ["6BSJnNllOaUQ", "8wC3YK6TgqRm", "db2aF23Z9hnH", "F0xDdtLRrhtQ", "nRJBgq4Tg2LG", "YvLb2lkRiYyh"],
+    "6BSJnNllOaUQ": {
+      "interactions": "..\\output\\WTHN\\6BSJnNllOaUQ\\interactions.csv",
+      "selections": "..\\output\\WTHN\\6BSJnNllOaUQ\\selections.csv",
+      "session_log": "..\\output\\WTHN\\6BSJnNllOaUQ\\session_log.csv",
+      "file_unknown": []
+    },
+    "8wC3YK6TgqRm": {
+      "interactions": "..\\output\\WTHN\\8wC3YK6TgqRm\\interactions.csv",
+      "selections": "..\\output\\WTHN\\8wC3YK6TgqRm\\selections.csv",
+      "session_log": "..\\output\\WTHN\\8wC3YK6TgqRm\\session_log.csv",
+      "file_unknown": []
+    },
+    "db2aF23Z9hnH": {
+      "interactions": "..\\output\\WTHN\\db2aF23Z9hnH\\interactions.csv",
+      "selections": "..\\output\\WTHN\\db2aF23Z9hnH\\selections.csv",
+      "session_log": "..\\output\\WTHN\\db2aF23Z9hnH\\session_log.csv",
+      "file_unknown": []
+    },
+    "F0xDdtLRrhtQ": {
+      "interactions": "..\\output\\WTHN\\F0xDdtLRrhtQ\\interactions.csv",
+      "selections": "..\\output\\WTHN\\F0xDdtLRrhtQ\\selections.csv",
+      "session_log": "..\\output\\WTHN\\F0xDdtLRrhtQ\\session_log.csv",
+      "file_unknown": []
+    },
+    "nRJBgq4Tg2LG": {
+      "interactions": "..\\output\\WTHN\\nRJBgq4Tg2LG\\interactions.csv",
+      "selections": "..\\output\\WTHN\\nRJBgq4Tg2LG\\selections.csv",
+      "session_log": "..\\output\\WTHN\\nRJBgq4Tg2LG\\session_log.csv",
+      "file_unknown": []
+    },
+    "YvLb2lkRiYyh": {
+      "interactions": "..\\output\\WTHN\\YvLb2lkRiYyh\\interactions.csv",
+      "selections": "..\\output\\WTHN\\YvLb2lkRiYyh\\selections.csv",
+      "session_log": "..\\output\\WTHN\\YvLb2lkRiYyh\\session_log.csv",
+      "file_unknown": []
+    }
+  },
+  "BTWN": {
+    "participants": [
+      "38vsTr4jwSxV",
+      "fHevN3Wo38TA",
+      "iswbEgz7w3KE",
+      "kdSlRblQt77j",
+      "mYSzFPXnkOdd",
+      "QEpQRLrqn7CX",
+      "Tcrfm9xpHN59"
+    ],
+    "38vsTr4jwSxV": {
+      "interactions": "..\\output\\BTWN\\38vsTr4jwSxV\\interactions.csv",
+      "selections": "..\\output\\BTWN\\38vsTr4jwSxV\\selections.csv",
+      "session_log": "..\\output\\BTWN\\38vsTr4jwSxV\\session_log.csv",
+      "file_unknown": []
+    },
+    "fHevN3Wo38TA": {
+      "interactions": "..\\output\\BTWN\\fHevN3Wo38TA\\interactions.csv",
+      "selections": "..\\output\\BTWN\\fHevN3Wo38TA\\selections.csv",
+      "session_log": "..\\output\\BTWN\\fHevN3Wo38TA\\session_log.csv",
+      "file_unknown": []
+    },
+    "iswbEgz7w3KE": {
+      "interactions": "..\\output\\BTWN\\iswbEgz7w3KE\\interactions.csv",
+      "selections": "..\\output\\BTWN\\iswbEgz7w3KE\\selections.csv",
+      "session_log": "..\\output\\BTWN\\iswbEgz7w3KE\\session_log.csv",
+      "file_unknown": []
+    },
+    "kdSlRblQt77j": {
+      "interactions": "..\\output\\BTWN\\kdSlRblQt77j\\interactions.csv",
+      "selections": "..\\output\\BTWN\\kdSlRblQt77j\\selections.csv",
+      "session_log": "..\\output\\BTWN\\kdSlRblQt77j\\session_log.csv",
+      "file_unknown": []
+    },
+    "mYSzFPXnkOdd": {
+      "interactions": "..\\output\\BTWN\\mYSzFPXnkOdd\\interactions.csv",
+      "selections": "..\\output\\BTWN\\mYSzFPXnkOdd\\selections.csv",
+      "session_log": "..\\output\\BTWN\\mYSzFPXnkOdd\\session_log.csv",
+      "file_unknown": []
+    },
+    "QEpQRLrqn7CX": {
+      "interactions": "..\\output\\BTWN\\QEpQRLrqn7CX\\interactions.csv",
+      "selections": "..\\output\\BTWN\\QEpQRLrqn7CX\\selections.csv",
+      "session_log": "..\\output\\BTWN\\QEpQRLrqn7CX\\session_log.csv",
+      "file_unknown": []
+    },
+    "Tcrfm9xpHN59": {
+      "interactions": "..\\output\\BTWN\\Tcrfm9xpHN59\\interactions.csv",
+      "selections": "..\\output\\BTWN\\Tcrfm9xpHN59\\selections.csv",
+      "session_log": "..\\output\\BTWN\\Tcrfm9xpHN59\\session_log.csv",
+      "file_unknown": []
+    }
+  },
+  "BOTH": {
+    "participants": ["1w4I0l6f60JG", "7UR5LIyKmQiz", "C9pIAv6kBqr6", "KK2JFLnabEl9", "MjcBTpGzYCD9", "TlJaxdq1DM23"],
+    "1w4I0l6f60JG": {
+      "interactions": "..\\output\\BOTH\\1w4I0l6f60JG\\interactions.csv",
+      "selections": "..\\output\\BOTH\\1w4I0l6f60JG\\selections.csv",
+      "session_log": "..\\output\\BOTH\\1w4I0l6f60JG\\session_log.csv",
+      "file_unknown": []
+    },
+    "7UR5LIyKmQiz": {
+      "interactions": "..\\output\\BOTH\\7UR5LIyKmQiz\\interactions.csv",
+      "selections": "..\\output\\BOTH\\7UR5LIyKmQiz\\selections.csv",
+      "session_log": "..\\output\\BOTH\\7UR5LIyKmQiz\\session_log.csv",
+      "file_unknown": []
+    },
+    "C9pIAv6kBqr6": {
+      "interactions": "..\\output\\BOTH\\C9pIAv6kBqr6\\interactions.csv",
+      "selections": "..\\output\\BOTH\\C9pIAv6kBqr6\\selections.csv",
+      "session_log": "..\\output\\BOTH\\C9pIAv6kBqr6\\session_log.csv",
+      "file_unknown": []
+    },
+    "KK2JFLnabEl9": {
+      "interactions": "..\\output\\BOTH\\KK2JFLnabEl9\\interactions.csv",
+      "selections": "..\\output\\BOTH\\KK2JFLnabEl9\\selections.csv",
+      "session_log": "..\\output\\BOTH\\KK2JFLnabEl9\\session_log.csv",
+      "file_unknown": []
+    },
+    "MjcBTpGzYCD9": {
+      "interactions": "..\\output\\BOTH\\MjcBTpGzYCD9\\interactions.csv",
+      "selections": "..\\output\\BOTH\\MjcBTpGzYCD9\\selections.csv",
+      "session_log": "..\\output\\BOTH\\MjcBTpGzYCD9\\session_log.csv",
+      "file_unknown": []
+    },
+    "TlJaxdq1DM23": {
+      "interactions": "..\\output\\BOTH\\TlJaxdq1DM23\\interactions.csv",
+      "selections": "..\\output\\BOTH\\TlJaxdq1DM23\\selections.csv",
+      "session_log": "..\\output\\BOTH\\TlJaxdq1DM23\\session_log.csv",
+      "file_unknown": []
+    }
+  }
+}
