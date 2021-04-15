@@ -1,10 +1,10 @@
-<!-- WHILE APP IS NOT CONNECTED DISPLAY THIS -->
-<ng-container *ngIf="!socketConnected">
+<!-- STUDY COMPLETED -->
+<ng-container *ngIf="studyCompleted">
   <!-- HEADER -->
   <div class="container page-header text-center min-width">
     <div class="row">
       <div class="col text-center">
-        <h2>Connecting...</h2>
+        <h2>Thank You!</h2>
       </div>
     </div>
   </div>
@@ -14,135 +14,168 @@
     <div class="row">
       <div class="col">
         <div class="alert alert-info text-center">
-          Please wait while the application establishes a connection to our server...
-        </div>
-        <br />
-        <div class="alert alert-warning text-center">
-          <p>Please <strong>DO NOT</strong> refresh the page during this process.</p>
-          <p><strong>Note: This may take 2-3 minutes, depending on your internet connection speed.</strong></p>
           <p>
-            If the application does not load after 3 minutes, please <strong>contact</strong> Adam Coscia at
-            <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
-            to let us know what happened and include the approximate time this failure occured. Then close this page.
+            The study has concluded! Thank you to everyone who participated. We truly appreciate your time and effort!
           </p>
-          <strong>Do NOT attempt to redo this study.</strong>
+          <span>
+            If you have any further questions or wish to know more about the study, please <strong>contact</strong> Adam
+            Coscia at
+            <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+          </span>
         </div>
       </div>
     </div>
   </div>
 </ng-container>
 
-<!-- ONCE APP IS CONNECTED DISPLAY THIS -->
-<ng-container *ngIf="socketConnected">
-  <div class="page-header text-center">
-    <h2>Consent Document For Enrolling Adult Participants In a Research Study</h2>
-  </div>
-
-  <div class="container min-width">
-    <div class="row">
-      <div class="col-md-12">
-        <h3 class="text-center text-secondary">
-          Project Title:
-          <strong>Studying Interactive Decision Making in Conversations with Artificial Intelligence Agents</strong>
-        </h3>
-
-        <h5 class="text-center text-secondary">
-          Investigators: <strong>Adam Coscia</strong>, <strong>Sarah Mathew</strong>, <strong>Marina Vemmou</strong>
-        </h5>
-
-        <hr />
-
-        <p>You are being asked to be a volunteer in a research study.</p>
-        <p>
-          <b><u>Purpose:</u></b>
-          The purpose of this study is to evaluate alternative methods of presenting a decision-making task in their
-          ability to affect the outcome of the decision making processes.
-        </p>
-        <p>
-          <b><u>Exclusion/Inclusion Criteria:</u></b>
-          Participants in this study must be at least 18 years of age and have general familiarity with using web-based
-          systems. Only participants in the United States can participate in this study.
-        </p>
-        <p>
-          <b><u>Procedures:</u></b>
-          If you decide to be in this study, your part will involve approximately twenty minutes, during which you will
-          complete simple knowledge background questionnaires and perform sets of tasks with an interactive
-          point-and-click interface. With your permission we will record your interactions using logging software that
-          will capture things like clicks.
-        </p>
-        <p>
-          <b><u>Risks or Discomforts:</u></b>
-          The risks involved are no greater than those involved in daily activities such as using a laptop for
-          web-browsing.
-        </p>
-        <p>
-          <b><u>Benefits:</u></b>
-          You are not likely to benefit in any way from joining this study. We hope that what we learn will help to
-          enhance our understanding of cognitive processes related to decision making.
-        </p>
-        <p>
-          <b><u>Compensation to You:</u></b>
-          You will not be compensated for your time.
-        </p>
-        <p>
-          <b><u>Confidentiality:</u></b>
-          To protect your privacy, your records will be kept under a code number rather than by name. Interaction logs
-          will be stored on an external storage device. Your records, including interaction logs, questionnaire
-          responses, and consent form will be kept in locked files and only study staff will be allowed to look at them.
-          Your name and any other fact that might point to you will not appear when results of this study are presented.
-          The results of this study will not be published.
-        </p>
-        <p>
-          <b><u>Costs to You:</u></b>
-          If you participate in this study, you will be responsible for any data costs incurred while participating in
-          the online study.
-        </p>
-        <p>
-          <b><u>Participant Rights:</u></b>
-          Your participation in this study is voluntary. You do not have to be in this study if you don't want to be.
-          You have the right to change your mind and leave the study at any time without giving any reason and without
-          penalty. If you decide not to finish the study, you have the right to withdraw any data collected about you.
-          Should you decide to withdraw from the study, your questionnaires will be shredded. Any new information that
-          may make you change your mind about being in this study will be given to you. You will be given a copy of this
-          consent form to keep. You do not waive any of your legal rights by signing this consent form.
-        </p>
-        <p>
-          <b><u>Questions about the Study:</u></b>
-          If you have any questions about the study, you may contact Adam Coscia at acoscia6@gatech.edu.
-        </p>
-
-        <hr />
-
-        <!-- User is using a Desktop Device -->
-        <form *ngIf="!usingMobileDevice()" class="text-center" style="margin-bottom: 15px">
-          <p>
-            By selecting <strong>Accept</strong>, you indicate that you have read the information in this consent form
-            and consent to be in the study.
-          </p>
-
-          <div class="form-check">
-            <input type="checkbox" name="acceptCheckCB" class="form-check-input" id="acceptCheck"
-              [(ngModel)]="acceptedConsent" />
-            <label class="form-check-label" for="acceptCheck">I accept</label>
-          </div>
-
-          <br />
-
-          <button [disabled]="!acceptedConsent" (click)="next()" type="submit" class="btn btn-outline-dark">
-            Submit
-          </button>
-        </form>
-
-        <!-- User is NOT using a Desktop Device -->
-        <div *ngIf="usingMobileDevice()">
-          <h5 class="text-center text-secondary">STOP!</h5>
-
-          <p>
-            You are using a mobile device! We require a desktop device to complete this study. Please switch to a
-            desktop device before continuing.
-          </p>
+<!-- STUDY NOT COMPLETE -->
+<ng-container *ngIf="!studyCompleted">
+  <!-- WHILE APP IS NOT CONNECTED DISPLAY THIS -->
+  <ng-container *ngIf="!socketConnected">
+    <!-- HEADER -->
+    <div class="container page-header text-center min-width">
+      <div class="row">
+        <div class="col text-center">
+          <h2>Connecting...</h2>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- BODY -->
+    <div class="container min-width">
+      <div class="row">
+        <div class="col">
+          <div class="alert alert-info text-center">
+            Please wait while the application establishes a connection to our server...
+          </div>
+          <br />
+          <div class="alert alert-warning text-center">
+            <p>Please <strong>DO NOT</strong> refresh the page during this process.</p>
+            <p><strong>Note: This may take 2-3 minutes, depending on your internet connection speed.</strong></p>
+            <p>
+              If the application does not load after 3 minutes, please <strong>contact</strong> Adam Coscia at
+              <a href="mailto: acoscia6@gatech.edu">acoscia6@gatech.edu</a>
+              to let us know what happened and include the approximate time this failure occured. Then close this page.
+            </p>
+            <strong>Do NOT attempt to redo this study.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- ONCE APP IS CONNECTED DISPLAY THIS -->
+  <ng-container *ngIf="socketConnected">
+    <div class="page-header text-center">
+      <h2>Consent Document For Enrolling Adult Participants In a Research Study</h2>
+    </div>
+
+    <div class="container min-width">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="text-center text-secondary">
+            Project Title:
+            <strong>Studying Interactive Decision Making in Conversations with Artificial Intelligence Agents</strong>
+          </h3>
+
+          <h5 class="text-center text-secondary">
+            Investigators: <strong>Adam Coscia</strong>, <strong>Sarah Mathew</strong>, <strong>Marina Vemmou</strong>
+          </h5>
+
+          <hr />
+
+          <p>You are being asked to be a volunteer in a research study.</p>
+          <p>
+            <b><u>Purpose:</u></b>
+            The purpose of this study is to evaluate alternative methods of presenting a decision-making task in their
+            ability to affect the outcome of the decision making processes.
+          </p>
+          <p>
+            <b><u>Exclusion/Inclusion Criteria:</u></b>
+            Participants in this study must be at least 18 years of age and have general familiarity with using
+            web-based systems. Only participants in the United States can participate in this study.
+          </p>
+          <p>
+            <b><u>Procedures:</u></b>
+            If you decide to be in this study, your part will involve approximately twenty minutes, during which you
+            will complete simple knowledge background questionnaires and perform sets of tasks with an interactive
+            point-and-click interface. With your permission we will record your interactions using logging software that
+            will capture things like clicks.
+          </p>
+          <p>
+            <b><u>Risks or Discomforts:</u></b>
+            The risks involved are no greater than those involved in daily activities such as using a laptop for
+            web-browsing.
+          </p>
+          <p>
+            <b><u>Benefits:</u></b>
+            You are not likely to benefit in any way from joining this study. We hope that what we learn will help to
+            enhance our understanding of cognitive processes related to decision making.
+          </p>
+          <p>
+            <b><u>Compensation to You:</u></b>
+            You will not be compensated for your time.
+          </p>
+          <p>
+            <b><u>Confidentiality:</u></b>
+            To protect your privacy, your records will be kept under a code number rather than by name. Interaction logs
+            will be stored on an external storage device. Your records, including interaction logs, questionnaire
+            responses, and consent form will be kept in locked files and only study staff will be allowed to look at
+            them. Your name and any other fact that might point to you will not appear when results of this study are
+            presented. The results of this study will not be published.
+          </p>
+          <p>
+            <b><u>Costs to You:</u></b>
+            If you participate in this study, you will be responsible for any data costs incurred while participating in
+            the online study.
+          </p>
+          <p>
+            <b><u>Participant Rights:</u></b>
+            Your participation in this study is voluntary. You do not have to be in this study if you don't want to be.
+            You have the right to change your mind and leave the study at any time without giving any reason and without
+            penalty. If you decide not to finish the study, you have the right to withdraw any data collected about you.
+            Should you decide to withdraw from the study, your questionnaires will be shredded. Any new information that
+            may make you change your mind about being in this study will be given to you. You will be given a copy of
+            this consent form to keep. You do not waive any of your legal rights by signing this consent form.
+          </p>
+          <p>
+            <b><u>Questions about the Study:</u></b>
+            If you have any questions about the study, you may contact Adam Coscia at acoscia6@gatech.edu.
+          </p>
+
+          <hr />
+
+          <!-- User is using a Desktop Device -->
+          <form *ngIf="!usingMobileDevice()" class="text-center" style="margin-bottom: 15px">
+            <p>
+              By selecting <strong>Accept</strong>, you indicate that you have read the information in this consent form
+              and consent to be in the study.
+            </p>
+
+            <div class="form-check">
+              <input type="checkbox" name="acceptCheckCB" class="form-check-input" id="acceptCheck"
+                [(ngModel)]="acceptedConsent" />
+              <label class="form-check-label" for="acceptCheck">I accept</label>
+            </div>
+
+            <br />
+
+            <button [disabled]="!acceptedConsent" (click)="next()" type="submit" class="btn btn-outline-dark">
+              Submit
+            </button>
+          </form>
+
+          <!-- User is NOT using a Desktop Device -->
+          <div *ngIf="usingMobileDevice()">
+            <h5 class="text-center text-secondary">STOP!</h5>
+
+            <p>
+              You are using a mobile device! We require a desktop device to complete this study. Please switch to a
+              desktop device before continuing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </ng-container>

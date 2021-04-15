@@ -23,6 +23,7 @@ window.addEventListener("beforeunload", function (e) {
 export class ConsentActivityComponent implements OnInit {
   private subscription: Subscription = new Subscription();
 
+  studyCompleted: any;
   socketConnected: any;
   acceptedConsent: any;
 
@@ -34,9 +35,14 @@ export class ConsentActivityComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.studyCompleted = true; // whether to load the entire study or not
     this.acceptedConsent = false; // until user clicks 'I Accept' Next button is disabled
-    this.titleService.setTitle("Consent"); // set the page title
-    this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
+    if (!this.studyCompleted) {
+      this.titleService.setTitle("Consent"); // set the page title
+      this.chatService.connectToSocket(this); // Connect to Server to Send/Receive Messages over WebSocket
+    } else {
+      this.titleService.setTitle("Thank You!"); // set the page title
+    }
   }
 
   /**

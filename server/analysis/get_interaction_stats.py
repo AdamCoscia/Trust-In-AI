@@ -10,8 +10,6 @@ import ast
 import pandas as pd
 import numpy as np
 
-from constants import ATTRIBUTES, IDS
-
 #
 # ---------------------------- INTERACTION TYPES -----------------------------
 # SUBMIT BUTTONS
