@@ -35,7 +35,7 @@ export class ConsentActivityComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.studyCompleted = true; // whether to load the entire study or not
+    this.studyCompleted = false; // whether to load the entire study or not
     this.acceptedConsent = false; // until user clicks 'I Accept' Next button is disabled
     if (!this.studyCompleted) {
       this.titleService.setTitle("Consent"); // set the page title
