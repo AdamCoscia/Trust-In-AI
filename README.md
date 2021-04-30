@@ -42,7 +42,7 @@ These are the versions the system has been tested on as of **04/02/2021**
 
 1. Make sure Python and pip are installed on your system
 2. Navigate to `/server` directory
-3. `python3.9 -m venv venv` / `virtualenv --python=python3.7 venv` - create a python3 virtual environment called venv
+3. `python3.9 -m venv venv` / `virtualenv --python=python3.9 venv` - create a python3 virtual environment called venv
 4. `source venv/bin/activate` - enters the virtual environment
    - **FROM THIS POINT ON: only use `python` command to invoke interpeter, avoid using global command `python3.9`!!**
 5. `python -m pip install -r requirements.txt` - installs required libraries local to this project environment
