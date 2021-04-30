@@ -12,22 +12,15 @@ import socketio
 from aiohttp import web
 from aiohttp_index import IndexMiddleware
 
-# APP_STATES = [
-#     {"appOrder": ["practice", "movies", "hiring"], "appType": "CTRL"},
-#     {"appOrder": ["practice", "movies", "hiring"], "appType": "BTWN"},
-#     {"appOrder": ["practice", "hiring", "movies"], "appType": "BOTH"},
-#     {"appOrder": ["practice", "hiring", "movies"], "appType": "CTRL"},
-#     {"appOrder": ["practice", "movies", "hiring"], "appType": "WTHN"},
-#     {"appOrder": ["practice", "hiring", "movies"], "appType": "BTWN"},
-#     {"appOrder": ["practice", "hiring", "movies"], "appType": "WTHN"},
-#     {"appOrder": ["practice", "movies", "hiring"], "appType": "BOTH"},
-# ]
-
 APP_STATES = [
+    {"appOrder": ["practice", "movies", "hiring"], "appType": "CTRL"},
+    {"appOrder": ["practice", "movies", "hiring"], "appType": "BTWN"},
     {"appOrder": ["practice", "hiring", "movies"], "appType": "BOTH"},
     {"appOrder": ["practice", "hiring", "movies"], "appType": "CTRL"},
+    {"appOrder": ["practice", "movies", "hiring"], "appType": "WTHN"},
     {"appOrder": ["practice", "hiring", "movies"], "appType": "BTWN"},
     {"appOrder": ["practice", "hiring", "movies"], "appType": "WTHN"},
+    {"appOrder": ["practice", "movies", "hiring"], "appType": "BOTH"},
 ]
 
 
@@ -70,8 +63,8 @@ async def save_session_log(sid, data):
         CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid  # update sid reference
         log = data["log"]  # session page times
         payload = json.dumps(log)  # object to JSON
-        R.set(f"user:{pid}:session", payload)
-        R.sadd("users", pid)
+        # R.set(f"user:{pid}:session", payload)
+        # R.sadd("users", pid)
         print(f"  Session Saved | SID: {sid} | PID: {pid}")
     except Exception as e:
         print(e)
@@ -85,8 +78,8 @@ async def save_selection_log(sid, data):
         CLIENT_PARTICIPANT_ID_SOCKET_ID_MAPPING[pid] = sid  # update sid reference
         log = data["log"]  # selections for appMode
         payload = json.dumps(log)  # object to JSON
-        R.rpush(f"user:{pid}:selections", payload)
-        R.sadd("users", pid)
+        # R.rpush(f"user:{pid}:selections", payload)
+        # R.sadd("users", pid)
         print(f"Selection Saved | SID: {sid} | PID: {pid}")
     except Exception as e:
         print(e)
@@ -129,32 +122,32 @@ async def on_interaction(sid, data):
 
     # persist each interaction to redis
     payload = json.dumps(response)
-    R.rpush(f"user:{pid}:interactions", payload)
-    R.sadd("users", pid)
+    # R.rpush(f"user:{pid}:interactions", payload)
+    # R.sadd("users", pid)
 
     await SIO.emit("interaction_response", response, room=sid)
 
 
 if __name__ == "__main__":
-    # Collect redis url endpoint
-    try:
-        url = json.load(open("redis.json", "r"))  #  stored remotely for safety
-        hostname, port, password = url["hostname"], url["port"], url["password"]
-    except FileNotFoundError as e:
-        if "REDISCLOUD_URL" in os.environ and os.environ.get("REDISCLOUD_URL"):
-            url = urlparse.urlparse(os.environ.get("REDISCLOUD_URL"))
-            hostname, port, password = url.hostname, url.port, url.password
-        else:
-            raise KeyError("'REDISCLOUD_URL' not found in environment variables.")
+    # # Collect redis url endpoint
+    # try:
+    #     url = json.load(open("redis.json", "r"))  #  stored remotely for safety
+    #     hostname, port, password = url["hostname"], url["port"], url["password"]
+    # except FileNotFoundError as e:
+    #     if "REDISCLOUD_URL" in os.environ and os.environ.get("REDISCLOUD_URL"):
+    #         url = urlparse.urlparse(os.environ.get("REDISCLOUD_URL"))
+    #         hostname, port, password = url.hostname, url.port, url.password
+    #     else:
+    #         raise KeyError("'REDISCLOUD_URL' not found in environment variables.")
 
-    # Connect to redis client
-    print("Connecting to redis server", end="\r")
-    try:
-        R = redis.Redis(host=hostname, port=port, password=password)
-        R.ping()
-        print(f"Connected  ")
-    except redis.RedisError as e:
-        raise e
+    # # Connect to redis client
+    # print("Connecting to redis server", end="\r")
+    # try:
+    #     R = redis.Redis(host=hostname, port=port, password=password)
+    #     R.ping()
+    #     print(f"Connected  ")
+    # except redis.RedisError as e:
+    #     raise e
 
     # Run the web server
     port = int(os.environ.get("PORT", 3000))
