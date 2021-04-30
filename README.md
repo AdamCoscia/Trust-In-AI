@@ -1,16 +1,14 @@
-# The Role of Transitivity and Implicit Bias in Decision-Making with AI
+# The Impact of Transitivity and Implicit Bias on Trust in AI
 
-Last updated: 04/12/2021
+Repository for the system used in the study.
 
-## Screenshots
-
-TODO
+Last updated: 04/30/2021
 
 ## Setup
 
 This is an Angular application (`/app`) with Python backend (`/server`).
 
-These are the versions the system has been tested on as of **03/18/2021**
+These are the versions the system has been tested on as of **04/02/2021**
 
 ### /App
 
