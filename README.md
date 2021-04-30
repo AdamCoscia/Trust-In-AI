@@ -1,10 +1,8 @@
-# The Role of Transitivity and Implicit Bias in Decision-Making with AI
+# The Impact of Transitivity and Implicit Bias on Trust in AI
 
-Last updated: 04/12/2021
+Repository for the system used in the study.
 
-## Screenshots
-
-TODO
+Last updated: 04/30/2021
 
 ## Setup
 
