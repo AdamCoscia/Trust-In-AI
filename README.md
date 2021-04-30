@@ -1,5 +1,7 @@
 # The Impact of Transitivity and Implicit Bias on Trust in AI
 
+![splash](splash.png)
+
 Repository for the system used in the study.
 
 Last updated: 04/30/2021
