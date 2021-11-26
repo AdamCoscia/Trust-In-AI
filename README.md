@@ -51,7 +51,13 @@ These are the versions the system has been tested on as of **04/02/2021**
 6. Run `python server.py`
 7. For local testing, set **SERVER_URL** (in `/app/src/app/models/config.ts`) to `http://localhost:3000`
 
-## Investigators
+## Credits
+
+Georgia Institute of Technology
+
+CS 6795 Introduction to Cognitive Science
+
+Spring 2021
 
 - Sarah Mathew ( smathew64 \[at\] gatech.edu )
 - Adam Coscia ( acoscia6 \[at\] gatech.edu )
