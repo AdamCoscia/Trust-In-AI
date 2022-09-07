@@ -4,6 +4,8 @@
 
 Repository for the system used in the study.
 
+Read the paper: <https://adamcoscia.github.io/sections/projects/Impact-Trust-AI/21-trust_in_ai.pdf>
+
 Last updated: 04/30/2021
 
 ## Setup
