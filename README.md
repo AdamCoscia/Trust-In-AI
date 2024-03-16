@@ -4,9 +4,13 @@
 
 Repository for the system used in the study.
 
+Last updated: 04/30/2021
+
+## What did we study?
+
 Read the paper: <https://adamcoscia.com/projects/Impact-Trust-AI/21-trust_in_ai.pdf>
 
-Last updated: 04/30/2021
+Watch the video: <https://youtu.be/NfrUjdmJHXQ>
 
 ## Setup
 
